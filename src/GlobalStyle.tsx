@@ -1,0 +1,39 @@
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+
+*,*::before,*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box
+}
+
+:root{
+    --fontHeading:'Oswald', sans-serif;
+    --fontContent:'Lato', sans-serif;
+}
+
+body{
+    width:100vw;
+    height:100%;
+    overflow-x: hidden;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    &:focus{
+        outline:0
+    }
+}
+
+input{
+    border:0;
+    &:focus{
+        outline:0
+    }
+}
+
+`;
+
+export default GlobalStyle;
