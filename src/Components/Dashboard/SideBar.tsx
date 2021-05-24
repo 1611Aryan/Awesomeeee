@@ -15,7 +15,7 @@ const SideBar: React.FC = () => {
 };
 
 const StyledSideBar = styled.div`
-  width: 5vw;
+  width: var(--sideBarWidth);
   height: 100vh;
   padding: 1rem 0.5rem;
 

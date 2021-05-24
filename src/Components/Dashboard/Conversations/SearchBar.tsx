@@ -29,7 +29,7 @@ const StyledSearchBar = styled.div`
 
   font-size: 1rem;
 
-  margin: 1.25em 0 0.25em;
+  margin: var(--searchBarMarginT) 0 0.25em;
   form {
     width: 100%;
     display: flex;
