@@ -6,7 +6,7 @@ const Header: React.FC<{
   selected: {
     name: string;
     img: string;
-  };
+  } | null;
 }> = ({ selected }) => {
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -21,11 +21,11 @@ const Header: React.FC<{
                 ? (imageRef.current.style.clipPath = "circle(100% at center")
                 : ""
             }
-            src={selected.img}
+            src={selected ? selected.img : ""}
             alt="contact profile"
           />
         </div>
-        <h1>{selected.name}</h1>
+        <h1>{selected && selected.name}</h1>
       </div>
       <HiDotsVertical />
       <div className="border"></div>
@@ -35,10 +35,8 @@ const Header: React.FC<{
 
 const StyledHeader = styled.header`
   width: 100%;
-  height: calc(
-    2 * var(--topPadding) + var(--headingSize) + var(--searchBarMarginT)
-  );
-  padding: 1rem 1.5rem;
+  height: var(--HeaderHeight);
+  padding: var(--HeaderPadding) 1.5rem;
 
   display: flex;
   justify-content: space-between;
@@ -66,10 +64,8 @@ const StyledHeader = styled.header`
     align-items: center;
 
     .profileImage {
-      width: calc(
-        var(--topPadding) + var(--headingSize) + var(--searchBarMarginT)
-      );
-      height: 100%;
+      width: var(--ImageHeight);
+      height: var(--ImageHeight);
 
       border-radius: 50%;
 
@@ -77,7 +73,7 @@ const StyledHeader = styled.header`
       background: rgb(44, 44, 44);
       overflow: hidden;
       img {
-        height: 100%;
+        //height: 100%;
         width: 100%;
 
         object-fit: cover;
@@ -91,6 +87,7 @@ const StyledHeader = styled.header`
 
       font-family: var(--fontHeading);
       font-weight: 500;
+      font-size: var(--headingSize);
     }
   }
   svg {

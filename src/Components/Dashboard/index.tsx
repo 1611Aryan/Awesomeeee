@@ -1,20 +1,20 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Chat from "./Chat";
-import Conversations from "./Conversations";
+
 import SideBar from "./SideBar";
+import Conversations from "./Conversations";
+import Chat from "./Chat";
+import ClosedChat from "./ClosedChat";
 
 const Dashboard: React.FC = () => {
-  const [selected, setSelected] = useState({
-    name: "Aryan",
-    img: "https://source.unsplash.com/collection/4457310/250x250/?sig=10",
-  });
+  const [selected, setSelected] =
+    useState<{ name: string; img: string } | null>(null);
 
   return (
     <StyledDashboard>
       <SideBar />
-      <Conversations setSelected={setSelected} />
-      <Chat selected={selected} />
+      <Conversations selected={selected} setSelected={setSelected} />
+      {selected ? <Chat selected={selected} /> : <ClosedChat />}
     </StyledDashboard>
   );
 };
@@ -36,7 +36,7 @@ const StyledDashboard = styled.main`
 
   --topPadding: 2em;
   --headingSize: 2em;
-  --searchBarMarginT: 1.25em;
+  --searchBarMarginT: 1.5em;
 `;
 
 export default Dashboard;

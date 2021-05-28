@@ -4,13 +4,17 @@ import Contacts from "./Contacts";
 import SearchBar from "./SearchBar";
 
 const Conversations: React.FC<{
+  selected: {
+    name: string;
+    img: string;
+  } | null;
   setSelected: React.Dispatch<
     React.SetStateAction<{
       name: string;
       img: string;
-    }>
+    } | null>
   >;
-}> = ({ setSelected }) => {
+}> = ({ setSelected, selected }) => {
   const [displacement, setDisplacement] = useState<number>();
 
   return (
@@ -20,7 +24,11 @@ const Conversations: React.FC<{
 
       <SearchBar setDisplacement={setDisplacement} />
 
-      <Contacts displacement={displacement} setSelected={setSelected} />
+      <Contacts
+        selected={selected}
+        displacement={displacement}
+        setSelected={setSelected}
+      />
     </StyledConversations>
   );
 };
@@ -54,7 +62,7 @@ const StyledConversations = styled.div`
     font-family: var(--fontHeading);
     font-weight: 500;
     font-size: var(--headingSize);
-    line-height: var(--headingSize);
+    line-height: 1;
   }
 `;
 

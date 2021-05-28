@@ -19,6 +19,7 @@ const Input: React.FC = () => {
 const StyledInput = styled.div`
   width: 100%;
   position: relative;
+  height: var(--InputHeight);
 
   .borderT {
     position: absolute;

@@ -1,20 +1,30 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import Contact from "./Contact";
 
 const Contacts: React.FC<{
   displacement: number | undefined;
+  selected: {
+    name: string;
+    img: string;
+  } | null;
   setSelected: React.Dispatch<
     React.SetStateAction<{
       name: string;
       img: string;
-    }>
+    } | null>
   >;
-}> = ({ displacement, setSelected }) => {
+}> = ({ displacement, setSelected, selected }) => {
   const contacts = [
     {
       name: "Andrea	Bell",
       message:
         "Sed eget sem molestie, iaculis arcu vitae, ultrices tortor. Nullam rhoncus, sapien quis suscipit lobortis.",
+    },
+    {
+      name: "Guss",
+      message:
+        "        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum pariatur odio vel sequi dignissimos mollitia.",
     },
     {
       name: "Sally King",
@@ -53,7 +63,12 @@ const Contacts: React.FC<{
       <ul>
         {contacts &&
           contacts.map((contact, index) => (
-            <Contact key={index} contact={contact} setSelected={setSelected} />
+            <Contact
+              key={index}
+              contact={contact}
+              selected={selected}
+              setSelected={setSelected}
+            />
           ))}
       </ul>
     </StyledContacts>
@@ -77,6 +92,14 @@ const StyledContacts = styled.div`
 
     -ms-overflow-style: none;
     scrollbar-width: none;
+
+    .selected {
+      background: linear-gradient(
+        to right,
+        rgba(255, 226, 89, 0.5),
+        rgba(255, 167, 81, 0.5)
+      );
+    }
   }
 `;
 

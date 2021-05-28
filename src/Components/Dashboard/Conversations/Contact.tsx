@@ -6,13 +6,17 @@ const Contact: React.FC<{
     name: string;
     message: string;
   };
+  selected: {
+    name: string;
+    img: string;
+  } | null;
   setSelected: React.Dispatch<
     React.SetStateAction<{
       name: string;
       img: string;
-    }>
+    } | null>
   >;
-}> = ({ contact, setSelected }) => {
+}> = ({ contact, setSelected, selected }) => {
   const [random, setRandom] = useState<number>();
 
   const imageRef = useRef<HTMLImageElement>(null);
@@ -31,7 +35,10 @@ const Contact: React.FC<{
   };
 
   return (
-    <StyledContact onClick={clickHandler}>
+    <StyledContact
+      onClick={clickHandler}
+      className={selected && selected.name === contact.name ? "selected" : ""}
+    >
       <div className="profile">
         <img
           ref={imageRef}
@@ -57,9 +64,8 @@ const Contact: React.FC<{
 };
 
 const StyledContact = styled.li`
-  margin: 0.5em 0;
   width: 100%;
-  padding: calc(var(--conversationsWidth) / 20.83)
+  padding: calc(var(--conversationsWidth) / 22)
     calc(var(--conversationsWidth) / 38.46);
 
   display: flex;
@@ -69,15 +75,21 @@ const StyledContact = styled.li`
   background: rgb(16, 16, 16, 0.5);
   border-radius: 5px;
 
+  margin: 0.25em 0;
+
   cursor: pointer;
 
   &:hover {
-    background: rgba(255, 255, 54, 0.5);
+    background: linear-gradient(
+      to left,
+      rgba(255, 226, 89, 0.5),
+      rgba(255, 167, 81, 0.5)
+    );
   }
 
   .profile {
-    width: calc((var(--conversationsWidth) - 1.3em) / 5);
-    height: calc((var(--conversationsWidth) - 1.3em) / 5);
+    width: calc((var(--conversationsWidth) - 1.3em) / 6.5);
+    height: calc((var(--conversationsWidth) - 1.3em) / 6.5);
     border-radius: 50%;
 
     align-self: center;
@@ -110,16 +122,16 @@ const StyledContact = styled.li`
     h3 {
       width: 100%;
       font-weight: 400;
-      font-size: 1.1em;
+      font-size: 1em;
     }
     p {
       width: 100%;
       height: auto;
       max-height: 2em;
-      margin-top: 1em;
+      margin-top: 0.75em;
       font-weight: 300;
-      font-size: 0.8em;
-      line-height: 1em;
+      font-size: 0.75em;
+      line-height: 1;
       color: rgba(255, 255, 255, 0.8);
       overflow: hidden;
     }
