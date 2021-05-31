@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
 interface theme {
@@ -19,31 +19,39 @@ const Message: React.FC<{
 }> = ({ message }) => {
   const [theme, setTheme] = useState<theme>();
 
+  const themeMe = useMemo<theme>(
+    () => ({
+      background:
+        message.sender === "me"
+          ? "linear-gradient( to right,rgba(255, 226, 89, 0.5), rgba(255, 167, 81, 0.5))"
+          : " linear-gradient(to right, rgba(16, 16, 16, 0.5), rgba(36, 4, 56, 0.5) )",
+
+      alignSelf: message.sender === "me" ? "flex-end" : "flex-start",
+
+      borderRadius: message.sender === "me" ? "8px 0px 8px 8px" : "0 8px 8px",
+
+      left:
+        message.sender === "me" ? "auto" : "calc(-1 * var(--triangleWidth))",
+
+      right:
+        message.sender === "me" ? "calc(-1 * var(--triangleWidth))" : "auto",
+
+      borderWidth:
+        message.sender === "me"
+          ? "var(--triangleHeight) var(--triangleWidth) 0 0"
+          : " 0 var(--triangleWidth) var(--triangleHeight) 0",
+
+      borderColor:
+        message.sender === "me"
+          ? "rgba(255, 167, 81, 0.5) transparent transparent transparent"
+          : "transparent rgba(16, 16, 16, 0.5) transparent transparent",
+    }),
+    [message.sender]
+  );
+
   useEffect(() => {
-    message.sender === "me"
-      ? setTheme({
-          background:
-            "linear-gradient( to right,rgba(255, 226, 89, 0.5), rgba(255, 167, 81, 0.5))",
-          alignSelf: "flex-end",
-          borderRadius: "8px 0px 8px 8px",
-          left: "auto",
-          right: "calc(-1 * var(--triangleWidth))",
-          borderWidth: "var(--triangleHeight) var(--triangleWidth) 0 0",
-          borderColor:
-            "rgba(255, 167, 81, 0.5) transparent transparent transparent",
-        })
-      : setTheme({
-          background:
-            " linear-gradient(to right, rgba(16, 16, 16, 0.5), rgba(36, 4, 56, 0.5) )",
-          alignSelf: "flex-start",
-          borderRadius: "0 8px 8px",
-          left: "calc(-1 * var(--triangleWidth))",
-          right: "auto",
-          borderWidth: " 0 var(--triangleWidth) var(--triangleHeight) 0",
-          borderColor:
-            "transparent rgba(16, 16, 16, 0.5) transparent transparent",
-        });
-  }, [message.sender]);
+    setTheme(themeMe);
+  }, [themeMe]);
 
   return <StyledMessage theme={theme}>{message.message.trim()}</StyledMessage>;
 };
@@ -51,41 +59,27 @@ const Message: React.FC<{
 const StyledMessage = styled.li`
   --triangleWidth: 0.3em;
   --triangleHeight: 0.5em;
-  --margin: 0.5em;
+  --margin: calc(var(--MessagesFontSize) * 0.45);
 
   position: relative;
   align-self: ${props => props.theme.alignSelf};
 
   width: auto;
   max-width: 55%;
-  padding: 1em;
+  padding: calc(var(--MessagesFontSize) * 0.65)
+    calc(var(--MessagesFontSize) * 0.75);
 
   font-family: var(--fontContent);
   font-weight: 400;
-  font-size: 0.9em;
+  font-size: var(--MessagesFontSize);
 
   color: #fff;
-
   background: ${props => props.theme.background};
   background-size: 400% 400%;
 
   border-radius: ${props => props.theme.borderRadius};
   margin: var(--margin) calc(var(--margin) + var(--triangleHeight))
     calc(var(--margin) * 2);
-
-  animation: gradient 20s ease-in-out infinite;
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
 
   &:first-of-type {
     margin: calc(var(--margin) * 2) calc(var(--margin) + var(--triangleHeight));

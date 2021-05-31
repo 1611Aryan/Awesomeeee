@@ -19,6 +19,8 @@ const StyledClosedChat = styled.div`
 
   position: relative;
 
+  overflow: hidden;
+
   .circle {
     position: absolute;
     top: 50%;
@@ -59,7 +61,7 @@ const StyledClosedChat = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 28ch;
+    width: clamp(40%, 28ch, 90%);
 
     font-family: var(--fontHeading);
     font-size: 4em;

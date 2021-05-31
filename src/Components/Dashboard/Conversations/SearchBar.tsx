@@ -3,13 +3,13 @@ import { HiSearch } from "react-icons/hi";
 import styled from "styled-components";
 
 const SearchBar: React.FC<{
-  setDisplacement: React.Dispatch<React.SetStateAction<number | undefined>>;
-}> = ({ setDisplacement }) => {
+  setContactsHeight: React.Dispatch<React.SetStateAction<number | undefined>>;
+}> = ({ setContactsHeight }) => {
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (divRef.current)
-      setDisplacement(divRef.current.offsetTop + divRef.current.offsetHeight);
+      setContactsHeight(divRef.current.offsetTop + divRef.current.offsetHeight);
   });
 
   return (
@@ -35,14 +35,12 @@ const StyledSearchBar = styled.div`
     display: flex;
     justify-content: space-between;
 
-    font-size: 1rem;
-
     input {
       width: 100%;
       background: rgb(16, 16, 16, 0.5);
       border-radius: 5px 0 0 5px;
-      padding: 0.35rem 0.5rem;
-      font-size: 1em;
+      padding: 0.35em 0.5em;
+      font-size: var(--contactTextSize);
       font-family: var(--fontContent);
       color: #bdbdbd;
     }
@@ -50,8 +48,8 @@ const StyledSearchBar = styled.div`
       background: rgb(16, 16, 16, 0.5);
       border-radius: 0 5px 5px 0;
       color: #bdbdbd;
-      padding: 0.35rem 0.5rem;
-      font-size: 1.5em;
+      padding: 0.35em 0.5em;
+      font-size: calc(var(--contactTextSize) * 1.5);
 
       display: grid;
       place-items: center;

@@ -1,29 +1,38 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import Header from "./Header";
 import Main from "./Main";
 
-const SignUp: React.FC = () => {
+const Login: React.FC = () => {
+  const variants = {
+    initial: {
+      x: -1200,
+    },
+    animate: {
+      x: 0,
+    },
+  };
+
   return (
-    <StyledSignUp>
+    <StyledLogin variants={variants} initial="initial" animate="animate">
       <Header />
       <Main />
-    </StyledSignUp>
+    </StyledLogin>
   );
 };
 
-const StyledSignUp = styled.div`
+const StyledLogin = styled(motion.div)`
   width: 100vw;
   height: 100vh;
   position: relative;
   overflow: hidden;
   background: linear-gradient(to top, #2b5876, #4e4376);
 
+  will-change: transform;
+
   --padding: clamp(2rem, 5vw, 4rem);
   --navHeight: 10vh;
   --primary: #4d4476;
-
-  --leftWidth: 60vw;
-  --rightWidth: calc(100vw - var(--leftWidth));
 `;
 
-export default SignUp;
+export default Login;

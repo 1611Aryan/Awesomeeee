@@ -36,7 +36,7 @@ const Header: React.FC<{
 const StyledHeader = styled.header`
   width: 100%;
   height: var(--HeaderHeight);
-  padding: var(--HeaderPadding) 1.5rem;
+  padding: var(--HeaderPadding) 1.5em;
 
   display: flex;
   justify-content: space-between;
@@ -65,6 +65,7 @@ const StyledHeader = styled.header`
 
     .profileImage {
       width: var(--ImageHeight);
+      max-width: 20vw;
       height: var(--ImageHeight);
 
       border-radius: 50%;
@@ -87,11 +88,11 @@ const StyledHeader = styled.header`
 
       font-family: var(--fontHeading);
       font-weight: 500;
-      font-size: var(--headingSize);
+      font-size: var(--HeaderFontSize);
     }
   }
   svg {
-    font-size: 2em;
+    font-size: var(--HeaderFontSize);
   }
 `;
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Contact from "./Contact";
 
 const Contacts: React.FC<{
-  displacement: number | undefined;
+  contactsHeight: number | undefined;
   selected: {
     name: string;
     img: string;
@@ -13,7 +13,7 @@ const Contacts: React.FC<{
       img: string;
     } | null>
   >;
-}> = ({ displacement, setSelected, selected }) => {
+}> = ({ contactsHeight, setSelected, selected }) => {
   const contacts = [
     {
       name: "Andrea	Bell",
@@ -58,7 +58,7 @@ const Contacts: React.FC<{
   ];
 
   return (
-    <StyledContacts theme={{ displacement }}>
+    <StyledContacts theme={{ contactsHeight }}>
       <ul>
         {contacts &&
           contacts.map((contact, index) => (
@@ -76,7 +76,7 @@ const Contacts: React.FC<{
 
 const StyledContacts = styled.div`
   width: 100%;
-  height: ${props => window.innerHeight - props.theme.displacement}px;
+  height: ${props => window.innerHeight - props.theme.contactsHeight}px;
   flex: 1;
   ul {
     width: 100%;

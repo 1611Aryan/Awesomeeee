@@ -1,15 +1,25 @@
+import React from "react";
 import styled from "styled-components";
+import { useAccess } from "../../../Providers/AccessProvider";
 
 const Form: React.FC = () => {
+  const { setAccess } = useAccess();
+
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setAccess(true);
+  };
+
   return (
-    <StyledForm>
+    <StyledForm onSubmit={submitHandler}>
       <div className="inputContainer">
         <label htmlFor="username/email">Username/Email</label>
         <input
           type="text"
           name="username/email"
           autoFocus
-          required
+          //required
           placeholder="Enter Here"
         />
       </div>
@@ -18,13 +28,12 @@ const Form: React.FC = () => {
         <input
           type="password"
           name="password"
-          required
+          //required
           placeholder="********"
         />
       </div>
-      <div className="inputContainer">
-        <button>Login</button>
-      </div>
+
+      <button>Login</button>
     </StyledForm>
   );
 };
@@ -32,7 +41,7 @@ const Form: React.FC = () => {
 const StyledForm = styled.form`
   position: relative;
   width: 100%;
-  padding: 0 var(--padding);
+  padding: 0 var(--padding) 0 calc(var(--padding) * 1.5);
 
   display: flex;
   flex-direction: column;
@@ -41,46 +50,38 @@ const StyledForm = styled.form`
 
   font-family: var(--fontContent);
   font-size: 1rem;
-  color: var(--primary);
+  color: #000;
 
   z-index: 2;
   .inputContainer {
-    width: 95%;
+    width: 100%;
 
     label {
-      font-size: 1.5em;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      font-size: 1.75em;
     }
 
     input {
       width: 100%;
-      padding: 0.5em 0.25em;
-
-      font-size: 1.25em;
-      color: #3d3c41;
-
+      background: #ececec;
       border-radius: 5px;
-      border-bottom: 3px solid var(--primary);
 
-      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      padding: 0.4em 0.5em;
+      font-size: 1.25em;
       margin: 1em 0 1.5em 0;
     }
-    &:last-of-type {
-      display: grid;
-      place-items: center;
-    }
   }
+
   button {
-    padding: 0.35em 1.75em;
-
-    background: var(--primary);
+    align-self: flex-start;
+    background: #4d4476;
     color: #fff;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-
-    font-weight: 900;
-    font-size: 1.5em;
-
     border-radius: 5px;
+
+    padding: 0.5em 1em;
+    font-size: 1.25em;
+    font-family: var(--fontHeading);
+    letter-spacing: 1px;
+    font-weight: 500;
   }
 `;
 

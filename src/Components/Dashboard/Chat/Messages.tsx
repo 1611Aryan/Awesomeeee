@@ -26,6 +26,10 @@ const Messages: React.FC = () => {
         "Donec in massa et quam volutpat tempor. Vivamus vel ligula lacinia, pellentesque erat nec, fringilla sem. Etiam et dolor et nunc blandit pellentesque.",
       sender: "me",
     },
+    {
+      message: "posuere aliquam. Pellentesque habitant morbi tri",
+      sender: "contact",
+    },
   ];
 
   return (
@@ -44,6 +48,8 @@ const StyledMessages = styled.div`
   height: var(--MessagesHeight);
 
   ul {
+    user-select: text;
+
     list-style-type: none;
 
     width: 100%;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const messages = ["Conversations", "Stories", "Talking"];
 
@@ -33,23 +33,20 @@ const HeroText: React.FC = () => {
   }, []);
 
   return (
-    <AnimatePresence>
-      <StyledHeroText>
-        <p>LET THE</p>
-        {active && (
-          <motion.p
-            className="bold"
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
-            {text}
-          </motion.p>
-        )}
-        <p>BEGIN</p>
-      </StyledHeroText>
-    </AnimatePresence>
+    <StyledHeroText>
+      <p>LET THE</p>
+      {active && (
+        <motion.p
+          className="bold"
+          variants={variants}
+          initial="initial"
+          animate="animate"
+        >
+          {text}
+        </motion.p>
+      )}
+      <p>BEGIN</p>
+    </StyledHeroText>
   );
 };
 

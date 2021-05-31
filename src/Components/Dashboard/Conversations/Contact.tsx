@@ -75,7 +75,7 @@ const StyledContact = styled.li`
   background: rgb(16, 16, 16, 0.5);
   border-radius: 5px;
 
-  margin: 0.25em 0;
+  margin: calc(var(--conversationsWidth) / 75) 0;
 
   cursor: pointer;
 
@@ -88,8 +88,8 @@ const StyledContact = styled.li`
   }
 
   .profile {
-    width: calc((var(--conversationsWidth) - 1.3em) / 6.5);
-    height: calc((var(--conversationsWidth) - 1.3em) / 6.5);
+    width: var(--contactImageSize);
+    height: var(--contactImageSize);
     border-radius: 50%;
 
     align-self: center;
@@ -122,15 +122,15 @@ const StyledContact = styled.li`
     h3 {
       width: 100%;
       font-weight: 400;
-      font-size: 1em;
+      font-size: var(--contactNameSize);
     }
     p {
       width: 100%;
       height: auto;
       max-height: 2em;
-      margin-top: 0.75em;
+      margin-top: calc(var(--contactTextSize) / 2.5);
       font-weight: 300;
-      font-size: 0.75em;
+      font-size: var(--contactTextSize);
       line-height: 1;
       color: rgba(255, 255, 255, 0.8);
       overflow: hidden;

@@ -19,7 +19,8 @@ const Input: React.FC = () => {
 const StyledInput = styled.div`
   width: 100%;
   position: relative;
-  height: var(--InputHeight);
+  min-height: 8vh;
+  height: calc(var(--conversationsWidth) / 5);
 
   .borderT {
     position: absolute;
@@ -32,21 +33,19 @@ const StyledInput = styled.div`
     background: linear-gradient(to top, #fff, transparent);
   }
   form {
-    padding: 1rem 1.5rem;
+    padding: 0.8em 0.5%;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-between;
-
-    font-size: 1rem;
 
     input {
       width: 100%;
 
       background: rgb(16, 16, 16, 0.5);
       border-radius: 5px 0 0 5px;
-      padding: 0.5em 0.5em;
-      font-size: 1em;
+      padding: calc(var(--InputFontSize) / 3);
+      font-size: var(--InputFontSize);
       font-family: var(--fontContent);
       color: #bdbdbd;
     }
@@ -54,8 +53,8 @@ const StyledInput = styled.div`
       background: rgb(16, 16, 16, 0.5);
       border-radius: 0 5px 5px 0;
       color: #bdbdbd;
-      padding: 0.5em 0.5em;
-      font-size: 1.5em;
+      padding: calc(var(--InputFontSize) / 3) calc(var(--InputFontSize) / 1.5);
+      font-size: calc(var(--InputFontSize) * 1.25);
 
       display: grid;
       place-items: center;

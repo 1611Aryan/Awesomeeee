@@ -4,13 +4,11 @@ import styled from "styled-components";
 const Header: React.FC = () => {
   return (
     <StyledHeader>
-      <h1>
-        <Link to="/">Messenger</Link>
-      </h1>
+      <h1>Messenger</h1>
 
-      <button>
-        <Link to="/">Login</Link>
-      </button>
+      <Link to="/signup">
+        <button>Sign Up</button>
+      </Link>
     </StyledHeader>
   );
 };
@@ -31,18 +29,18 @@ const StyledHeader = styled.header`
   h1 {
     font-size: 2.5em;
     font-weight: 700;
-    color: var(--primary);
+    color: #fff;
   }
 
   button {
     padding: 0.42rem 1.1rem;
-    background: #fff;
+    background: var(--primary);
 
     font-size: 1.25em;
     font-weight: 700;
-    color: var(--primary);
+    color: #fff;
 
-    border-radius: 6px;
+    border-radius: 7px;
   }
 `;
 

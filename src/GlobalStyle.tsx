@@ -17,6 +17,10 @@ body{
     width:100vw;
     height:100%;
     overflow-x: hidden;
+
+    background: linear-gradient(to top, #2b5876, #4e4376);
+
+    user-select: none;
 }
 
 button{

@@ -1,15 +1,33 @@
 import styled from "styled-components";
+import { useAccess } from "../../../Providers/AccessProvider";
 
 const Form: React.FC = () => {
+  const { setAccess } = useAccess();
+
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setAccess(true);
+  };
+
   return (
-    <StyledForm>
+    <StyledForm onSubmit={submitHandler}>
       <div className="inputContainer">
         <label htmlFor="email">Email</label>
-        <input type="text" required autoFocus name="email" />
+        <input
+          type="text"
+          // required
+          autoFocus
+          name="email"
+        />
       </div>
       <div className="inputContainer">
         <label htmlFor="password">Password</label>
-        <input type="text" required name="password" />
+        <input
+          type="text"
+          //required
+          name="password"
+        />
       </div>
       <button>Sign Up</button>
     </StyledForm>

@@ -28,13 +28,22 @@ const StyledChat = styled.main`
   align-items: flex-start;
   flex-direction: column;
 
+  overflow: hidden;
+
   --HeaderHeight: calc(
     var(--topPadding) + var(--headingSize) + var(--searchBarMarginT)
   );
   --HeaderPadding: 1em;
+  --HeaderFontSize: calc(var(--chatWidth) * 0.0259);
+  --HeaderFontSize: calc(var(--HeaderHeight) / 3);
+
   --ImageHeight: calc(var(--HeaderHeight) - 1.5 * var(--HeaderPadding));
+
   --InputHeight: 10vh;
+  --InputFontSize: calc(var(--HeaderFontSize) * 0.5);
+
   --MessagesHeight: calc(100vh - var(--HeaderHeight) - var(--InputHeight));
+  --MessagesFontSize: calc(var(--conversationsWidth) * 0.039);
 `;
 
 export default Chat;

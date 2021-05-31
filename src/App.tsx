@@ -1,24 +1,13 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
 import Dashboard from "./Components/Dashboard";
 
 import Home from "./Components/Home";
-import SignUp from "./Components/SignUp";
+import { useAccess } from "./Providers/AccessProvider";
 
-const App = () => {
-  return (
-    <Switch>
-      <Route path="/" exact>
-        <Home />
-      </Route>
-      <Route path="/signup" exact>
-        <SignUp />
-      </Route>
-      <Route path="/dashboard" exact>
-        <Dashboard />
-      </Route>
-    </Switch>
-  );
+const App: React.FC = () => {
+  const { access } = useAccess();
+
+  return !access ? <Home /> : <Dashboard />;
 };
 
 export default App;
