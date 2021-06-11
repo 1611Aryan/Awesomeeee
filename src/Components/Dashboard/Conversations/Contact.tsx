@@ -1,38 +1,38 @@
-import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { useEffect, useRef, useState } from "react"
+import styled from "styled-components"
 
 const Contact: React.FC<{
   contact: {
-    name: string;
-    message: string;
-  };
+    name: string
+    message: string
+  }
   selected: {
-    name: string;
-    img: string;
-  } | null;
+    name: string
+    img: string
+  } | null
   setSelected: React.Dispatch<
     React.SetStateAction<{
-      name: string;
-      img: string;
+      name: string
+      img: string
     } | null>
-  >;
+  >
 }> = ({ contact, setSelected, selected }) => {
-  const [random, setRandom] = useState<number>();
+  const [random, setRandom] = useState<number>()
 
-  const imageRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null)
 
-  const length = 1409;
+  const length = 1409
 
   useEffect(() => {
-    setRandom(Math.floor(Math.random() * length));
-  }, []);
+    setRandom(Math.floor(Math.random() * length))
+  }, [])
 
   const clickHandler = () => {
     setSelected({
       name: contact.name,
       img: `https://source.unsplash.com/collection/4457310/250x250/?sig=${random}`,
-    });
-  };
+    })
+  }
 
   return (
     <StyledContact
@@ -42,6 +42,8 @@ const Contact: React.FC<{
       <div className="profile">
         <img
           ref={imageRef}
+          loading="lazy"
+          decoding="async"
           onLoad={() =>
             imageRef.current
               ? (imageRef.current.style.clipPath = "circle(100% at center")
@@ -49,7 +51,7 @@ const Contact: React.FC<{
           }
           src={
             random
-              ? `https://source.unsplash.com/collection/4457310/250x250/?sig=${random}`
+              ? `https://source.unsplash.com/collection/4457310/150x150/?sig=${random}`
               : ""
           }
           alt="contact profile"
@@ -60,8 +62,8 @@ const Contact: React.FC<{
         <p>{contact.message}</p>
       </div>
     </StyledContact>
-  );
-};
+  )
+}
 
 const StyledContact = styled.li`
   width: 100%;
@@ -136,6 +138,6 @@ const StyledContact = styled.li`
       overflow: hidden;
     }
   }
-`;
+`
 
-export default Contact;
+export default Contact

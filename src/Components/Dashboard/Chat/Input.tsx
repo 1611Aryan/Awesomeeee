@@ -1,20 +1,42 @@
-import styled from "styled-components";
-import { IoSend } from "react-icons/io5";
+import styled from "styled-components"
+import { IoSend } from "react-icons/io5"
+import React, { useState } from "react"
 
-const Input: React.FC = () => {
+const Input: React.FC<{
+  setMessages: React.Dispatch<
+    React.SetStateAction<
+      {
+        message: string
+        sender: "me" | "contact"
+      }[]
+    >
+  >
+}> = ({ setMessages }) => {
+  const [input, setInput] = useState("")
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value)
+  }
+
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    setMessages(messages => [...messages, { sender: "me", message: input }])
+    setInput("")
+  }
+
   return (
     <StyledInput>
-      <div className="borderT"></div>
-      <form>
-        <input type="text" />
+      <div className="border"></div>
+      <form onSubmit={submitHandler}>
+        <input type="text" value={input} onChange={changeHandler} />
         <button>
-          <div className="borderL"></div>
           <IoSend />
         </button>
       </form>
     </StyledInput>
-  );
-};
+  )
+}
 
 const StyledInput = styled.div`
   width: 100%;
@@ -22,18 +44,18 @@ const StyledInput = styled.div`
   min-height: 8vh;
   height: calc(var(--conversationsWidth) / 5);
 
-  .borderT {
+  .border {
     position: absolute;
     top: 0;
     left: 50%;
 
     transform: translateX(-50%);
-    height: 1px;
-    width: 99%;
-    background: linear-gradient(to top, #fff, transparent);
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(to bottom, #dadada88, transparent);
   }
   form {
-    padding: 0.8em 0.5%;
+    padding: 0.8em 0.75em;
     width: 100%;
     height: 100%;
     display: flex;
@@ -44,7 +66,7 @@ const StyledInput = styled.div`
 
       background: rgb(16, 16, 16, 0.5);
       border-radius: 5px 0 0 5px;
-      padding: calc(var(--InputFontSize) / 3);
+      padding: calc(var(--InputFontSize) / 3) calc(var(--InputFontSize) / 2);
       font-size: var(--InputFontSize);
       font-family: var(--fontContent);
       color: #bdbdbd;
@@ -59,19 +81,8 @@ const StyledInput = styled.div`
       display: grid;
       place-items: center;
       position: relative;
-
-      .borderL {
-        position: absolute;
-        top: 50%;
-        left: 0px;
-
-        transform: translateY(-50%);
-        height: 70%;
-        width: 1px;
-        background: linear-gradient(to right, #fff, transparent);
-      }
     }
   }
-`;
+`
 
-export default Input;
+export default Input

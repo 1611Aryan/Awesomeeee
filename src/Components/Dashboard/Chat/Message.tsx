@@ -1,29 +1,29 @@
-import { useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
+import { useEffect, useMemo, useState } from "react"
+import styled from "styled-components"
 
 interface theme {
-  background: string;
-  alignSelf: string;
-  borderRadius: string;
-  left: string;
-  right: string;
-  borderWidth: string;
-  borderColor: string;
+  background: string
+  alignSelf: string
+  borderRadius: string
+  left: string
+  right: string
+  borderWidth: string
+  borderColor: string
 }
 
 const Message: React.FC<{
   message: {
-    message: string;
-    sender: "me" | "contact";
-  };
+    message: string
+    sender: "me" | "contact"
+  }
 }> = ({ message }) => {
-  const [theme, setTheme] = useState<theme>();
+  const [theme, setTheme] = useState<theme>()
 
   const themeMe = useMemo<theme>(
     () => ({
       background:
         message.sender === "me"
-          ? "linear-gradient( to right,rgba(255, 226, 89, 0.5), rgba(255, 167, 81, 0.5))"
+          ? "linear-gradient( to right,rgba(175, 150, 26, 0.5), rgba(255, 167, 81, 0.5)),rgba(0, 0, 0,0.1)"
           : " linear-gradient(to right, rgba(16, 16, 16, 0.5), rgba(36, 4, 56, 0.5) )",
 
       alignSelf: message.sender === "me" ? "flex-end" : "flex-start",
@@ -47,14 +47,14 @@ const Message: React.FC<{
           : "transparent rgba(16, 16, 16, 0.5) transparent transparent",
     }),
     [message.sender]
-  );
+  )
 
   useEffect(() => {
-    setTheme(themeMe);
-  }, [themeMe]);
+    setTheme(themeMe)
+  }, [themeMe])
 
-  return <StyledMessage theme={theme}>{message.message.trim()}</StyledMessage>;
-};
+  return <StyledMessage theme={theme}>{message.message.trim()}</StyledMessage>
+}
 
 const StyledMessage = styled.li`
   --triangleWidth: 0.3em;
@@ -66,16 +66,18 @@ const StyledMessage = styled.li`
 
   width: auto;
   max-width: 55%;
-  padding: calc(var(--MessagesFontSize) * 0.65)
+  padding: calc(var(--MessagesFontSize) * 1.25)
     calc(var(--MessagesFontSize) * 0.75);
 
   font-family: var(--fontContent);
   font-weight: 400;
   font-size: var(--MessagesFontSize);
+  line-height: 1.35;
+  letter-spacing: 0.3px;
+  word-spacing: 0.5px;
 
-  color: #fff;
+  color: #efefef;
   background: ${props => props.theme.background};
-  background-size: 400% 400%;
 
   border-radius: ${props => props.theme.borderRadius};
   margin: var(--margin) calc(var(--margin) + var(--triangleHeight))
@@ -99,6 +101,6 @@ const StyledMessage = styled.li`
     border-width: ${props => props.theme.borderWidth};
     border-color: ${props => props.theme.borderColor};
   }
-`;
+`
 
-export default Message;
+export default Message

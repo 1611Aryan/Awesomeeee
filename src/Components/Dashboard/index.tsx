@@ -1,27 +1,27 @@
-import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { useLayoutEffect, useRef, useState } from "react"
+import styled from "styled-components"
 
-import SideBar from "./SideBar";
-import Conversations from "./Conversations";
-import Chat from "./Chat";
-import ClosedChat from "./ClosedChat";
-import useLocalStorage from "../../Hooks/useLocalStorage";
+import SideBar from "./SideBar"
+import Conversations from "./Conversations"
+import Chat from "./Chat"
+import ClosedChat from "./ClosedChat"
+import useLocalStorage from "../../Hooks/useLocalStorage"
 
 const Dashboard: React.FC = () => {
   const [selected, setSelected] =
-    useState<{ name: string; img: string } | null>(null);
-  const [savedPosition, setSavedPosition] = useLocalStorage<number>("width", 0);
+    useState<{ name: string; img: string } | null>(null)
+  const [savedPosition, setSavedPosition] = useLocalStorage<number>("width", 0)
 
   const [displacement, setDisplacement] = useState(() => {
-    if (savedPosition) return savedPosition;
-    else return 0;
-  });
+    if (typeof savedPosition === "number") return savedPosition
+    else return 0
+  })
 
-  const width = window.innerWidth * 0.2;
+  const width = window.innerWidth * 0.25
 
-  const dashboardRef = useRef<HTMLDivElement>(null);
+  const dashboardRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (dashboardRef.current)
       if (
         displacement <= window.innerWidth * 0.23 &&
@@ -30,8 +30,8 @@ const Dashboard: React.FC = () => {
         dashboardRef.current.style.setProperty(
           "--conversationsWidth",
           `${(width + displacement) * 0.85}px`
-        );
-  }, [displacement, width]);
+        )
+  }, [displacement, width])
 
   return (
     <StyledDashboard ref={dashboardRef}>
@@ -45,8 +45,8 @@ const Dashboard: React.FC = () => {
       />
       {selected ? <Chat selected={selected} /> : <ClosedChat />}
     </StyledDashboard>
-  );
-};
+  )
+}
 
 const StyledDashboard = styled.main`
   width: 100vw;
@@ -60,7 +60,7 @@ const StyledDashboard = styled.main`
   background: linear-gradient(to top, #2b5876, #4e4376);
 
   //--conversationsWidth: ${props => props.theme.displacement}px;
-  --sideBarWidth: calc(var(--conversationsWidth) * 0.15);
+  --sideBarWidth: calc(var(--conversationsWidth) * 0.17);
 
   --chatWidth: calc(100vw - var(--sideBarWidth) - var(--conversationsWidth));
 
@@ -68,6 +68,6 @@ const StyledDashboard = styled.main`
   --headingSize: calc(var(--conversationsWidth) * 0.087);
   --sideBarHeading: calc(var(--sideBarWidth) * 0.8);
   --searchBarMarginT: calc(var(--conversationsWidth) * 0.1);
-`;
+`
 
-export default Dashboard;
+export default Dashboard

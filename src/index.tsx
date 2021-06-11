@@ -1,10 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import React from "react"
+import ReactDOM from "react-dom"
+import { BrowserRouter } from "react-router-dom"
 
-import App from "./App";
-import GlobalStyle from "./GlobalStyle";
-import { AccessProvider } from "./Providers/AccessProvider";
+import App from "./App"
+import GlobalStyle from "./GlobalStyle"
+import { AccessProvider } from "./Providers/AccessProvider"
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,4 +16,4 @@ ReactDOM.render(
     </AccessProvider>
   </React.StrictMode>,
   document.getElementById("root")
-);
+)

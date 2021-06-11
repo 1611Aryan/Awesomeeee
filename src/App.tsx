@@ -1,13 +1,17 @@
-import React from "react";
-import Dashboard from "./Components/Dashboard";
+import React, { lazy, Suspense } from "react"
+import { useAccess } from "./Providers/AccessProvider"
 
-import Home from "./Components/Home";
-import { useAccess } from "./Providers/AccessProvider";
+const Dashboard = lazy(() => import("./Components/Dashboard"))
+const Home = lazy(() => import("./Components/Home"))
 
 const App: React.FC = () => {
-  const { access } = useAccess();
+  const { access } = useAccess()
 
-  return !access ? <Home /> : <Dashboard />;
-};
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {!access?.loggedIn ? <Home /> : <Dashboard />}
+    </Suspense>
+  )
+}
 
-export default App;
+export default App

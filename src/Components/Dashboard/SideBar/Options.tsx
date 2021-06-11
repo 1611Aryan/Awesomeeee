@@ -1,22 +1,22 @@
-import { IoMdSettings } from "react-icons/io";
-import { FiLogOut } from "react-icons/fi";
-import styled from "styled-components";
-import { useAccess } from "../../../Providers/AccessProvider";
+import { IoMdSettings } from "react-icons/io"
+import { FiLogOut } from "react-icons/fi"
+import styled from "styled-components"
+import { useAccess } from "../../../Providers/AccessProvider"
 
 const Options: React.FC = () => {
-  const { setAccess } = useAccess();
+  const { setAccess } = useAccess()
 
   const logout = () => {
-    setAccess(false);
-  };
+    setAccess({ loggedIn: false, username: null })
+  }
 
   return (
     <StyledOptions className="options">
       <IoMdSettings />
       <FiLogOut onClick={logout} />
     </StyledOptions>
-  );
-};
+  )
+}
 
 const StyledOptions = styled.div`
   width: 100%;
@@ -39,6 +39,6 @@ const StyledOptions = styled.div`
 
     transform: scaleY(0.5);
   }
-`;
+`
 
-export default Options;
+export default Options

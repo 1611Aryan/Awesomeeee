@@ -1,42 +1,98 @@
-import React from "react";
-import styled from "styled-components";
-import { useAccess } from "../../../Providers/AccessProvider";
+import axios from "axios"
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+import { useAccess } from "../../../Providers/AccessProvider"
 
 const Form: React.FC = () => {
-  const { setAccess } = useAccess();
+  const loginURL = "http://localhost:5000/login"
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const { setAccess } = useAccess()
 
-    setAccess(true);
-  };
+  const [input, setInput] = useState<{
+    username_email: string
+    password: string
+  }>({
+    username_email: "",
+    password: "",
+  })
+  const [error, setError] =
+    useState<{
+      type: "username" | "password"
+      info: string
+    } | null>(null)
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(input => ({ ...input, [e.target.name]: e.target.value }))
+  }
+
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      const res = await axios.post<{ success: boolean; username: string }>(
+        loginURL,
+        {
+          username: input.username_email.trim(),
+          password: input.password.trim(),
+        },
+        { withCredentials: true }
+      )
+      if (res.data.success)
+        setAccess({ loggedIn: true, username: res.data.username })
+    } catch (err) {
+      console.log(err.response.data)
+      setError(err.response.data)
+    }
+  }
+
+  useEffect(() => {
+    if (error) {
+      if (error.type === "password")
+        setInput(input => ({ ...input, password: "" }))
+      else if (error.type === "username")
+        setInput(input => ({ username_email: "", password: "" }))
+    }
+  }, [error])
 
   return (
     <StyledForm onSubmit={submitHandler}>
       <div className="inputContainer">
-        <label htmlFor="username/email">Username/Email</label>
-        <input
-          type="text"
-          name="username/email"
-          autoFocus
-          //required
-          placeholder="Enter Here"
-        />
+        <label htmlFor="username_email">Username/Email</label>
+        <div>
+          <p className="errorMessage">
+            {error && error.type === "username" ? error.info : ""}
+          </p>
+          <input
+            type="text"
+            name="username_email"
+            autoFocus
+            required
+            value={input.username_email}
+            onChange={changeHandler}
+            className={error && error.type === "username" ? "error" : ""}
+          />
+        </div>
       </div>
       <div className="inputContainer">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          //required
-          placeholder="********"
-        />
+        <label htmlFor="password">Password</label>{" "}
+        <div>
+          <p className="errorMessage">
+            {error && error.type === "password" ? error.info : ""}
+          </p>
+          <input
+            type="password"
+            name="password"
+            required
+            value={input.password}
+            onChange={changeHandler}
+            className={error && error.type === "password" ? "error" : ""}
+          />
+        </div>
       </div>
 
       <button>Login</button>
     </StyledForm>
-  );
-};
+  )
+}
 
 const StyledForm = styled.form`
   position: relative;
@@ -60,14 +116,34 @@ const StyledForm = styled.form`
       font-size: 1.75em;
     }
 
+    .errorMessage {
+      color: red;
+      line-height: 1;
+      height: 0.8em;
+      font-size: 0.8em;
+      font-weight: 300;
+    }
+
+    div {
+      margin: 0.5em 0 1em 0;
+    }
+
     input {
       width: 100%;
       background: #ececec;
+      color: #383838;
       border-radius: 5px;
 
-      padding: 0.4em 0.5em;
-      font-size: 1.25em;
-      margin: 1em 0 1.5em 0;
+      padding: 0.5em;
+      font-size: 1.15em;
+
+      margin-top: 0.5em;
+      transition: box-shadow 0.3s;
+    }
+
+    .error {
+      box-shadow: inset 1px 1px 5px rgba(255, 0, 0, 0.05),
+        inset -1px -1px 5px rgba(255, 0, 0, 0.05);
     }
   }
 
@@ -83,6 +159,6 @@ const StyledForm = styled.form`
     letter-spacing: 1px;
     font-weight: 500;
   }
-`;
+`
 
-export default Form;
+export default Form

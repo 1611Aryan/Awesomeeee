@@ -1,14 +1,14 @@
-import { useRef } from "react";
-import styled from "styled-components";
-import { HiDotsVertical } from "react-icons/hi";
+import { useRef } from "react"
+import styled from "styled-components"
+import { HiDotsVertical } from "react-icons/hi"
 
 const Header: React.FC<{
   selected: {
-    name: string;
-    img: string;
-  } | null;
+    name: string
+    img: string
+  } | null
 }> = ({ selected }) => {
-  const imageRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null)
 
   return (
     <StyledHeader>
@@ -21,6 +21,7 @@ const Header: React.FC<{
                 ? (imageRef.current.style.clipPath = "circle(100% at center")
                 : ""
             }
+            decoding="async"
             src={selected ? selected.img : ""}
             alt="contact profile"
           />
@@ -30,8 +31,8 @@ const Header: React.FC<{
       <HiDotsVertical />
       <div className="border"></div>
     </StyledHeader>
-  );
-};
+  )
+}
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -51,14 +52,14 @@ const StyledHeader = styled.header`
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
-    width: 99%;
+    width: 100%;
     height: 1px;
-    background: linear-gradient(to bottom, #fff, transparent);
+    background: linear-gradient(to bottom, #dadada88, transparent);
   }
 
   .profileContainer {
     width: auto;
-    height: 100%;
+    height: var(--ImageHeight);
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -66,7 +67,7 @@ const StyledHeader = styled.header`
     .profileImage {
       width: var(--ImageHeight);
       max-width: 20vw;
-      height: var(--ImageHeight);
+      height: 100%;
 
       border-radius: 50%;
 
@@ -94,6 +95,6 @@ const StyledHeader = styled.header`
   svg {
     font-size: var(--HeaderFontSize);
   }
-`;
+`
 
-export default Header;
+export default Header

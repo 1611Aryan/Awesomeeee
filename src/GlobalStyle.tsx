@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components"
 
 const GlobalStyle = createGlobalStyle`
 
@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 
 body{
     width:100vw;
-    height:100%;
+    height:100vh;
     overflow-x: hidden;
 
     background: linear-gradient(to top, #2b5876, #4e4376);
@@ -42,6 +42,6 @@ a{
     color:inherit;
     text-decoration: none;;
 }
-`;
+`
 
-export default GlobalStyle;
+export default GlobalStyle

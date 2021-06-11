@@ -27,11 +27,10 @@ const StyledProfile = styled.div`
   overflow: hidden;
 
   .imgContainer {
-    width: 100%;
-    height: calc(var(--sideBarWidth) - 1rem);
-    max-height: calc(10vw - 1rem);
+    width: calc(var(--sideBarWidth) - 1em);
+    height: calc(var(--sideBarWidth) - 1em);
+    max-height: calc(10vw - 1em);
 
-    transition: background 0.1s;
     z-index: 2;
     img {
       width: 100%;
