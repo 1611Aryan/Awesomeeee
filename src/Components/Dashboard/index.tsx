@@ -1,49 +1,69 @@
-import { useLayoutEffect, useRef, useState } from "react"
+import { useState, lazy, Suspense } from "react"
 import styled from "styled-components"
 
 import SideBar from "./SideBar"
 import Conversations from "./Conversations"
 import Chat from "./Chat"
 import ClosedChat from "./ClosedChat"
-import useLocalStorage from "../../Hooks/useLocalStorage"
+import { useEffect } from "react"
+import axios from "axios"
+import { useAccess } from "../../Providers/AccessProvider"
+import { useUser } from "../../Providers/UserProvider"
+
+const Settings = lazy(() => import("./Settings"))
+
+interface user {
+  id: string
+  username: string
+  profilePicture: {
+    large: string
+    thumbnail: string
+  }
+  contacts: {
+    name: user["username"]
+    id: user["id"]
+    profilePicture: user["profilePicture"]
+  }[]
+}
 
 const Dashboard: React.FC = () => {
+  const url = "http://localhost:5000/user/profile"
+
   const [selected, setSelected] =
     useState<{ name: string; img: string } | null>(null)
-  const [savedPosition, setSavedPosition] = useLocalStorage<number>("width", 0)
+  const [settingsActive, setSettingsActive] = useState(false)
 
-  const [displacement, setDisplacement] = useState(() => {
-    if (typeof savedPosition === "number") return savedPosition
-    else return 0
-  })
+  const { setAccess } = useAccess()
+  const { setUser } = useUser()
 
-  const width = window.innerWidth * 0.25
+  const logout = () => {
+    setAccess({ loggedIn: false, username: null })
+  }
 
-  const dashboardRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const res = await axios.get<{ user: user }>(url, {
+          withCredentials: true,
+        })
+        setUser(res.data.user)
+      } catch (err) {
+        logout()
+        console.log(err)
+      }
+    })()
 
-  useLayoutEffect(() => {
-    if (dashboardRef.current)
-      if (
-        displacement <= window.innerWidth * 0.23 &&
-        displacement >= window.innerWidth * -0.07
-      )
-        dashboardRef.current.style.setProperty(
-          "--conversationsWidth",
-          `${(width + displacement) * 0.85}px`
-        )
-  }, [displacement, width])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
-    <StyledDashboard ref={dashboardRef}>
-      <SideBar />
-      <Conversations
-        setSavedPosition={setSavedPosition}
-        displacement={displacement}
-        setDisplacement={setDisplacement}
-        selected={selected}
-        setSelected={setSelected}
-      />
+    <StyledDashboard>
+      <SideBar setSettingsActive={setSettingsActive} />
+      <Conversations selected={selected} setSelected={setSelected} />
       {selected ? <Chat selected={selected} /> : <ClosedChat />}
+      <Suspense fallback={<div>Loading...</div>}>
+        {settingsActive && <Settings setSettingsActive={setSettingsActive} />}
+      </Suspense>
     </StyledDashboard>
   )
 }
@@ -59,10 +79,11 @@ const StyledDashboard = styled.main`
 
   background: linear-gradient(to top, #2b5876, #4e4376);
 
-  //--conversationsWidth: ${props => props.theme.displacement}px;
-  --sideBarWidth: calc(var(--conversationsWidth) * 0.17);
-
+  --conversationsWidth: var(--size);
+  --sideBarWidth: calc(var(--conversationsWidth) / 5.5);
   --chatWidth: calc(100vw - var(--sideBarWidth) - var(--conversationsWidth));
+
+  --headerHeight: 10vh;
 
   --topPadding: calc(var(--conversationsWidth) * 0.1);
   --headingSize: calc(var(--conversationsWidth) * 0.087);

@@ -3,8 +3,14 @@ import { FiLogOut } from "react-icons/fi"
 import styled from "styled-components"
 import { useAccess } from "../../../Providers/AccessProvider"
 
-const Options: React.FC = () => {
+const Options: React.FC<{
+  setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ setSettingsActive }) => {
   const { setAccess } = useAccess()
+
+  const openSettings = () => {
+    setSettingsActive(true)
+  }
 
   const logout = () => {
     setAccess({ loggedIn: false, username: null })
@@ -12,7 +18,7 @@ const Options: React.FC = () => {
 
   return (
     <StyledOptions className="options">
-      <IoMdSettings />
+      <IoMdSettings onClick={openSettings} />
       <FiLogOut onClick={logout} />
     </StyledOptions>
   )

@@ -62,7 +62,8 @@ const Chat: React.FC<{
 const StyledChat = styled(motion.main)`
   width: var(--chatWidth);
   height: 100vh;
-  background: rgba(16, 16, 16, 0.25);
+  //  background: rgba(16, 16, 16, 0.25);
+  background: rgba(126, 126, 126, 0.15);
 
   display: flex;
   justify-content: space-between;
@@ -71,19 +72,14 @@ const StyledChat = styled(motion.main)`
 
   overflow: hidden;
 
-  --HeaderHeight: calc(
-    var(--topPadding) + var(--headingSize) + var(--searchBarMarginT)
-  );
   --HeaderPadding: 1em;
-  --HeaderFontSize: calc(var(--chatWidth) * 0.0259);
-  --HeaderFontSize: calc(var(--HeaderHeight) / 3);
 
-  --ImageHeight: calc(var(--HeaderHeight) - 1.85 * var(--HeaderPadding));
+  --HeaderFontSize: calc(var(--headerHeight) / 3);
 
-  --InputHeight: 10vh;
-  --InputFontSize: calc(var(--HeaderFontSize) * 0.5);
+  --InputHeight: calc(var(--conversationsWidth) / 5);
+  --InputFontSize: calc(var(--HeaderFontSize) / 2);
 
-  --MessagesHeight: calc(100vh - var(--HeaderHeight) - var(--InputHeight));
+  --MessagesHeight: calc(100vh - var(--headerHeight) - var(--InputHeight));
   --MessagesFontSize: calc(var(--conversationsWidth) * 0.044);
 `
 

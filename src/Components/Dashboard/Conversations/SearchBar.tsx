@@ -1,19 +1,20 @@
-import { useEffect, useRef } from "react";
-import { HiSearch } from "react-icons/hi";
-import styled from "styled-components";
+import { useEffect } from "react"
+import { useRef } from "react"
+import { HiSearch } from "react-icons/hi"
+import styled from "styled-components"
 
 const SearchBar: React.FC<{
-  setContactsHeight: React.Dispatch<React.SetStateAction<number | undefined>>;
-}> = ({ setContactsHeight }) => {
-  const divRef = useRef<HTMLDivElement>(null);
+  setSearchBarBottom: React.Dispatch<React.SetStateAction<number | undefined>>
+}> = ({ setSearchBarBottom }) => {
+  const searchBarRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (divRef.current)
-      setContactsHeight(divRef.current.offsetTop + divRef.current.offsetHeight);
-  });
+    if (searchBarRef.current)
+      setSearchBarBottom(searchBarRef.current.getBoundingClientRect().bottom)
+  }, [setSearchBarBottom])
 
   return (
-    <StyledSearchBar ref={divRef}>
+    <StyledSearchBar ref={searchBarRef}>
       <form>
         <input type="text" />
         <button>
@@ -21,15 +22,16 @@ const SearchBar: React.FC<{
         </button>
       </form>
     </StyledSearchBar>
-  );
-};
+  )
+}
 
 const StyledSearchBar = styled.div`
   width: 100%;
 
   font-size: 1rem;
 
-  margin: var(--searchBarMarginT) 0 0.25em;
+  margin: 0.5em 0;
+
   form {
     width: 100%;
     display: flex;
@@ -55,6 +57,6 @@ const StyledSearchBar = styled.div`
       place-items: center;
     }
   }
-`;
+`
 
-export default SearchBar;
+export default SearchBar

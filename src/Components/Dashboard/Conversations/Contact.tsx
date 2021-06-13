@@ -75,9 +75,11 @@ const StyledContact = styled.li`
   align-items: flex-start;
 
   background: rgb(16, 16, 16, 0.5);
-  border-radius: 5px;
+  // border-radius: 5px;
 
-  margin: calc(var(--conversationsWidth) / 75) 0;
+  //margin: calc(var(--conversationsWidth) / 75) 0;
+
+  border-bottom: 1px solid #e4e4e487;
 
   cursor: pointer;
 
@@ -131,10 +133,10 @@ const StyledContact = styled.li`
       height: auto;
       max-height: 2em;
       margin-top: calc(var(--contactTextSize) / 2.5);
-      font-weight: 300;
+      font-weight: 400;
       font-size: var(--contactTextSize);
       line-height: 1;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgb(211, 211, 211);
       overflow: hidden;
     }
   }

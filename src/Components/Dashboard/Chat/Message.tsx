@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useLayoutEffect, useMemo, useState } from "react"
 import styled from "styled-components"
 
 interface theme {
@@ -49,7 +49,7 @@ const Message: React.FC<{
     [message.sender]
   )
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTheme(themeMe)
   }, [themeMe])
 

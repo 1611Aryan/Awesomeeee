@@ -1,19 +1,19 @@
-import styled from "styled-components";
-import Contact from "./Contact";
+import styled from "styled-components"
+import Contact from "./Contact"
 
 const Contacts: React.FC<{
-  contactsHeight: number | undefined;
   selected: {
-    name: string;
-    img: string;
-  } | null;
+    name: string
+    img: string
+  } | null
   setSelected: React.Dispatch<
     React.SetStateAction<{
-      name: string;
-      img: string;
+      name: string
+      img: string
     } | null>
-  >;
-}> = ({ contactsHeight, setSelected, selected }) => {
+  >
+  searchBarBottom: number | undefined
+}> = ({ setSelected, selected, searchBarBottom }) => {
   const contacts = [
     {
       name: "Andrea	Bell",
@@ -55,10 +55,24 @@ const Contacts: React.FC<{
       message:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem  quisquam blanditiis eligendi similique assumenda impedit.",
     },
-  ];
+    {
+      name: "John Cena",
+      message: "My time is now!!.",
+    },
+    {
+      name: "Guss",
+      message:
+        "        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum pariatur odio vel sequi dignissimos mollitia.",
+    },
+    {
+      name: "Sally King",
+      message:
+        "Nullam suscipit aliquam libero, vitae suscipit augue ultrices sit amet. Curabitur eu malesuada nibh, a.",
+    },
+  ]
 
   return (
-    <StyledContacts theme={{ contactsHeight }}>
+    <StyledContacts theme={{ top: searchBarBottom }}>
       <ul>
         {contacts &&
           contacts.map((contact, index) => (
@@ -71,19 +85,21 @@ const Contacts: React.FC<{
           ))}
       </ul>
     </StyledContacts>
-  );
-};
+  )
+}
 
 const StyledContacts = styled.div`
   width: 100%;
-  height: ${props => window.innerHeight - props.theme.contactsHeight}px;
+  height: ${props => window.innerHeight - props.theme.top - 7.5}px;
   flex: 1;
   ul {
     width: 100%;
-    max-height: 100%;
+    height: 100%;
     overflow-y: auto;
 
     list-style-type: none;
+
+    border-radius: 5px;
 
     &::-webkit-scrollbar {
       display: none;
@@ -100,6 +116,6 @@ const StyledContacts = styled.div`
       );
     }
   }
-`;
+`
 
-export default Contacts;
+export default Contacts

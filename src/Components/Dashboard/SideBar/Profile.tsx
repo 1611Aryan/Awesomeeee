@@ -1,19 +1,21 @@
-import styled from "styled-components";
-import Options from "./Options";
+import styled from "styled-components"
+import { useUser } from "../../../Providers/UserProvider"
+import Options from "./Options"
 
-const Profile: React.FC = () => {
+const Profile: React.FC<{
+  setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ setSettingsActive }) => {
+  const { user } = useUser()
+
   return (
     <StyledProfile tabIndex={1}>
-      <Options />
+      <Options setSettingsActive={setSettingsActive} />
       <div className="imgContainer">
-        <img
-          src="https://source.unsplash.com/collection/1718802/450x450"
-          alt=""
-        />
+        <img src={user?.profilePicture.thumbnail} alt="" />
       </div>
     </StyledProfile>
-  );
-};
+  )
+}
 
 const StyledProfile = styled.div`
   width: 100%;
@@ -51,6 +53,6 @@ const StyledProfile = styled.div`
       transform: translateY(0%) scaleY(2);
     }
   }
-`;
+`
 
-export default Profile;
+export default Profile

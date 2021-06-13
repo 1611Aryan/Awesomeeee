@@ -36,7 +36,7 @@ const Header: React.FC<{
 
 const StyledHeader = styled.header`
   width: 100%;
-  height: var(--HeaderHeight);
+  height: var(--headerHeight);
   padding: var(--HeaderPadding) 1.5em;
 
   display: flex;
@@ -59,15 +59,15 @@ const StyledHeader = styled.header`
 
   .profileContainer {
     width: auto;
-    height: var(--ImageHeight);
+    height: var(--headerHeight);
     display: flex;
     justify-content: flex-start;
     align-items: center;
 
     .profileImage {
-      width: var(--ImageHeight);
+      width: calc(var(--headerHeight) * 0.8);
       max-width: 20vw;
-      height: 100%;
+      height: calc(var(--headerHeight) * 0.8);
 
       border-radius: 50%;
 
@@ -75,7 +75,7 @@ const StyledHeader = styled.header`
       background: rgb(44, 44, 44);
       overflow: hidden;
       img {
-        //height: 100%;
+        height: 100%;
         width: 100%;
 
         object-fit: cover;

@@ -42,7 +42,7 @@ const StyledInput = styled.div`
   width: 100%;
   position: relative;
   min-height: 8vh;
-  height: calc(var(--conversationsWidth) / 5);
+  height: var(--InputHeight);
 
   .border {
     position: absolute;

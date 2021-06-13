@@ -1,15 +1,17 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
-import Profile from "./Profile";
+import Profile from "./Profile"
 
-const SideBar: React.FC = () => {
+const SideBar: React.FC<{
+  setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ setSettingsActive }) => {
   return (
     <StyledSideBar>
       <h1>M</h1>
-      <Profile />
+      <Profile setSettingsActive={setSettingsActive} />
     </StyledSideBar>
-  );
-};
+  )
+}
 
 const StyledSideBar = styled.div`
   width: clamp(3vw, var(--sideBarWidth), 10vw);
@@ -29,6 +31,6 @@ const StyledSideBar = styled.div`
 
     color: white;
   }
-`;
+`
 
-export default SideBar;
+export default SideBar
