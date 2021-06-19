@@ -53,6 +53,6 @@
     "start": " cd build && node server.js",
     "lint": "eslint .  --ext .ts",
     "lint-fix": "eslint --fix .  --ext .ts",
-    "heroku-postbuild": "yarn && yarn build"
+    "heroku-postbuild": "yarn build"
   }
 }
