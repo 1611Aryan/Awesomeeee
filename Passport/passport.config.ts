@@ -2,7 +2,7 @@
 
 import { PassportStatic } from "passport"
 import { Mixin } from "ts-mixer"
-import JWT from "./JWT.Strategy"
+import JWT from "./JWT.strategy"
 
 import Local from "./Local.strategy"
 
