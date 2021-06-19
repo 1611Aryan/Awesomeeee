@@ -15,10 +15,16 @@ import { useSocket } from "../../Providers/SocketProvider"
 
 const Settings = lazy(() => import("./Settings"))
 
-const ENDPOINT = "ws://localhost:5000"
+const ENDPOINT =
+  process.env.NODE_ENV === "production"
+    ? "ws://awesomeeeee.herokuapp.com"
+    : "ws://localhost:5000"
 
 const Dashboard: React.FC = () => {
-  const url = "http://localhost:5000/user/profile"
+  const url =
+    process.env.NODE_ENV === "production"
+      ? "https://awesomeeeee.herokuapp.com/user/profile"
+      : "http://localhost:5000/user/profile"
 
   const [settingsActive, setSettingsActive] = useState(false)
 

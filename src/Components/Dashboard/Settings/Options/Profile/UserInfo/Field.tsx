@@ -23,7 +23,10 @@ const Field: React.FC<{
   name: "username" | "email" | "phone"
   value: string | undefined
 }> = ({ info, setInfo, name, value }) => {
-  const usernameChangeURL = "http://localhost:5000/user/username"
+  const usernameChangeURL =
+    process.env.NODE_ENV === "production"
+      ? "https://awesomeeeee.herokuapp.com/user/username"
+      : "http://localhost:5000/user/username"
 
   const inputRef = useRef<HTMLInputElement>(null)
   const { user, setUser } = useUser()

@@ -6,7 +6,10 @@ import styled from "styled-components"
 import { useUser } from "../../../../../Providers/UserProvider"
 
 const ProfilePicture: React.FC = () => {
-  const profileChangeUrl = "http://localhost:5000/user/profilePicture"
+  const profileChangeUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://awesomeeeee.herokuapp.com/user/profilePicture"
+      : "http://localhost:5000/user/profilePicture"
 
   //Ref
   const inputFileRef = useRef<HTMLInputElement>(null)

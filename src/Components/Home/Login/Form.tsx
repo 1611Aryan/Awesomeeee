@@ -4,7 +4,10 @@ import styled from "styled-components"
 import { useAccess } from "../../../Providers/AccessProvider"
 
 const Form: React.FC = () => {
-  const loginURL = "http://localhost:5000/login"
+  const loginURL =
+    process.env.NODE_ENV === "production"
+      ? "https://awesomeeeee.herokuapp.com/login"
+      : "http://localhost:5000/login"
 
   const { setAccess } = useAccess()
 

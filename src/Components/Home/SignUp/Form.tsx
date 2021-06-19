@@ -4,7 +4,10 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 const Form: React.FC = () => {
-  const signUpURL = "http://localhost:5000/signup"
+  const signUpURL =
+    process.env.NODE_ENV === "production"
+      ? "https://awesomeeeee.herokuapp.com/signup"
+      : "http://localhost:5000/signup"
 
   const [input, setInput] = useState<{ email: string; password: string }>({
     email: "",
