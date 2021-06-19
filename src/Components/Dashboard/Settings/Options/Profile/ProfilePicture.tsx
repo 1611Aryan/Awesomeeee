@@ -58,6 +58,8 @@ const ProfilePicture: React.FC = () => {
         formData.append("avatar", profilePicture.file, profilePicture.file.name)
         await submitProfilePicture(formData)
       })()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profilePicture])
 
   return (
