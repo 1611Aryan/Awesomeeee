@@ -1,7 +1,7 @@
 import { IoMdSettings } from "react-icons/io"
 import { FiLogOut } from "react-icons/fi"
 import styled from "styled-components"
-import { useAccess } from "../../../Providers/AccessProvider"
+import { useAccess } from "../../../../Providers/AccessProvider"
 
 const Options: React.FC<{
   setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>

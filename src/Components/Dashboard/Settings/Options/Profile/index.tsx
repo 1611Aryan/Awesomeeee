@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import LeftColumn from "./LeftColumn"
-import RightColumn from "./RightColumn"
+import ProfilePicture from "./ProfilePicture"
+import UserInfo from "./UserInfo"
 
 const Profile: React.FC = () => {
   return (
@@ -10,8 +10,8 @@ const Profile: React.FC = () => {
         <div className="line"></div>
       </header>
       <div className="profileContent">
-        <LeftColumn />
-        <RightColumn />
+        <ProfilePicture />
+        <UserInfo />
       </div>
     </StyledProfile>
   )
@@ -19,6 +19,8 @@ const Profile: React.FC = () => {
 
 const StyledProfile = styled.section`
   width: 100%;
+  height: 100%;
+
   padding: 2em;
 
   font-family: var(--fontContent);
@@ -45,25 +47,12 @@ const StyledProfile = styled.section`
   .profileContent {
     margin-top: 2em;
     width: 100%;
-    height: 70vh;
 
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    padding: 2em;
 
-    .column {
-      width: 50%;
-      height: 100%;
-      form {
-        width: 100%;
-        height: 100%;
+    border-radius: 5px;
 
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        flex-direction: column;
-      }
-    }
+    background: rgba(0, 0, 0, 0.2);
   }
 `
 

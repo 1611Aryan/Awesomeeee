@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 const ClosedChat: React.FC = () => {
   return (
@@ -8,8 +8,8 @@ const ClosedChat: React.FC = () => {
         Select a Contact <br /> To Continue the Conversation
       </p>
     </StyledClosedChat>
-  );
-};
+  )
+}
 
 const StyledClosedChat = styled.div`
   width: var(--chatWidth);
@@ -69,6 +69,6 @@ const StyledClosedChat = styled.div`
 
     text-align: center;
   }
-`;
+`
 
-export default ClosedChat;
+export default ClosedChat

@@ -1,5 +1,6 @@
 import { useLayoutEffect, useMemo, useState } from "react"
 import styled from "styled-components"
+import { useUser } from "../../../Providers/UserProvider"
 
 interface theme {
   background: string
@@ -14,39 +15,39 @@ interface theme {
 const Message: React.FC<{
   message: {
     message: string
-    sender: "me" | "contact"
+    sender: string
   }
 }> = ({ message }) => {
   const [theme, setTheme] = useState<theme>()
+  const { user } = useUser()
+
+  const themeCriteria = useMemo(() => {
+    return message.sender === "me" || message.sender === user?.username
+  }, [message, user])
 
   const themeMe = useMemo<theme>(
     () => ({
-      background:
-        message.sender === "me"
-          ? "linear-gradient( to right,rgba(175, 150, 26, 0.5), rgba(255, 167, 81, 0.5)),rgba(0, 0, 0,0.1)"
-          : " linear-gradient(to right, rgba(16, 16, 16, 0.5), rgba(36, 4, 56, 0.5) )",
+      background: themeCriteria
+        ? "linear-gradient( to right,rgba(204, 174, 26, 0.5), rgba(255, 167, 81, 0.5)),rgba(0, 0, 0,0.1)"
+        : " linear-gradient(to right, rgba(16, 16, 16, 0.5), rgba(36, 4, 56, 0.5) )",
 
-      alignSelf: message.sender === "me" ? "flex-end" : "flex-start",
+      alignSelf: themeCriteria ? "flex-end" : "flex-start",
 
-      borderRadius: message.sender === "me" ? "8px 0px 8px 8px" : "0 8px 8px",
+      borderRadius: themeCriteria ? "8px 0px 8px 8px" : "0 8px 8px",
 
-      left:
-        message.sender === "me" ? "auto" : "calc(-1 * var(--triangleWidth))",
+      left: themeCriteria ? "auto" : "calc(-1 * var(--triangleWidth))",
 
-      right:
-        message.sender === "me" ? "calc(-1 * var(--triangleWidth))" : "auto",
+      right: themeCriteria ? "calc(-1 * var(--triangleWidth))" : "auto",
 
-      borderWidth:
-        message.sender === "me"
-          ? "var(--triangleHeight) var(--triangleWidth) 0 0"
-          : " 0 var(--triangleWidth) var(--triangleHeight) 0",
+      borderWidth: themeCriteria
+        ? "var(--triangleHeight) var(--triangleWidth) 0 0"
+        : " 0 var(--triangleWidth) var(--triangleHeight) 0",
 
-      borderColor:
-        message.sender === "me"
-          ? "rgba(255, 167, 81, 0.5) transparent transparent transparent"
-          : "transparent rgba(16, 16, 16, 0.5) transparent transparent",
+      borderColor: themeCriteria
+        ? "rgba(255, 167, 81, 0.5) transparent transparent transparent"
+        : "transparent rgba(16, 16, 16, 0.5) transparent transparent",
     }),
-    [message.sender]
+    [themeCriteria]
   )
 
   useLayoutEffect(() => {
@@ -64,6 +65,7 @@ const StyledMessage = styled.li`
   position: relative;
   align-self: ${props => props.theme.alignSelf};
 
+  min-width: 5%;
   width: auto;
   max-width: 55%;
   padding: calc(var(--MessagesFontSize) * 1.25)
@@ -75,6 +77,8 @@ const StyledMessage = styled.li`
   line-height: 1.35;
   letter-spacing: 0.3px;
   word-spacing: 0.5px;
+  word-break: break-word;
+  text-align: center;
 
   color: #efefef;
   background: ${props => props.theme.background};

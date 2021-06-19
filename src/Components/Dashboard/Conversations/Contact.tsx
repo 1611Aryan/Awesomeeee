@@ -1,65 +1,51 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 import styled from "styled-components"
+import { useSelectedContact } from "../../../Providers/SelectedContactProvider"
+import { contactI } from "../../../Providers/UserProvider"
 
 const Contact: React.FC<{
-  contact: {
-    name: string
-    message: string
-  }
-  selected: {
-    name: string
-    img: string
-  } | null
-  setSelected: React.Dispatch<
-    React.SetStateAction<{
-      name: string
-      img: string
-    } | null>
-  >
-}> = ({ contact, setSelected, selected }) => {
-  const [random, setRandom] = useState<number>()
-
+  contact: contactI
+}> = ({ contact }) => {
   const imageRef = useRef<HTMLImageElement>(null)
 
-  const length = 1409
-
-  useEffect(() => {
-    setRandom(Math.floor(Math.random() * length))
-  }, [])
+  const { selected, setSelected } = useSelectedContact()
 
   const clickHandler = () => {
     setSelected({
-      name: contact.name,
-      img: `https://source.unsplash.com/collection/4457310/250x250/?sig=${random}`,
+      ...contact,
+      messages: null,
     })
+  }
+
+  const loadImage = () => {
+    return imageRef.current
+      ? (imageRef.current.style.clipPath = "circle(100% at center")
+      : ""
   }
 
   return (
     <StyledContact
       onClick={clickHandler}
       className={selected && selected.name === contact.name ? "selected" : ""}
+      tabIndex={0}
     >
       <div className="profile">
         <img
           ref={imageRef}
           loading="lazy"
           decoding="async"
-          onLoad={() =>
-            imageRef.current
-              ? (imageRef.current.style.clipPath = "circle(100% at center")
-              : ""
-          }
-          src={
-            random
-              ? `https://source.unsplash.com/collection/4457310/150x150/?sig=${random}`
-              : ""
-          }
+          onLoad={loadImage}
+          src={contact.profilePicture.thumbnail}
           alt="contact profile"
         />
       </div>
       <div className="content">
         <h3>{contact.name}</h3>
-        <p>{contact.message}</p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
+          voluptatem, consectetur vitae suscipit facere quam cumque quis
+          molestiae accusantium dolore.
+        </p>
       </div>
     </StyledContact>
   )
@@ -74,16 +60,16 @@ const StyledContact = styled.li`
   justify-content: flex-start;
   align-items: flex-start;
 
-  background: rgb(16, 16, 16, 0.5);
-  // border-radius: 5px;
+  background: rgb(16, 16, 16, 0.4);
 
-  //margin: calc(var(--conversationsWidth) / 75) 0;
-
-  border-bottom: 1px solid #e4e4e487;
+  border-bottom: 1px solid #0004;
+  transform-origin: left;
+  transition: all 0.2s;
 
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background: linear-gradient(
       to left,
       rgba(255, 226, 89, 0.5),
@@ -110,7 +96,8 @@ const StyledContact = styled.li`
   }
 
   .content {
-    max-height: calc(100% - 10vh);
+    width: 50%;
+    height: var(--contactImageSize);
 
     flex: 1;
     color: white;
@@ -118,25 +105,29 @@ const StyledContact = styled.li`
     font-family: var(--fontContent);
 
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
     flex-direction: column;
+
+    overflow: hidden;
 
     margin-left: 1em;
     h3 {
       width: 100%;
       font-weight: 400;
       font-size: var(--contactNameSize);
+      color: #fffd;
+      word-break: break-word;
     }
     p {
       width: 100%;
-      height: auto;
-      max-height: 2em;
+
       margin-top: calc(var(--contactTextSize) / 2.5);
       font-weight: 400;
       font-size: var(--contactTextSize);
       line-height: 1;
-      color: rgb(211, 211, 211);
+      color: rgba(211, 211, 211, 0.8);
+      word-break: break-word;
       overflow: hidden;
     }
   }

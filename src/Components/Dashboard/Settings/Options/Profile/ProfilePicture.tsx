@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import styled from "styled-components"
 import { useUser } from "../../../../../Providers/UserProvider"
 
-const LeftColumn: React.FC = () => {
+const ProfilePicture: React.FC = () => {
   const profileChangeUrl = "http://localhost:5000/user/profilePicture"
 
   //Ref
@@ -58,20 +58,18 @@ const LeftColumn: React.FC = () => {
   }, [profilePicture])
 
   return (
-    <StyledLeftColumn className="column">
+    <StyledProfilePicture>
       <form encType="multpart/form-data" onSubmit={e => e.preventDefault()}>
-        <h3>Profile Picture:</h3>
-
-        <div className="profilePictureContainer">
+        <StyledProfilePictureContainer>
           <img onClick={chooseProfilePicture} src={profilePicture.src} alt="" />
+          <label htmlFor="avatar"></label>
           <input
             type="file"
             name="avatar"
             ref={inputFileRef}
             onChange={changeHandler}
           />
-        </div>
-
+        </StyledProfilePictureContainer>
         <div className="buttonContainer">
           <button type="button" onClick={chooseProfilePicture}>
             Change Profile Picture
@@ -80,56 +78,38 @@ const LeftColumn: React.FC = () => {
           <button type="button">Remove Profile Picture</button>
         </div>
       </form>
-    </StyledLeftColumn>
+    </StyledProfilePicture>
   )
 }
 
-const StyledLeftColumn = styled.div`
-  h3 {
-    font-weight: 400;
-    font-size: 1.5em;
-    color: rgba(255, 255, 255, 0.8);
-  }
+const StyledProfilePicture = styled.div`
+  width: 100%;
 
-  .profilePictureContainer {
-    width: 60%;
-    height: calc((var(--RightPanelWidth) / 2 - 2em) * 0.6);
+  --imgSize: 0.4;
 
-    margin: 4em 0 3em;
+  form {
+    width: 100%;
+    height: calc(var(--RightPanelWidth) * 85.7 / 100 * var(--imgSize) - 5.5em);
 
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.7);
-    overflow: hidden;
-    position: relative;
-
-    input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-    }
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      position: relative;
-      z-index: 2;
-    }
-  }
-
-  .buttonContainer {
-    width: 60%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1em;
+  }
+
+  .buttonContainer {
+    width: calc(100% * var(--imgSize));
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 2em;
     button {
       border: 0;
-      border-radius: 10px;
-      padding: 0.5em 1em;
+      border-radius: 5px;
+      padding: 0.75em;
 
-      font-size: 1em;
+      font-size: 1.05em;
       color: white;
 
       &:focus {
@@ -138,19 +118,48 @@ const StyledLeftColumn = styled.div`
       &:nth-of-type(1) {
         background: linear-gradient(
           to right,
-          rgba(16, 16, 16, 0.5),
-          rgba(36, 4, 56, 0.5)
+          rgba(123, 7, 194, 0.8) 30%,
+          rgba(51, 70, 167, 0.8) 100%
         );
       }
       &:nth-of-type(2) {
         background: linear-gradient(
           to right,
-          rgba(255, 226, 89, 0.5),
-          rgba(255, 167, 81, 0.5)
+          rgba(255, 226, 89, 0.7) 30%,
+          rgba(255, 167, 81, 0.7) 100%
         );
       }
     }
   }
 `
 
-export default LeftColumn
+const StyledProfilePictureContainer = styled.div`
+  width: calc(100% * var(--imgSize));
+
+  border-radius: 7px;
+
+  overflow: hidden;
+  position: relative;
+
+  input,
+  label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.2);
+
+    border-radius: 7px;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+  }
+`
+
+export default ProfilePicture

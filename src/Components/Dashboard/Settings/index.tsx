@@ -1,14 +1,14 @@
 import styled from "styled-components"
-import LeftPanel from "./LeftPanel"
-import RightPanel from "./RightPanel"
+import Menu from "./Menu"
+import Options from "./Options"
 
 const Settings: React.FC<{
   setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ setSettingsActive }) => {
   return (
     <StyledSettings>
-      <LeftPanel setSettingsActive={setSettingsActive} />
-      <RightPanel />
+      <Menu setSettingsActive={setSettingsActive} />
+      <Options />
     </StyledSettings>
   )
 }
@@ -28,7 +28,7 @@ const StyledSettings = styled.section`
 
   background: linear-gradient(to top, #2b5876, #4e4376);
 
-  --LeftPanelWidth: 20vw;
+  --LeftPanelWidth: 30vw;
   --RightPanelWidth: calc(100vw - var(--LeftPanelWidth));
 `
 

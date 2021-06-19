@@ -1,18 +1,27 @@
 import styled from "styled-components"
 import { IoSend } from "react-icons/io5"
 import React, { useState } from "react"
+import { useSelectedContact } from "../../../Providers/SelectedContactProvider"
+import { useEffect } from "react"
+import { useRef } from "react"
+import { useSocket } from "../../../Providers/SocketProvider"
+import { useUser } from "../../../Providers/UserProvider"
 
-const Input: React.FC<{
-  setMessages: React.Dispatch<
-    React.SetStateAction<
-      {
-        message: string
-        sender: "me" | "contact"
-      }[]
-    >
-  >
-}> = ({ setMessages }) => {
+const Input: React.FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null)
+
   const [input, setInput] = useState("")
+
+  const { socket } = useSocket()
+  const { user } = useUser()
+  const { selected, addMessageToSelected } = useSelectedContact()
+
+  useEffect(() => {
+    if (selected && inputRef.current) {
+      inputRef.current.focus()
+      setInput("")
+    }
+  }, [selected])
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
@@ -20,16 +29,33 @@ const Input: React.FC<{
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    setMessages(messages => [...messages, { sender: "me", message: input }])
-    setInput("")
+    if (input) {
+      socket &&
+        user &&
+        selected &&
+        socket.emit(
+          "sendMessage",
+          {
+            message: input,
+            sender: user.username,
+          },
+          selected.roomId
+        )
+      addMessageToSelected({ message: input, sender: "me" })
+      setInput("")
+    }
   }
 
   return (
     <StyledInput>
       <div className="border"></div>
       <form onSubmit={submitHandler}>
-        <input type="text" value={input} onChange={changeHandler} />
+        <input
+          type="text"
+          value={input}
+          ref={inputRef}
+          onChange={changeHandler}
+        />
         <button>
           <IoSend />
         </button>

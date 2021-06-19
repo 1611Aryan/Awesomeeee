@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useUser } from "../../../Providers/UserProvider"
+import { useUser } from "../../../../Providers/UserProvider"
 import Options from "./Options"
 
 const Profile: React.FC<{

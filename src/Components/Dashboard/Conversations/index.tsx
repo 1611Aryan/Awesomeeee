@@ -1,20 +1,11 @@
 import React, { useState } from "react"
+
 import styled from "styled-components"
+
 import Contacts from "./Contacts"
 import SearchBar from "./SearchBar"
 
-const Conversations: React.FC<{
-  selected: {
-    name: string
-    img: string
-  } | null
-  setSelected: React.Dispatch<
-    React.SetStateAction<{
-      name: string
-      img: string
-    } | null>
-  >
-}> = ({ setSelected, selected }) => {
+const Conversations: React.FC = () => {
   const [searchBarBottom, setSearchBarBottom] = useState<number>()
 
   return (
@@ -26,11 +17,7 @@ const Conversations: React.FC<{
 
       <SearchBar setSearchBarBottom={setSearchBarBottom} />
 
-      <Contacts
-        selected={selected}
-        setSelected={setSelected}
-        searchBarBottom={searchBarBottom}
-      />
+      <Contacts searchBarBottom={searchBarBottom} />
     </StyledConversations>
   )
 }

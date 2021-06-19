@@ -12,6 +12,9 @@ const RightPanel: React.FC = () => {
 const StyledRightPanel = styled.section`
   width: var(--RightPanelWidth);
   height: 100vh;
+  padding-right: 14.2%;
+
+  overflow: hidden auto;
 `
 
 export default RightPanel

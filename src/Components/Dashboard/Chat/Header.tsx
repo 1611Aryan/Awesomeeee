@@ -1,13 +1,11 @@
 import { useRef } from "react"
 import styled from "styled-components"
 import { HiDotsVertical } from "react-icons/hi"
+import { useSelectedContact } from "../../../Providers/SelectedContactProvider"
 
-const Header: React.FC<{
-  selected: {
-    name: string
-    img: string
-  } | null
-}> = ({ selected }) => {
+const Header: React.FC<{}> = () => {
+  const { selected } = useSelectedContact()
+
   const imageRef = useRef<HTMLImageElement>(null)
 
   return (
@@ -22,7 +20,7 @@ const Header: React.FC<{
                 : ""
             }
             decoding="async"
-            src={selected ? selected.img : ""}
+            src={selected ? selected.profilePicture.thumbnail : ""}
             alt="contact profile"
           />
         </div>

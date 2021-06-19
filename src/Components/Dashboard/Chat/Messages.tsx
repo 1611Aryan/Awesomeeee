@@ -1,25 +1,26 @@
 import { useEffect, useRef } from "react"
 import styled from "styled-components"
+
+import { useSelectedContact } from "../../../Providers/SelectedContactProvider"
+import { useUser } from "../../../Providers/UserProvider"
+
 import Message from "./Message"
 
-const Messages: React.FC<{
-  messages: {
-    message: string
-    sender: "me" | "contact"
-  }[]
-}> = ({ messages }) => {
+const Messages: React.FC<{}> = () => {
   const ulRef = useRef<HTMLUListElement>(null)
 
+  const { messages } = useSelectedContact()
+  const { addMessageToRoom } = useUser()
+
   useEffect(() => {
-    if (ulRef.current) ulRef.current.scrollTop = ulRef.current?.scrollHeight
-  }, [messages])
+    if (ulRef.current) ulRef.current.scrollTop = ulRef.current.scrollHeight
+  }, [addMessageToRoom])
 
   return (
     <StyledMessages>
       <ul ref={ulRef}>
-        {messages.map((msg, index) => (
-          <Message key={index} message={msg} />
-        ))}
+        {messages &&
+          messages.map((msg, index) => <Message key={index} message={msg} />)}
       </ul>
     </StyledMessages>
   )

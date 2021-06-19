@@ -9,17 +9,19 @@ const App: React.FC = () => {
   const { access } = useAccess()
 
   useEffect(() => {
-    window.addEventListener("keypress", e => {
-      if (e.key === "s") {
-        document.querySelector("html")?.setAttribute("theme", "small")
-      }
-      if (e.key === "m") {
-        document.querySelector("html")?.setAttribute("theme", "medium")
-      }
-      if (e.key === "l") {
-        document.querySelector("html")?.setAttribute("theme", "large")
-      }
-    })
+    if (false) {
+      window.addEventListener("keypress", e => {
+        if (e.key === "s") {
+          document.querySelector("html")?.setAttribute("theme", "small")
+        }
+        if (e.key === "m") {
+          document.querySelector("html")?.setAttribute("theme", "medium")
+        }
+        if (e.key === "l") {
+          document.querySelector("html")?.setAttribute("theme", "large")
+        }
+      })
+    }
 
     return window.removeEventListener("keypress", () => {})
   }, [])

@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import AddContact from "./AddContact"
 
 import Profile from "./Profile"
 
@@ -8,6 +9,7 @@ const SideBar: React.FC<{
   return (
     <StyledSideBar>
       <h1>M</h1>
+      <AddContact />
       <Profile setSettingsActive={setSettingsActive} />
     </StyledSideBar>
   )
