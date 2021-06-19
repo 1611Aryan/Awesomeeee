@@ -17,7 +17,7 @@ const Settings = lazy(() => import("./Settings"))
 
 const ENDPOINT =
   process.env.NODE_ENV === "production"
-    ? "ws://awesomeeeee.herokuapp.com"
+    ? "wss://awesomeeeee.herokuapp.com"
     : "ws://localhost:5000"
 
 const Dashboard: React.FC = () => {
