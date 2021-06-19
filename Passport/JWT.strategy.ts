@@ -2,9 +2,6 @@ import { PassportStatic } from "passport"
 import { Strategy as JWTStrategy } from "passport-jwt"
 import { Request } from "express"
 
-import { config } from "dotenv"
-config()
-
 class JWT {
   protected passport: PassportStatic
 
