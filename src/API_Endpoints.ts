@@ -16,6 +16,11 @@ const baseUrl =
     ? "https://awesomeeeee.herokuapp.com"
     : "http://localhost:5000"
 
+export const autoUpdateContact: endpoint = {
+  URL: `${baseUrl}/user/autoUpdateContact`,
+  METHOD: methods.PATCH,
+}
+
 export const updateContact: endpoint = {
   URL: `${baseUrl}/user/updateContact`,
   METHOD: methods.PATCH,

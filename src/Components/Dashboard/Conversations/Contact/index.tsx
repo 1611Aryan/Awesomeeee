@@ -9,6 +9,8 @@ import Content from "./ContactContent"
 import Options from "./ContactOptions"
 import ProfilePicture from "./ContactProfilePicture"
 
+import { autoUpdateContact } from "./../../../../API_Endpoints"
+
 const Contact: React.FC<{
   contact: contactI
 
@@ -23,11 +25,6 @@ const Contact: React.FC<{
     }>
   >
 }> = ({ contact, setMenuConfig }) => {
-  const updateURL =
-    process.env.NODE_ENV === "production"
-      ? "/user/autoUpdateContact"
-      : "http://localhost:5000/user/autoUpdateContact"
-
   const { selected, setSelected } = useSelectedContact()
   const dispatchContact = useDispatch()
 
@@ -48,13 +45,13 @@ const Contact: React.FC<{
             (contact.lastUpdated &&
               (Date.now() - parseInt(contact.lastUpdated)) / (1000 * 60) > 10))
         ) {
-          const res = await axios.patch<{
+          const res = await axios[autoUpdateContact.METHOD]<{
             message: "Up to Date" | "Updating Contact"
             payload: null | {
               profilePicture: contactI["profilePicture"]
             }
           }>(
-            updateURL,
+            autoUpdateContact.URL,
             {
               contact,
             },
