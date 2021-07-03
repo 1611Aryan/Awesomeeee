@@ -17,11 +17,11 @@ class Local {
   constructor(passport: PassportStatic) {
     this.passport = passport
   }
-  createUsername = (email: UserInput["email"]) => {
+  createUsername = (email: UserInput["email"]): string => {
     return email.split("@", 1)[0]
   }
 
-  login = () =>
+  login = (): unknown =>
     this.passport.use(
       "login",
       new LocalStrategy(
@@ -71,7 +71,7 @@ class Local {
       )
     )
 
-  signup = () =>
+  signup = (): unknown =>
     this.passport.use(
       "signup",
       new LocalStrategy(
@@ -113,7 +113,7 @@ class Local {
       )
     )
 
-  delete = () =>
+  delete = (): unknown =>
     this.passport.use(
       "delete",
       new LocalStrategy(

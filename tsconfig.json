@@ -3,10 +3,13 @@
     "alwaysStrict": true,
     "noImplicitAny": true,
     "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "esnext",
     "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "build"
+    "outDir": "build",
+    "lib": ["es2020"],
+    "target": "es2020",
+    //"strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   }
 }

@@ -1,6 +1,9 @@
 import sharp from "sharp"
 
-const optimizeImage = async (imgPath: string, mimeType: string) => {
+const optimizeImage = async (
+  imgPath: string,
+  mimeType: string
+): Promise<boolean> => {
   const imageType = mimeType.split("/")[1] as "jpeg" | "webp" | "png"
 
   console.log({ imageType })
@@ -10,6 +13,7 @@ const optimizeImage = async (imgPath: string, mimeType: string) => {
       .resize(1200, 1200, {
         fit: "cover",
       })
+      // eslint-disable-next-line no-unexpected-multiline
       [imageType]({ quality: 80 })
       .toFile(`${imgPath}-min`)
 

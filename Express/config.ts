@@ -4,7 +4,7 @@ import helmet from "helmet"
 import morgan from "morgan"
 import cookieParser from "cookie-parser"
 
-const ExpressConfig = () => {
+const ExpressConfig = (): express.Application => {
   const app = express()
   app.use(express.urlencoded({ extended: true }))
   app.use(express.json())

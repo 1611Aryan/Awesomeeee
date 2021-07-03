@@ -9,7 +9,7 @@ class JWT {
     this.passport = passport
   }
 
-  #cookieExtractor = (req: Request) => {
+  #cookieExtractor = (req: Request): string => {
     let jwt = null
     if (req && req.cookies) {
       jwt = req.cookies["JWT"]
@@ -18,7 +18,7 @@ class JWT {
     return jwt
   }
 
-  jwt = () => {
+  jwt = (): void => {
     this.passport.use(
       "jwt",
       new JWTStrategy(

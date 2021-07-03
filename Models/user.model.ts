@@ -2,7 +2,23 @@ import bcrypt from "bcrypt"
 import { Schema, model, Document } from "mongoose"
 import { IVerifyOptions } from "passport-local"
 
-export interface UserI {
+export type contactI = {
+  //Document id
+  _id: Document["_id"]
+  //User Entered => won't change automatically
+  //Mutable
+  name: string
+  //Immutable
+  contactId: string
+  //URL=> image/id=>wont change
+  profilePicture: UserI["profilePicture"]
+  //Constant
+  roomId: string
+  lastSeen: string
+  lastMessage: string
+}
+
+export type UserI = {
   username: string
   email: string
   phone: string
@@ -10,18 +26,7 @@ export interface UserI {
     thumbnail: string
     large: string
   }
-  contacts: {
-    //Document id
-    _id: Document["_id"]
-    //User Entered => won't change automatically
-    name: string
-    //Immutable
-    contactId: string
-    //URL=> image/id=>wont change
-    profilePicture: UserI["profilePicture"]
-    //
-    roomId: string
-  }[]
+  contacts: contactI[]
   password: string
 
   setPassword: (password: UserI["password"]) => Promise<string>
@@ -65,6 +70,8 @@ const UserSchema = new Schema<UserI>(
           },
           contactId: String,
           roomId: String,
+          lastSeen: String,
+          lastMessage: String,
         },
       ],
       required: true,

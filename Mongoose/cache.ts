@@ -1,3 +1,4 @@
+/* eslint-disable prefer-rest-params */
 import { Query } from "mongoose"
 import { createNodeRedisClient } from "handy-redis"
 
@@ -13,8 +14,8 @@ redisClient.nodeRedis.on("error", err => {
 })
 
 declare module "mongoose" {
-  interface Query<ResultType, DocType extends Document, THelpers = {}> {
-    cache(primaryKey: number | string): Query<ResultType, Document & THelpers>
+  interface Query<ResultType, DocType extends Document, THelpers> {
+    cache(primaryKey: number | string): Query<ResultType, DocType & THelpers>
     useCache: boolean
     primaryKey: number | string
   }
@@ -40,6 +41,7 @@ Query.prototype.exec = async function () {
 
   if (cachedValue) {
     const document = JSON.parse(cachedValue)
+    console.log("Cache Used")
 
     return Array.isArray(document)
       ? document.map(d => new this.model(d))
@@ -52,7 +54,7 @@ Query.prototype.exec = async function () {
   return result
 }
 
-export const clearCache = async (primaryKey: any) => {
+export const clearCache = async (primaryKey: unknown): Promise<void> => {
   await redisClient.del(JSON.stringify(primaryKey))
   console.log("Cache Cleared")
 }

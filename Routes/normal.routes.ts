@@ -50,7 +50,7 @@ router.post("/login", (req, res) =>
         }
 
         const token = jwt.sign(payload, process.env.JWT_SECRET)
-        console.log(token, payload, process.env.JWT_SECRET)
+
         return res
           .cookie("JWT", token, {
             //7 Days

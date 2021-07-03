@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import "./cache"
 
-const MongoConfig = () => {
+const MongoConfig = (): void => {
   const MongoURI = process.env.MONGODB_URI
 
   const mongoOptions = {
