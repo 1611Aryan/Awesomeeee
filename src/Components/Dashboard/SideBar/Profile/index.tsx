@@ -1,11 +1,13 @@
+import { useSelector } from "react-redux"
 import styled from "styled-components"
-import { useUser } from "../../../../Providers/UserProvider"
+import { rootState } from "../../../../Reducers"
+
 import Options from "./Options"
 
 const Profile: React.FC<{
   setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ setSettingsActive }) => {
-  const { user } = useUser()
+  const { user } = useSelector((state: rootState) => state)
 
   return (
     <StyledProfile tabIndex={1}>

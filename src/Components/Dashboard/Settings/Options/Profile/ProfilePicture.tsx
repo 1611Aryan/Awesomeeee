@@ -1,9 +1,10 @@
 import axios from "axios"
 import React, { useRef, useState } from "react"
 import { useEffect } from "react"
+import { useSelector } from "react-redux"
 
 import styled from "styled-components"
-import { useUser } from "../../../../../Providers/UserProvider"
+import { rootState } from "../../../../../Reducers"
 
 const ProfilePicture: React.FC = () => {
   const profileChangeUrl =
@@ -14,7 +15,7 @@ const ProfilePicture: React.FC = () => {
   //Ref
   const inputFileRef = useRef<HTMLInputElement>(null)
 
-  const { user } = useUser()
+  const user = useSelector((state: rootState) => state.user)
 
   //State
   const [profilePicture, setProfilePicture] = useState<{
@@ -140,7 +141,7 @@ const StyledProfilePicture = styled.div`
 
 const StyledProfilePictureContainer = styled.div`
   width: calc(100% * var(--imgSize));
-
+  height: calc(var(--RightPanelWidth) * 85.7 / 100 * var(--imgSize) - 5.5em);
   border-radius: 7px;
 
   overflow: hidden;

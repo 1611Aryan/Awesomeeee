@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react"
+import { useSelector } from "react-redux"
 import styled from "styled-components"
 
 import { useSelectedContact } from "../../../Providers/SelectedContactProvider"
-import { useUser } from "../../../Providers/UserProvider"
+import { rootState } from "../../../Reducers"
 
 import Message from "./Message"
 
@@ -10,11 +11,11 @@ const Messages: React.FC<{}> = () => {
   const ulRef = useRef<HTMLUListElement>(null)
 
   const { messages } = useSelectedContact()
-  const { addMessageToRoom } = useUser()
+  const { contacts } = useSelector((state: rootState) => state)
 
   useEffect(() => {
     if (ulRef.current) ulRef.current.scrollTop = ulRef.current.scrollHeight
-  }, [addMessageToRoom])
+  }, [contacts])
 
   return (
     <StyledMessages>

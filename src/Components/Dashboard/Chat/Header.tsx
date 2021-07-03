@@ -2,9 +2,12 @@ import { useRef } from "react"
 import styled from "styled-components"
 import { HiDotsVertical } from "react-icons/hi"
 import { useSelectedContact } from "../../../Providers/SelectedContactProvider"
+import { useSelector } from "react-redux"
+import { rootState } from "../../../Reducers"
 
 const Header: React.FC<{}> = () => {
   const { selected } = useSelectedContact()
+  const { contacts } = useSelector((state: rootState) => state)
 
   const imageRef = useRef<HTMLImageElement>(null)
 
@@ -20,11 +23,34 @@ const Header: React.FC<{}> = () => {
                 : ""
             }
             decoding="async"
-            src={selected ? selected.profilePicture.thumbnail : ""}
+            src={
+              selected && contacts
+                ? contacts.filter(
+                    contact => contact.contactId === selected.contactId
+                  )[0].profilePicture.thumbnail
+                : ""
+            }
             alt="contact profile"
           />
         </div>
-        <h1>{selected && selected.name}</h1>
+        <div className="info">
+          <h1>
+            {selected &&
+              contacts &&
+              contacts.filter(
+                contact => contact.contactId === selected.contactId
+              )[0].name}
+          </h1>
+          {selected &&
+            contacts &&
+            contacts.filter(
+              contact => contact.contactId === selected.contactId
+            )[0].online && (
+              <div className="online">
+                <div className="dot"></div> <span>Online</span>
+              </div>
+            )}
+        </div>
       </div>
       <HiDotsVertical />
       <div className="border"></div>
@@ -82,12 +108,52 @@ const StyledHeader = styled.header`
       }
     }
 
-    h1 {
+    .info {
       margin-left: 0.5em;
 
-      font-family: var(--fontHeading);
-      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+
       font-size: var(--HeaderFontSize);
+      font-family: var(--fontHeading);
+
+      h1 {
+        font-size: 1em;
+        font-weight: 500;
+      }
+      .online {
+        display: flex;
+
+        justify-content: flex-start;
+        align-items: center;
+        .dot {
+          margin-right: 0.2em;
+
+          display: inline;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: rgb(255, 167, 81);
+          animation: hue 10s infinite alternate;
+        }
+        span {
+          text-transform: uppercase;
+          font-size: 0.4em;
+          color: rgb(255, 167, 81);
+          font-weight: 300;
+          line-height: 1;
+          letter-spacing: 1px;
+          animation: hue 10s infinite alternate;
+        }
+      }
+
+      @keyframes hue {
+        to {
+          filter: hue-rotate(360deg);
+        }
+      }
     }
   }
   svg {

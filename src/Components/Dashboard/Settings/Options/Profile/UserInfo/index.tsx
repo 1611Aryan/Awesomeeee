@@ -1,14 +1,16 @@
 import React, { useState } from "react"
+import { useSelector } from "react-redux"
 import styled from "styled-components"
-import { useUser } from "../../../../../../Providers/UserProvider"
+import { rootState } from "../../../../../../Reducers"
+
 import Field from "./Field"
 
 const UserInfo: React.FC = () => {
-  const { user } = useUser()
+  const user = useSelector((state: rootState) => state.user)
 
   const [info, setInfo] = useState({
-    username: user?.username,
-    email: user?.email,
+    username: user ? user.username : "",
+    email: user ? user.email : "",
     phone: "1234567890",
   })
 

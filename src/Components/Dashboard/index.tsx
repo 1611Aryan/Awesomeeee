@@ -9,9 +9,16 @@ import Chat from "./Chat"
 import ClosedChat from "./ClosedChat"
 
 import { useAccess } from "../../Providers/AccessProvider"
-import { useUser, userI } from "../../Providers/UserProvider"
+
 import { useSelectedContact } from "../../Providers/SelectedContactProvider"
 import { useSocket } from "../../Providers/SocketProvider"
+import { actionsUser, userI } from "../../Actions/userActions"
+import { useDispatch } from "react-redux"
+import {
+  actionsContacts,
+  contactI,
+  messageI,
+} from "../../Actions/contactsAction"
 
 const Settings = lazy(() => import("./Settings"))
 
@@ -31,7 +38,10 @@ const Dashboard: React.FC = () => {
   const { socket, setSocket } = useSocket()
   const { selected } = useSelectedContact()
   const { setAccess } = useAccess()
-  const { setUser, rooms, addMessageToRoom } = useUser()
+
+  const dispatch = useDispatch()
+
+  const [rooms, setRooms] = useState<string[] | null>(null)
 
   const logout = () => {
     setAccess({ loggedIn: false, username: null })
@@ -42,41 +52,97 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     ;(async () => {
       try {
-        const res = await axios.get<{ user: userI }>(url, {
+        const res = await axios.get<{
+          user: userI
+          contacts: contactI[] | null
+        }>(url, {
           withCredentials: true,
         })
-        setUser(res.data.user)
+
+        dispatch({
+          type: actionsUser.ADD_USER,
+          payload: { user: res.data.user },
+        })
+        dispatch({
+          type: actionsContacts.SET_CONTACTS,
+          payload: {
+            contacts: res.data.contacts
+              ? res.data.contacts.map(contact => {
+                  return {
+                    ...contact,
+                    messages: null,
+                  }
+                })
+              : null,
+          },
+        })
+
+        const tempRooms = res.data.contacts
+          ? res.data.contacts.map(contact => contact.roomId)
+          : null
+
+        setRooms(tempRooms)
+
+        setSocket(() =>
+          io(ENDPOINT, {
+            transports: ["websocket"],
+            query: {
+              id: res.data.user._id,
+              rooms: JSON.stringify(tempRooms),
+            },
+          })
+        )
       } catch (err) {
         logout()
         console.log(err)
       }
     })()
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    setSocket(() =>
-      io(ENDPOINT, {
-        transports: ["websocket"],
-      })
-    )
-
     return () => {
+      console.log("disconnect")
       socket && socket.disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  //*Join All
   useEffect(() => {
     socket && rooms && socket.emit("joinAll", rooms)
-  }, [rooms, socket])
-
-  useEffect(() => {
-    socket && socket.on("recieveMessage", addMessageToRoom)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket])
 
+  //*Online
+  useEffect(() => {
+    socket &&
+      socket.on("online", ({ contactId, status }) => {
+        console.log(contactId, status)
+
+        dispatch({
+          type: actionsContacts.CHANGE_CONTACT_STATUS,
+          payload: { contactStatus: { contactId, status } },
+        })
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket])
+
+  //*Recieve Message
+  useEffect(() => {
+    socket &&
+      socket.on(
+        "recieveMessage",
+        ({ room, sender, message }: messageI & { room: string }) => {
+          dispatch({
+            type: actionsContacts.ADD_MESSAGE,
+            payload: {
+              message: { roomId: room, sender, message },
+            },
+          })
+        }
+      )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket])
+
+  //*Dev logs all events
   useEffect(() => {
     socket && socket.onAny(console.log)
   }, [socket])
@@ -102,7 +168,7 @@ const StyledDashboard = styled.main`
   justify-content: flex-start;
   align-items: flex-start;
 
-  background: linear-gradient(to top, #2b5876, #4e4376);
+  background: linear-gradient(to top, rgb(43, 88, 118), #4e4376);
 
   --conversationsWidth: var(--size);
   --sideBarWidth: calc(var(--conversationsWidth) / 5.5);

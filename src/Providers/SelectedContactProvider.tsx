@@ -1,20 +1,22 @@
 import React, { useContext, createContext, useState } from "react"
-import { messagePoolI, messageI, useUser, contactI } from "./UserProvider"
+import { useSelector } from "react-redux"
+import { contactI } from "../Actions/contactsAction"
 
-export interface selectedI extends contactI {
-  messages: messagePoolI["messages"]
+import { rootState } from "../Reducers"
+
+export type selectedI = {
+  contactId: contactI["contactId"]
+  roomId: contactI["roomId"]
 }
 
 const SelectedContactContext = createContext<{
   selected: selectedI | null
   setSelected: React.Dispatch<React.SetStateAction<selectedI | null>>
-  messages: messagePoolI["messages"]
-  addMessageToSelected: ({ message, sender }: messageI) => void
+  messages: contactI["messages"]
 }>({
   selected: null,
   setSelected: () => {},
   messages: null,
-  addMessageToSelected: () => {},
 })
 
 export const useSelectedContact = () => useContext(SelectedContactContext)
@@ -24,34 +26,22 @@ export const SelectedContactProvider: React.FC<{
 }> = ({ children }) => {
   const [selected, setSelected] = useState<selectedI | null>(null)
 
-  const { messagePool, setMessagePool } = useUser()
+  const { contacts } = useSelector((state: rootState) => state)
 
-  const selectedMessagePool =
-    messagePool && selected
-      ? messagePool.filter(m => m.name === selected.name)[0]
+  const messages =
+    contacts && selected
+      ? contacts.filter(contact => contact.roomId === selected.roomId)[0] &&
+        contacts.filter(contact => contact.roomId === selected.roomId)[0]
+          .messages
       : null
-
-  const messages = selectedMessagePool ? selectedMessagePool.messages : null
-
-  const addMessageToSelected = ({ message, sender }: messageI) =>
-    setMessagePool(messagePool => {
-      const selectedMessagePool =
-        messagePool && selected
-          ? messagePool.filter(m => m.name === selected.name)[0]
-          : null
-
-      if (selectedMessagePool) {
-        selectedMessagePool.messages
-          ? selectedMessagePool.messages.push({ sender, message })
-          : (selectedMessagePool.messages = [{ sender, message }])
-
-        return messagePool ? [...messagePool] : null
-      } else return null
-    })
 
   return (
     <SelectedContactContext.Provider
-      value={{ selected, setSelected, messages, addMessageToSelected }}
+      value={{
+        selected,
+        setSelected,
+        messages,
+      }}
     >
       {children}
     </SelectedContactContext.Provider>

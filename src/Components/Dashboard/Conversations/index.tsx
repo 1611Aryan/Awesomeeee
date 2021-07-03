@@ -25,8 +25,10 @@ const Conversations: React.FC = () => {
 const StyledConversations = styled.div`
   width: var(--conversationsWidth);
 
+  --contactPadding: calc(var(--conversationsWidth) / 16.666);
+
   height: 100vh;
-  padding: 0 calc(var(--conversationsWidth) / 16.666) 0;
+  padding: 0 var(--contactPadding) 0;
 
   position: relative;
 

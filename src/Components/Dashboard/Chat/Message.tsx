@@ -1,6 +1,8 @@
 import { useLayoutEffect, useMemo, useState } from "react"
+import { useSelector } from "react-redux"
 import styled from "styled-components"
-import { useUser } from "../../../Providers/UserProvider"
+
+import { rootState } from "../../../Reducers"
 
 interface theme {
   background: string
@@ -19,7 +21,7 @@ const Message: React.FC<{
   }
 }> = ({ message }) => {
   const [theme, setTheme] = useState<theme>()
-  const { user } = useUser()
+  const { user } = useSelector((state: rootState) => state)
 
   const themeCriteria = useMemo(() => {
     return message.sender === "me" || message.sender === user?.username

@@ -4,19 +4,23 @@ import styled from "styled-components"
 import { FaTimes } from "react-icons/fa"
 import { IoMdCheckmark } from "react-icons/io"
 
-import { useUser } from "../../../../../../Providers/UserProvider"
+// import { actionsUser, useUser } from "../../../../../../Providers/UserProvider"
+import { useDispatch, useSelector } from "react-redux"
+
 import axios from "axios"
+import { rootState } from "../../../../../../Reducers"
+import { actionsUser } from "../../../../../../Actions/userActions"
 
 const Field: React.FC<{
   info: {
-    username: string | undefined
-    email: string | undefined
+    username: string
+    email: string
     phone: string
   }
   setInfo: React.Dispatch<
     React.SetStateAction<{
-      username: string | undefined
-      email: string | undefined
+      username: string
+      email: string
       phone: string
     }>
   >
@@ -29,7 +33,11 @@ const Field: React.FC<{
       : "http://localhost:5000/user/username"
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const { user, setUser } = useUser()
+  //const { user, dispatchUser } = useUser()
+  const user = useSelector((state: rootState) => state.user)
+
+  const dispatch = useDispatch()
+
   const [activated, setActivated] = useState(false)
 
   const activateInput = () => {
@@ -81,7 +89,11 @@ const Field: React.FC<{
           withCredentials: true,
         }
       )
-      setUser(user => (user ? { ...user, [name]: info?.[name] } : null))
+
+      dispatch({
+        type: actionsUser.UPDATE_USER,
+        payload: { property: { key: name, value: info?.[name] } },
+      })
       console.log(res)
     } catch (err) {
       console.log(err)

@@ -5,7 +5,10 @@ import { useSelectedContact } from "../../../Providers/SelectedContactProvider"
 import { useEffect } from "react"
 import { useRef } from "react"
 import { useSocket } from "../../../Providers/SocketProvider"
-import { useUser } from "../../../Providers/UserProvider"
+
+import { useDispatch, useSelector } from "react-redux"
+import { rootState } from "../../../Reducers"
+import { actionsContacts } from "../../../Actions/contactsAction"
 
 const Input: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -13,8 +16,9 @@ const Input: React.FC = () => {
   const [input, setInput] = useState("")
 
   const { socket } = useSocket()
-  const { user } = useUser()
-  const { selected, addMessageToSelected } = useSelectedContact()
+  const { user } = useSelector((state: rootState) => state)
+  const dispatch = useDispatch()
+  const { selected } = useSelectedContact()
 
   useEffect(() => {
     if (selected && inputRef.current) {
@@ -29,19 +33,22 @@ const Input: React.FC = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (input) {
-      socket &&
-        user &&
-        selected &&
-        socket.emit(
-          "sendMessage",
-          {
-            message: input,
-            sender: user.username,
-          },
-          selected.roomId
-        )
-      addMessageToSelected({ message: input, sender: "me" })
+    if (input && socket && user && selected) {
+      socket.emit(
+        "sendMessage",
+        {
+          message: input,
+          sender: user.username,
+        },
+        selected.roomId,
+        selected.contactId
+      )
+      dispatch({
+        type: actionsContacts.ADD_MESSAGE,
+        payload: {
+          message: { roomId: selected.roomId, message: input, sender: "me" },
+        },
+      })
       setInput("")
     }
   }

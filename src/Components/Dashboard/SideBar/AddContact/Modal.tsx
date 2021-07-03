@@ -2,8 +2,10 @@ import axios from "axios"
 import { motion } from "framer-motion"
 import React, { useState } from "react"
 import { useRef } from "react"
+import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { useUser } from "../../../../Providers/UserProvider"
+import { actionsContacts, contactI } from "../../../../Actions/contactsAction"
+
 import dog1 from "./../../../../Media/PNG/dog1.png"
 
 const Modal: React.FC<{
@@ -37,7 +39,7 @@ const Modal: React.FC<{
     },
   }
 
-  const { addContact } = useUser()
+  const dispatchUser = useDispatch()
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(input => ({
@@ -55,15 +57,7 @@ const Modal: React.FC<{
     try {
       const res = await axios.patch<{
         message: string
-        contact: {
-          name: string
-          contactId: string
-          profilePicture: {
-            thumbnail: string
-            large: string
-          }
-          roomId: string
-        }
+        contact: contactI
       }>(
         addContactUrl,
         {
@@ -76,10 +70,14 @@ const Modal: React.FC<{
       )
       console.log(res)
       setErr(res.data.message)
-      addContact(res.data.contact)
+
+      dispatchUser({
+        type: actionsContacts.ADD_CONTACT,
+        payload: { newContact: { ...res.data.contact, messages: null } },
+      })
       closeModal()
     } catch (err) {
-      console.log(err.response.data)
+      console.log(err)
       err.response.data.message && typeof err.response.data.message === "string"
         ? setErr(err.response.data.message)
         : setErr("An error occured. Try again Later😔")
