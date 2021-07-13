@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
 :root{
     --fontHeading:'Oswald', sans-serif;
     --fontContent:'Lato', sans-serif;
+    --fontGoogle:'Roboto', sans-serif;
     --extrLarge:25vw;
     --large: 23vw;
     --medium: 21vw;

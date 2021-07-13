@@ -3,6 +3,8 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
 
+import sizeOf from "object-sizeof"
+
 import { actionsContacts, contactI } from "../../../../Actions/contactsAction"
 import { useSelectedContact } from "../../../../Providers/SelectedContactProvider"
 import Content from "./ContactContent"
@@ -13,7 +15,6 @@ import { autoUpdateContact } from "./../../../../API_Endpoints"
 
 const Contact: React.FC<{
   contact: contactI
-
   setMenuConfig: React.Dispatch<
     React.SetStateAction<{
       positionY: number
@@ -21,6 +22,7 @@ const Contact: React.FC<{
       contact: {
         contactId: string
         contactName: string
+        roomId: string
       } | null
     }>
   >
@@ -59,6 +61,9 @@ const Contact: React.FC<{
               withCredentials: true,
             }
           )
+
+          console.log(sizeOf(res))
+
           if (
             res.data.message === "Updating Contact" &&
             res.data.payload &&

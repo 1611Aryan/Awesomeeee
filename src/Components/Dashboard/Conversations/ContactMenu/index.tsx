@@ -11,6 +11,7 @@ const ContactMenu: React.FC<{
     contact: {
       contactId: string
       contactName: string
+      roomId: string
     } | null
   }
   setMenuConfig: React.Dispatch<
@@ -20,6 +21,7 @@ const ContactMenu: React.FC<{
       contact: {
         contactId: string
         contactName: string
+        roomId: string
       } | null
     }>
   >

@@ -1,21 +1,19 @@
 import axios from "axios"
 import React, { useRef, useState } from "react"
 import { useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import styled from "styled-components"
+import { actionsUser } from "../../../../../Actions/userActions"
+import { updateProfilePicture } from "../../../../../API_Endpoints"
 import { rootState } from "../../../../../Reducers"
 
 const ProfilePicture: React.FC = () => {
-  const profileChangeUrl =
-    process.env.NODE_ENV === "production"
-      ? "https://awesomeeeee.herokuapp.com/user/profilePicture"
-      : "http://localhost:5000/user/profilePicture"
-
   //Ref
   const inputFileRef = useRef<HTMLInputElement>(null)
 
-  const user = useSelector((state: rootState) => state.user)
+  const { user } = useSelector((state: rootState) => state)
+  const dispatch = useDispatch()
 
   //State
   const [profilePicture, setProfilePicture] = useState<{
@@ -43,10 +41,26 @@ const ProfilePicture: React.FC = () => {
 
   const submitProfilePicture = async (formData: FormData) => {
     try {
-      const res = await axios.patch(profileChangeUrl, formData, {
-        withCredentials: true,
-      })
+      const res = await axios[updateProfilePicture.METHOD](
+        updateProfilePicture.URL,
+        formData,
+        {
+          withCredentials: true,
+        }
+      )
       console.log(res)
+      dispatch({
+        type: actionsUser.UPDATE_USER,
+        payload: {
+          property: {
+            key: "profilePicture",
+            value: {
+              thumbnail: profilePicture.src,
+              large: profilePicture.src,
+            },
+          },
+        },
+      })
     } catch (err) {
       console.log(err)
     }

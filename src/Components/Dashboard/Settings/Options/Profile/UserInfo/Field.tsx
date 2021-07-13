@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { rootState } from "../../../../../../Reducers"
 import { actionsUser } from "../../../../../../Actions/userActions"
+import { updateUsername } from "../../../../../../API_Endpoints"
 
 const Field: React.FC<{
   info: {
@@ -27,11 +28,6 @@ const Field: React.FC<{
   name: "username" | "email" | "phone"
   value: string | undefined
 }> = ({ info, setInfo, name, value }) => {
-  const usernameChangeURL =
-    process.env.NODE_ENV === "production"
-      ? "https://awesomeeeee.herokuapp.com/user/username"
-      : "http://localhost:5000/user/username"
-
   const inputRef = useRef<HTMLInputElement>(null)
   //const { user, dispatchUser } = useUser()
   const user = useSelector((state: rootState) => state.user)
@@ -77,10 +73,10 @@ const Field: React.FC<{
     }
     let URL = ""
     if (name === "username") {
-      URL = usernameChangeURL
+      URL = updateUsername.URL
     }
     try {
-      const res = await axios.patch(
+      const res = await axios[updateUsername.METHOD](
         URL,
         {
           username: info.username,

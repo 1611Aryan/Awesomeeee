@@ -9,6 +9,7 @@ const Modal: React.FC<{
     contact: {
       contactId: string
       contactName: string
+      roomId: string
     } | null
   }
   modalState: {

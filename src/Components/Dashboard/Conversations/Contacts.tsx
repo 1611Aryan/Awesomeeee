@@ -14,7 +14,7 @@ const Contacts: React.FC<{
   const [menuConfig, setMenuConfig] = useState<{
     positionY: number
     openState: boolean
-    contact: { contactId: string; contactName: string } | null
+    contact: { contactId: string; contactName: string; roomId: string } | null
   }>({
     positionY: 0,
     openState: false,

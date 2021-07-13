@@ -3,6 +3,8 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import { updateContact } from "../../../../API_Endpoints"
 
+import quill from "./../../../../Media/PNG/quill.png"
+
 const RenameModal: React.FC<{
   menuConfig: {
     positionY: number
@@ -10,6 +12,7 @@ const RenameModal: React.FC<{
     contact: {
       contactId: string
       contactName: string
+      roomId: string
     } | null
   }
   cancel: () => void
@@ -42,30 +45,35 @@ const RenameModal: React.FC<{
   }
 
   return (
-    <StyledRenameModal onSubmit={rename}>
-      <h1>Rename Contact</h1>
-      <label htmlFor="name">Name: </label>
-      <input
-        type="text"
-        name="name"
-        value={name}
-        onChange={changeHandler}
-        placeholder={menuConfig.contact ? menuConfig.contact.contactName : ""}
-        autoFocus
-        required
-      />
-      <div className="buttons">
-        <button type="submit">Change</button>
-        <button type="button" onClick={cancel}>
-          Cancel
-        </button>
-      </div>
+    <StyledRenameModal>
+      <StyledForm onSubmit={rename}>
+        <h1>Rename Contact</h1>
+        <label htmlFor="name">Name: </label>
+        <input
+          type="text"
+          name="name"
+          value={name}
+          onChange={changeHandler}
+          placeholder={menuConfig.contact ? menuConfig.contact.contactName : ""}
+          autoFocus
+          required
+        />
+        <div className="buttons">
+          <button type="submit">Change</button>
+          <button type="button" onClick={cancel}>
+            Abort
+          </button>
+        </div>
+      </StyledForm>
+      <StyledImage>
+        <img src={quill} alt="Quill" />
+      </StyledImage>
     </StyledRenameModal>
   )
 }
 
-const StyledRenameModal = styled.form`
-  width: 30vw;
+const StyledRenameModal = styled.div`
+  width: 40vw;
   background: #456d;
   backdrop-filter: blur(2px);
   border-radius: 5px;
@@ -73,21 +81,31 @@ const StyledRenameModal = styled.form`
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0em 1.5em;
+`
+
+const StyledForm = styled.form`
+  width: 50%;
+  height: 100%;
+
+  display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-
-  padding: 1em;
 
   color: white;
   font-family: var(--fontContent);
 
   * {
-    margin: 0.5em 0;
+    margin: 1em 0;
   }
 
   h1 {
     font-family: var(--fontHeading);
+    color: white;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
   }
 
@@ -96,7 +114,7 @@ const StyledRenameModal = styled.form`
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
   }
   input {
-    width: 60%;
+    width: 100%;
     font-size: 1.1em;
 
     font-family: var(--fontContent);
@@ -124,7 +142,9 @@ const StyledRenameModal = styled.form`
   }
 
   .buttons {
+    width: 100%;
     button {
+      min-width: 30%;
       font-size: 1em;
       font-family: var(--fontContent);
       background: #567d;
@@ -146,6 +166,44 @@ const StyledRenameModal = styled.form`
 
     * + * {
       margin-left: 1em;
+    }
+  }
+`
+
+const StyledImage = styled.div`
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  img {
+    width: 75%;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+
+    display: inline-block;
+
+    @media (hover: hover) {
+      transition: transform 0.1s;
+      &:hover {
+        animation: shake 650ms linear infinite alternate;
+      }
+    }
+
+    @keyframes shake {
+      from {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(2deg);
+      }
+      to {
+        transform: rotate(-2deg);
+      }
     }
   }
 `

@@ -2,17 +2,18 @@ import axios from "axios"
 import { motion } from "framer-motion"
 import React, { useState } from "react"
 import { useRef } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { actionsContacts, contactI } from "../../../../Actions/contactsAction"
+import { addContact } from "../../../../API_Endpoints"
+import { useSocket } from "../../../../Providers/SocketProvider"
+import { rootState } from "../../../../Reducers"
 
 import dog1 from "./../../../../Media/PNG/dog1.png"
 
 const Modal: React.FC<{
   setAddContact: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ setAddContact }) => {
-  const addContactUrl = "http://localhost:5000/user/addContact"
-
   const imageRef = useRef<HTMLImageElement>(null)
 
   const [input, setInput] = useState({
@@ -20,6 +21,9 @@ const Modal: React.FC<{
     username: "",
   })
   const [err, setErr] = useState("")
+
+  const { user } = useSelector((state: rootState) => state)
+  const { socket } = useSocket()
 
   const variants = {
     initial: {
@@ -54,12 +58,16 @@ const Modal: React.FC<{
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (input.username === user?.username)
+      setErr("You can't add yourself as a contact")
+
     try {
-      const res = await axios.patch<{
+      const res = await axios[addContact.METHOD]<{
         message: string
         contact: contactI
       }>(
-        addContactUrl,
+        addContact.URL,
         {
           name: input.nickname,
           username: input.username,
@@ -75,6 +83,7 @@ const Modal: React.FC<{
         type: actionsContacts.ADD_CONTACT,
         payload: { newContact: { ...res.data.contact, messages: null } },
       })
+      socket && socket.emit("joinRoom", res.data.contact.roomId)
       closeModal()
     } catch (err) {
       console.log(err)

@@ -2,21 +2,18 @@ import axios from "axios"
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { signUpEndpoint } from "../../../API_Endpoints"
 
 const Form: React.FC = () => {
-  const signUpURL =
-    process.env.NODE_ENV === "production"
-      ? "https://awesomeeeee.herokuapp.com/signup"
-      : "http://localhost:5000/signup"
-
   const [input, setInput] = useState<{ email: string; password: string }>({
     email: "",
     password: "",
   })
 
   const [success, setSuccess] = useState(false)
-  const [error, setError] =
-    useState<{ type: "email"; info: string } | null>(null)
+  const [error, setError] = useState<{ type: "email"; info: string } | null>(
+    null
+  )
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(input => ({ ...input, [e.target.name]: e.target.value }))
   }
@@ -24,7 +21,7 @@ const Form: React.FC = () => {
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const res = await axios.post(signUpURL, {
+      const res = await axios[signUpEndpoint.METHOD](signUpEndpoint.URL, {
         email: input.email.trim(),
         password: input.password.trim(),
       })

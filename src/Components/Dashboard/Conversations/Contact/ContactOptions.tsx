@@ -13,6 +13,7 @@ const ContactOptions: React.FC<{
       contact: {
         contactId: string
         contactName: string
+        roomId: string
       } | null
     }>
   >
@@ -34,6 +35,7 @@ const ContactOptions: React.FC<{
         contact: {
           contactId: contact.contactId,
           contactName: contact.name,
+          roomId: contact.roomId,
         },
       }))
     }

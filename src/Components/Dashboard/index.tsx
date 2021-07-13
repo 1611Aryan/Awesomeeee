@@ -3,13 +3,14 @@ import styled from "styled-components"
 import io from "socket.io-client"
 import axios from "axios"
 
+import sizeOf from "object-sizeof"
+
 import SideBar from "./SideBar"
 import Conversations from "./Conversations"
 import Chat from "./Chat"
 import ClosedChat from "./ClosedChat"
 
 import { useAccess } from "../../Providers/AccessProvider"
-
 import { useSelectedContact } from "../../Providers/SelectedContactProvider"
 import { useSocket } from "../../Providers/SocketProvider"
 import { actionsUser, userI } from "../../Actions/userActions"
@@ -19,20 +20,15 @@ import {
   contactI,
   messageI,
 } from "../../Actions/contactsAction"
+import {
+  getProfile,
+  logoutEndpoint,
+  WEBSOCKET_ENDPOINT,
+} from "../../API_Endpoints"
 
 const Settings = lazy(() => import("./Settings"))
 
-const ENDPOINT =
-  process.env.NODE_ENV === "production"
-    ? "wss://awesomeeeee.herokuapp.com"
-    : "ws://localhost:5000"
-
 const Dashboard: React.FC = () => {
-  const url =
-    process.env.NODE_ENV === "production"
-      ? "https://awesomeeeee.herokuapp.com/user/profile"
-      : "http://localhost:5000/user/profile"
-
   const [settingsActive, setSettingsActive] = useState(false)
 
   const { socket, setSocket } = useSocket()
@@ -41,24 +37,23 @@ const Dashboard: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  const [rooms, setRooms] = useState<string[] | null>(null)
-
-  const logout = () => {
+  const logout = async () => {
     setAccess({ loggedIn: false, username: null })
-
-    //!logout from server also
+    await axios[logoutEndpoint.METHOD](logoutEndpoint.URL, {
+      withCredentials: true,
+    })
   }
 
   useEffect(() => {
     ;(async () => {
       try {
-        const res = await axios.get<{
+        const res = await axios[getProfile.METHOD]<{
           user: userI
           contacts: contactI[] | null
-        }>(url, {
+        }>(getProfile.URL, {
           withCredentials: true,
         })
-
+        console.log(sizeOf(res))
         dispatch({
           type: actionsUser.ADD_USER,
           payload: { user: res.data.user },
@@ -77,18 +72,16 @@ const Dashboard: React.FC = () => {
           },
         })
 
-        const tempRooms = res.data.contacts
+        const rooms = res.data.contacts
           ? res.data.contacts.map(contact => contact.roomId)
           : null
 
-        setRooms(tempRooms)
-
         setSocket(() =>
-          io(ENDPOINT, {
+          io(WEBSOCKET_ENDPOINT, {
             transports: ["websocket"],
             query: {
               id: res.data.user._id,
-              rooms: JSON.stringify(tempRooms),
+              rooms: JSON.stringify(rooms),
             },
           })
         )
@@ -105,18 +98,10 @@ const Dashboard: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  //*Join All
-  useEffect(() => {
-    socket && rooms && socket.emit("joinAll", rooms)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket])
-
   //*Online
   useEffect(() => {
     socket &&
       socket.on("online", ({ contactId, status }) => {
-        console.log(contactId, status)
-
         dispatch({
           type: actionsContacts.CHANGE_CONTACT_STATUS,
           payload: { contactStatus: { contactId, status } },

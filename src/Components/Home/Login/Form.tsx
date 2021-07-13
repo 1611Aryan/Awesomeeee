@@ -3,14 +3,18 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useAccess } from "../../../Providers/AccessProvider"
 
+import sizeOf from "object-sizeof"
+import { baseUrl, googleAuth, loginEndpoint } from "../../../API_Endpoints"
+
+import google from "./../../../Media/PNG/google_icon_2048 (1).png"
+import facebook from "./../../../Media/PNG/facebook.png"
+
+type payload = {
+  success: boolean
+  username: string
+}
+
 const Form: React.FC = () => {
-  const loginURL =
-    process.env.NODE_ENV === "production"
-      ? "https://awesomeeeee.herokuapp.com/login"
-      : "http://localhost:5000/login"
-
-  const { setAccess } = useAccess()
-
   const [input, setInput] = useState<{
     username_email: string
     password: string
@@ -18,11 +22,12 @@ const Form: React.FC = () => {
     username_email: "",
     password: "",
   })
-  const [error, setError] =
-    useState<{
-      type: "username" | "password"
-      info: string
-    } | null>(null)
+  const [error, setError] = useState<{
+    type: "username" | "password"
+    info: string
+  } | null>(null)
+
+  const { setAccess } = useAccess()
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(input => ({ ...input, [e.target.name]: e.target.value }))
@@ -31,14 +36,16 @@ const Form: React.FC = () => {
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const res = await axios.post<{ success: boolean; username: string }>(
-        loginURL,
+      const res = await axios[loginEndpoint.METHOD]<payload>(
+        loginEndpoint.URL,
         {
           username: input.username_email.trim(),
           password: input.password.trim(),
         },
         { withCredentials: true }
       )
+
+      console.log(sizeOf(res))
       if (res.data.success)
         setAccess({ loggedIn: true, username: res.data.username })
     } catch (err) {
@@ -47,12 +54,30 @@ const Form: React.FC = () => {
     }
   }
 
+  const googleAuthHandler = async () => {
+    let width = 500
+    let height = 750
+    let params = `"location=1,status=1,scrollbars=1,resizable=no,toolbar=no,menubar=no,
+width=${width},height=${height},left=${(window.innerWidth - width) / 2},top=${
+      (window.innerHeight - height) / 2
+    }`
+    window.open(googleAuth.URL, "login", params)
+
+    window.addEventListener("message", (message: MessageEvent<payload>) => {
+      if (message.origin === baseUrl) {
+        console.log(message.data)
+        if (message.data.success)
+          setAccess({ loggedIn: true, username: message.data.username })
+      }
+    })
+  }
+
   useEffect(() => {
     if (error) {
       if (error.type === "password")
         setInput(input => ({ ...input, password: "" }))
       else if (error.type === "username")
-        setInput(input => ({ username_email: "", password: "" }))
+        setInput({ username_email: "", password: "" })
     }
   }, [error])
 
@@ -93,6 +118,30 @@ const Form: React.FC = () => {
       </div>
 
       <button>Login</button>
+
+      <div className="oAuth">
+        <div className="or">
+          <div className="line"></div>
+          <h3>OR</h3>
+          <div className="line"></div>
+        </div>
+
+        <div className="providers">
+          <div className="logo" onClick={googleAuthHandler}>
+            <div className="imgContainer">
+              <img src={google} alt="google" />
+            </div>
+            <span>Sign in with Google</span>
+          </div>
+
+          <div className="logo facebook">
+            <div className="imgContainer">
+              <img src={facebook} alt="facebook" />
+            </div>
+            <span>Sign in with Facebook</span>
+          </div>
+        </div>
+      </div>
     </StyledForm>
   )
 }
@@ -100,7 +149,7 @@ const Form: React.FC = () => {
 const StyledForm = styled.form`
   position: relative;
   width: 100%;
-  padding: 0 var(--padding) 0 calc(var(--padding) * 1.5);
+  padding: 0 var(--padding) 0 calc(var(--padding) * 1.25);
 
   display: flex;
   flex-direction: column;
@@ -161,6 +210,84 @@ const StyledForm = styled.form`
     font-family: var(--fontHeading);
     letter-spacing: 1px;
     font-weight: 500;
+  }
+
+  .oAuth {
+    width: 100%;
+    margin-top: 1em;
+    .or {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 5px;
+      .line {
+        width: 100%;
+        height: 1px;
+        background: #8b8b8b;
+        flex: 1;
+      }
+      h3 {
+        color: #8b8b8b;
+      }
+    }
+    .providers {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      margin-top: 1.5em;
+      background: #4285f4;
+
+      border-radius: 2px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 40px;
+
+      cursor: pointer;
+
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      .imgContainer {
+        margin: 1px 1px;
+        height: 38px;
+        width: 39px;
+        background: #fff;
+        display: grid;
+        place-items: center;
+        padding: 0 8px;
+
+        border-radius: 1px;
+
+        img {
+          height: 18px;
+          width: 18px;
+        }
+      }
+      span {
+        font-family: var(--fontGoogle);
+        padding: 0 32px 0 8px;
+        font-size: 16px;
+        color: #fff;
+      }
+    }
+    .facebook {
+      background: #4267b2;
+
+      .imgContainer {
+        background: none;
+        margin: 0;
+        height: 100%;
+        img {
+          width: 22px;
+          height: 22px;
+        }
+      }
+    }
   }
 `
 
