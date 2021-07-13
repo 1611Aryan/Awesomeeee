@@ -9,6 +9,7 @@ import {
   autoUpdateContact,
   updateContact,
   deleteContact,
+  logout,
 } from "../Controllers/user.controller"
 
 const router = Router()
@@ -32,5 +33,7 @@ router.patch("/autoUpdateContact", autoUpdateContact)
 router.patch("/updateContact", updateContact)
 
 router.patch("/deleteContact", deleteContact)
+
+router.get("/logout", logout)
 
 export default router

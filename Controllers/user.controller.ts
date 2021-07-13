@@ -134,6 +134,13 @@ export const addContact = async (
   let roomId = uuid()
   const contactName = req.body.name
   const contactUsername = req.body.username
+
+  if (contactUsername === req.user.username) {
+    return res.status(400).send({
+      message: "You can't add yourself as a contact",
+    })
+  }
+
   try {
     const contact = await User.findOne(
       { username: contactUsername },
@@ -295,3 +302,5 @@ export const deleteContact = async (
     return res.status(500).send(err)
   }
 }
+
+export const logout = (req: req): void => req.logOut()

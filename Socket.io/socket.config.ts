@@ -1,6 +1,12 @@
 import http from "http"
 import { Server } from "socket.io"
-import { users, sendMessageListener, disconnectListener } from "./Listeners"
+import {
+  users,
+  sendMessageListener,
+  disconnectListener,
+  joinRoomListener,
+  leaveRoomListener,
+} from "./Listeners"
 import { customUserIdMiddleware } from "./Middlewares"
 import { socketI } from "./types"
 
@@ -48,7 +54,9 @@ const socketConfig = (server: http.Server): void => {
       })
     })
 
+    joinRoomListener(io, socket)
     sendMessageListener(io, socket)
+    leaveRoomListener(io, socket)
     disconnectListener(io, socket)
   })
 }

@@ -3,9 +3,11 @@ import cors from "cors"
 import helmet from "helmet"
 import morgan from "morgan"
 import cookieParser from "cookie-parser"
+import compression from "compression"
 
 const ExpressConfig = (): express.Application => {
   const app = express()
+  app.use(compression())
   app.use(express.urlencoded({ extended: true }))
   app.use(express.json())
   app.use(
@@ -20,7 +22,7 @@ const ExpressConfig = (): express.Application => {
   )
   app.use(helmet())
   app.use(cookieParser())
-  app.use(morgan("tiny"))
+  app.use(morgan("dev"))
 
   return app
 }

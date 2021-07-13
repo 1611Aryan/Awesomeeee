@@ -30,7 +30,7 @@ class JWT {
           try {
             return done(null, token)
           } catch (err) {
-            console.log(err)
+            console.log({ jwt: err })
             return done(err)
           }
         }
