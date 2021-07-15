@@ -10,11 +10,12 @@ import { clearCache } from "./../Mongoose/cache"
 
 import optimizeImage from "../Utilities/optimizeImage"
 import deleteImage from "../Utilities/deleteImage"
+import { IMAGEKIT_ENDPOINT } from "../Utilities/Endpoints"
 
 const imagekit = new ImageKit({
   publicKey: "public_3oRfceoym6fYdLSisJvQyec8czA=",
   privateKey: process.env.IMAGE_KIT_PRIVATE_KEY,
-  urlEndpoint: "https://ik.imagekit.io/qhjbxokyvp1/Messenger_2_0",
+  urlEndpoint: IMAGEKIT_ENDPOINT,
 })
 
 type req = Request & {

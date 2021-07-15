@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt"
 import { Schema, model, Document } from "mongoose"
 import { IVerifyOptions } from "passport-local"
+import { DEFAULT_PROFILE_IMAGE } from "../Utilities/Endpoints"
 
 export type contactI = {
   //Document id
@@ -55,10 +56,8 @@ const UserSchema = new Schema<UserI>(
       },
       required: true,
       default: {
-        thumbnail:
-          "https://ik.imagekit.io/qhjbxokyvp1/tr:n-media_library_thumbnail/Awesome/60b7fb1209590040ecfecbd9_mcbSfnGOa",
-        large:
-          "https://ik.imagekit.io/qhjbxokyvp1/Awesome/60b7fb1209590040ecfecbd9_mcbSfnGOa",
+        thumbnail: DEFAULT_PROFILE_IMAGE.THUMBNAIL,
+        large: DEFAULT_PROFILE_IMAGE.LARGE,
       },
     },
     contacts: {

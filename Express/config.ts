@@ -4,6 +4,7 @@ import helmet from "helmet"
 import morgan from "morgan"
 import cookieParser from "cookie-parser"
 import compression from "compression"
+import { CLIENT_URL } from "../Utilities/Endpoints"
 
 const ExpressConfig = (): express.Application => {
   const app = express()
@@ -12,11 +13,7 @@ const ExpressConfig = (): express.Application => {
   app.use(express.json())
   app.use(
     cors({
-      origin: [
-        "https://messenger1.netlify.app",
-        "http://localhost:3000",
-        "http://localhost:53275",
-      ],
+      origin: CLIENT_URL,
       credentials: true,
     })
   )

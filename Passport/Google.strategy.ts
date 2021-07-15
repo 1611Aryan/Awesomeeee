@@ -1,6 +1,7 @@
 import { PassportStatic } from "passport"
 import { Strategy as GoogleStrategy } from "passport-google-oauth2"
 import User from "../Models/user.model"
+import { GOOGLE_CALLBACK_URL } from "../Utilities/Endpoints"
 
 class Google {
   protected passport: PassportStatic
@@ -16,10 +17,7 @@ class Google {
         {
           clientID: process.env.GOOGLE_CLIENT_ID,
           clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-          callbackURL:
-            process.env.NODE_ENV === "production"
-              ? "https://awesomeeeee.herokuapp.com/auth/google/callback"
-              : "http://localhost:5000/auth/google/callback",
+          callbackURL: GOOGLE_CALLBACK_URL,
         },
         async (accessToken, refreshToken, profile, done) => {
           try {

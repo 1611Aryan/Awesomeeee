@@ -4,21 +4,12 @@ import jwt from "jsonwebtoken"
 import { createHash } from "crypto"
 
 import passport from "passport"
-import User, { UserI } from "../Models/user.model"
+import { UserI } from "../Models/user.model"
+import { CLIENT_URL } from "../Utilities/Endpoints"
 
 const router = Router()
 
-router.get("/", async (_req, res) => {
-  try {
-    const users = await User.find(
-      {},
-      { password: 0, profilePicture: 0, contacts: 0 }
-    )
-    return res.status(200).send(users)
-  } catch (err) {
-    res.status(500).send(err)
-  }
-})
+router.get("/", (_req, res) => res.redirect(CLIENT_URL))
 
 router.post("/signup", (req, res) =>
   passport.authenticate("signup", async (err, user: UserI, info) => {
@@ -94,10 +85,7 @@ router.get("/auth/google/callback", (req, res) =>
 
           const token = jwt.sign(payload, process.env.JWT_SECRET)
 
-          const targetOrigin =
-            process.env.NODE_ENV === "production"
-              ? "https://messenger1.netlify.app/"
-              : "http://localhost:3000"
+          const targetOrigin = CLIENT_URL
 
           const inlineJS = `res = ${JSON.stringify({
             success: true,

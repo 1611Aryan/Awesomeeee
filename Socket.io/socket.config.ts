@@ -1,5 +1,6 @@
 import http from "http"
 import { Server } from "socket.io"
+import { CLIENT_URL } from "../Utilities/Endpoints"
 import {
   users,
   sendMessageListener,
@@ -11,11 +12,7 @@ import { customUserIdMiddleware } from "./Middlewares"
 import { socketI } from "./types"
 
 const corsConfig = {
-  origin: [
-    "http://localhost:53275/",
-    "http://localhost:3000",
-    "https://messenger1.netlify.app",
-  ],
+  origin: CLIENT_URL,
   allowedHeaders: ["JWT"],
   methods: ["GET", "POST"],
   credentials: true,
