@@ -1,14 +1,14 @@
 import styled from "styled-components"
-import Menu from "./Menu"
-import Options from "./Options"
+import SideBar from "./SideBar"
+import Content from "./Content"
 
 const Settings: React.FC<{
   setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ setSettingsActive }) => {
   return (
     <StyledSettings>
-      <Menu setSettingsActive={setSettingsActive} />
-      <Options />
+      <SideBar setSettingsActive={setSettingsActive} />
+      <Content />
     </StyledSettings>
   )
 }
@@ -30,6 +30,15 @@ const StyledSettings = styled.section`
 
   --LeftPanelWidth: 30vw;
   --RightPanelWidth: calc(100vw - var(--LeftPanelWidth));
+
+  --labelFontSize: 1.1em;
+  --labelFontWeight: 400;
+  --labelColor: #b8b8b8;
+
+  --inputFontSize: 1em;
+  --inputFontWeight: 300;
+  --inputColor: rgba(255, 255, 255, 0.8);
+  --inputMargin: 0.5em 0;
 `
 
 export default Settings

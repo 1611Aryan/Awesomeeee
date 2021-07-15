@@ -4,9 +4,9 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import styled from "styled-components"
-import { actionsUser } from "../../../../../Actions/userActions"
-import { updateProfilePicture } from "../../../../../API_Endpoints"
-import { rootState } from "../../../../../Reducers"
+import { actionsUser } from "../../../../Actions/userActions"
+import { updateProfilePicture } from "../../../../API_Endpoints"
+import { rootState } from "../../../../Reducers"
 
 const ProfilePicture: React.FC = () => {
   //Ref
@@ -179,6 +179,8 @@ const StyledProfilePictureContainer = styled.div`
     object-fit: cover;
     position: relative;
     z-index: 2;
+
+    cursor: pointer;
   }
 `
 

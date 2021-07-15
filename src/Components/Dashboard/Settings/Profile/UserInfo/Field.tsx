@@ -8,9 +8,10 @@ import { IoMdCheckmark } from "react-icons/io"
 import { useDispatch, useSelector } from "react-redux"
 
 import axios from "axios"
-import { rootState } from "../../../../../../Reducers"
-import { actionsUser } from "../../../../../../Actions/userActions"
-import { updateUsername } from "../../../../../../API_Endpoints"
+import { rootState } from "../../../../../Reducers"
+import { actionsUser } from "../../../../../Actions/userActions"
+import { updateUsername } from "../../../../../API_Endpoints"
+import { StyledButton } from "../../Styles"
 
 const Field: React.FC<{
   info: {
@@ -105,15 +106,14 @@ const Field: React.FC<{
           name={name}
           value={value}
           ref={inputRef}
-          //onBlur={deactivateInput}
           onChange={changeHandler}
           readOnly
         />
       </div>
       {!activated ? (
-        <button type="button" onClick={activateInput}>
+        <ReStyledButton type="button" onClick={activateInput}>
           Edit
-        </button>
+        </ReStyledButton>
       ) : (
         <div className="buttons">
           <IoMdCheckmark
@@ -140,8 +140,6 @@ const StyledField = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  margin: 1em 0;
-
   .field {
     flex: 1;
 
@@ -151,25 +149,15 @@ const StyledField = styled.div`
     max-width: 80%;
   }
 
-  label {
-    font-size: 1em;
-    text-transform: uppercase;
-    color: #b8b8b8;
-  }
   input {
     width: 100%;
-    margin: 0.2em 0;
     padding: 0.25em;
 
     border: 0;
-
-    border-bottom: 1px solid #fff;
+    border-radius: 2px;
+    border-bottom: 1px solid #fff8;
 
     background: #0002;
-    font-family: var(--fontContent);
-    font-size: 1.1em;
-    font-weight: 200;
-    color: #fff;
 
     transition: all 0.1s;
 
@@ -183,20 +171,6 @@ const StyledField = styled.div`
     padding: 0.25em 0;
   }
 
-  button {
-    width: calc(2.4em + 4ch);
-    border: 0;
-    padding: 0.5em 1.2em;
-
-    background: rgba(255, 255, 255, 0.4);
-
-    color: white;
-    font-size: 0.9em;
-    &:focus {
-      outline: 0;
-    }
-  }
-
   .buttons {
     width: calc(2.4em + 4ch);
     display: flex;
@@ -207,20 +181,18 @@ const StyledField = styled.div`
       font-size: 1.5em;
 
       transition: all 0.1s;
+      color: rgba(255, 255, 255, 0.4);
       @media (hover: hover) {
         :hover {
-          transform: scale(1.1);
-          filter: saturate(250%);
+          color: rgba(255, 255, 255, 0.6);
         }
       }
     }
-    .save {
-      color: #48ff48;
-    }
-    .cancel {
-      color: #ff3232;
-    }
   }
+`
+
+const ReStyledButton = styled(StyledButton)`
+  background: rgba(255, 255, 255, 0.4);
 `
 
 export default Field

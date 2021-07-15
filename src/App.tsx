@@ -8,8 +8,10 @@ const Home = lazy(() => import("./Components/Home"))
 const App: React.FC = () => {
   const { access } = useAccess()
 
+  const resize = false
+
   useEffect(() => {
-    if (false) {
+    if (resize) {
       window.addEventListener("keypress", e => {
         if (e.key === "s") {
           document.querySelector("html")?.setAttribute("theme", "small")
@@ -24,7 +26,7 @@ const App: React.FC = () => {
     }
 
     return window.removeEventListener("keypress", () => {})
-  }, [])
+  }, [resize])
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

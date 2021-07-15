@@ -133,14 +133,19 @@ const Dashboard: React.FC = () => {
   }, [socket])
 
   return (
-    <StyledDashboard>
-      <SideBar setSettingsActive={setSettingsActive} />
-      <Conversations />
-      {selected ? <Chat /> : <ClosedChat />}
-      <Suspense fallback={<div>Loading...</div>}>
-        {settingsActive && <Settings setSettingsActive={setSettingsActive} />}
-      </Suspense>
-    </StyledDashboard>
+    <Suspense fallback={<div>Loading...</div>}>
+      <StyledDashboard>
+        {settingsActive ? (
+          <Settings setSettingsActive={setSettingsActive} />
+        ) : (
+          <>
+            <SideBar setSettingsActive={setSettingsActive} />
+            <Conversations />
+            {selected ? <Chat /> : <ClosedChat />}
+          </>
+        )}
+      </StyledDashboard>
+    </Suspense>
   )
 }
 

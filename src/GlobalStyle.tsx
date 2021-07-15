@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
 }
 
 
+
 html[theme='small']{
 --size:var(--small);
 }

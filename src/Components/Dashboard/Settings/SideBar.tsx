@@ -4,7 +4,7 @@ import { CgProfile, CgInfo } from "react-icons/cg"
 import styled from "styled-components"
 import { useState } from "react"
 
-const Menu: React.FC<{
+const SideBar: React.FC<{
   setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ setSettingsActive }) => {
   const [selected, setSelected] = useState("profile")
@@ -25,33 +25,39 @@ const Menu: React.FC<{
         <h1>Settings</h1>
 
         <ul>
-          <li
-            tabIndex={0}
-            className={selectOption("profile")}
-            onFocus={() => setSelected("profile")}
-            onClick={() => setSelected("profile")}
-          >
-            <CgProfile />
-            <span>My Profile</span>
-          </li>
-          <li
-            tabIndex={0}
-            className={selectOption("info")}
-            onFocus={() => setSelected("info")}
-            onClick={() => setSelected("info")}
-          >
-            <CgInfo />
-            <span>Personal Info</span>
-          </li>
-          <li
-            tabIndex={0}
-            className={selectOption("theme")}
-            onFocus={() => setSelected("theme")}
-            onClick={() => setSelected("theme")}
-          >
-            <AiFillFormatPainter />
-            <span>Theme</span>
-          </li>
+          <a href="#profile">
+            <li
+              tabIndex={0}
+              className={selectOption("profile")}
+              onFocus={() => setSelected("profile")}
+              onClick={() => setSelected("profile")}
+            >
+              <CgProfile />
+              <span>My Profile</span>
+            </li>
+          </a>
+          <a href="#info">
+            <li
+              tabIndex={0}
+              className={selectOption("info")}
+              onFocus={() => setSelected("info")}
+              onClick={() => setSelected("info")}
+            >
+              <CgInfo />
+              <span>Personal Info</span>
+            </li>
+          </a>
+          <a href="#theme">
+            <li
+              tabIndex={0}
+              className={selectOption("theme")}
+              onFocus={() => setSelected("theme")}
+              onClick={() => setSelected("theme")}
+            >
+              <AiFillFormatPainter />
+              <span>Theme</span>
+            </li>
+          </a>
         </ul>
       </div>
     </StyledOptions>
@@ -93,6 +99,7 @@ const StyledOptions = styled.section`
   ul {
     list-style-type: none;
     padding: 0 1em;
+
     li {
       display: flex;
       justify-content: flex-start;
@@ -129,4 +136,4 @@ const StyledOptions = styled.section`
   }
 `
 
-export default Menu
+export default SideBar
