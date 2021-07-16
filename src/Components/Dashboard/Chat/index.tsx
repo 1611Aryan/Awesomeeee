@@ -5,7 +5,7 @@ import Header from "./Header"
 import Input from "./Input"
 import Messages from "./Messages"
 
-const Chat: React.FC<{}> = () => {
+const Chat: React.FC = () => {
   const variants = {
     initial: {
       y: -1000,

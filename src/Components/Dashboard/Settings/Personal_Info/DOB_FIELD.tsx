@@ -1,17 +1,50 @@
 import styled from "styled-components"
-import { IoCalendar } from "react-icons/io5"
-import { StyledButton } from "../Styles"
+import { useState } from "react"
+
+import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css"
+import DatePicker, {
+  DayValue,
+} from "@hassanmojab/react-modern-calendar-datepicker"
 
 const DOB_FIELD: React.FC = () => {
+  const [selectedDay, setSelectedDay] = useState<DayValue>(null)
+
+  const renderCustomInput = ({ ref }: { ref: any }) => (
+    <input
+      readOnly
+      ref={ref} // necessary
+      placeholder="Change"
+      value="Change"
+      style={{
+        width: "8ch",
+        textAlign: "center",
+        boxSizing: "content-box",
+        padding: "0.65em 0.5em",
+        fontSize: "0.9em",
+        fontWeight: 500,
+        borderRadius: "5px",
+        color: "white",
+        outline: "none",
+        background: "linear-gradient(90deg, #6575ff, #4c5eff)",
+        cursor: "pointer",
+      }}
+      className="my-custom-input-class"
+    />
+  )
+
   return (
     <STYLED_DOB_FIELD>
       <div>
         <p className="label">Date of Birth</p>
-        <p className="input">16/11/2001</p>
+        <p className="input">{`${selectedDay?.day}/${selectedDay?.month}/${selectedDay?.year}`}</p>
       </div>
-      <ReStyledButton type="button">
-        <IoCalendar />
-      </ReStyledButton>
+
+      <DatePicker
+        value={selectedDay}
+        onChange={setSelectedDay}
+        renderInput={renderCustomInput}
+        calendarClassName="responsive-calendar"
+      />
     </STYLED_DOB_FIELD>
   )
 }
@@ -19,13 +52,10 @@ const STYLED_DOB_FIELD = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
 
-const ReStyledButton = styled(StyledButton)`
-  background: linear-gradient(90deg, #6575ff, #4c5eff);
-  svg {
-    font-size: 1.3em;
-    color: #fff;
+  .responsive-calendar {
+    margin-top: -1.5em;
+    font-size: 8px;
   }
 `
 

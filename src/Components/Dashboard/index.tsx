@@ -7,7 +7,6 @@ import sizeOf from "object-sizeof"
 
 import SideBar from "./SideBar"
 import Conversations from "./Conversations"
-import Chat from "./Chat"
 import ClosedChat from "./ClosedChat"
 
 import { useAccess } from "../../Providers/AccessProvider"
@@ -25,8 +24,10 @@ import {
   logoutEndpoint,
   WEBSOCKET_ENDPOINT,
 } from "../../API_Endpoints"
+import Petal from "../Loaders/Petal"
 
 const Settings = lazy(() => import("./Settings"))
+const Chat = lazy(() => import("./Chat"))
 
 const Dashboard: React.FC = () => {
   const [settingsActive, setSettingsActive] = useState(false)
@@ -133,19 +134,21 @@ const Dashboard: React.FC = () => {
   }, [socket])
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <StyledDashboard>
-        {settingsActive ? (
+    <StyledDashboard>
+      {settingsActive ? (
+        <Suspense fallback={<Petal />}>
           <Settings setSettingsActive={setSettingsActive} />
-        ) : (
-          <>
-            <SideBar setSettingsActive={setSettingsActive} />
-            <Conversations />
+        </Suspense>
+      ) : (
+        <>
+          <SideBar setSettingsActive={setSettingsActive} />
+          <Conversations />
+          <Suspense fallback={<Petal />}>
             {selected ? <Chat /> : <ClosedChat />}
-          </>
-        )}
-      </StyledDashboard>
-    </Suspense>
+          </Suspense>
+        </>
+      )}
+    </StyledDashboard>
   )
 }
 

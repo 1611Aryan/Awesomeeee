@@ -10,10 +10,11 @@ const COLOR_PALETTE_FIELD: React.FC = () => {
     "What's Poppin",
   ]
 
-  const [colorPalette, setColorPalette] = useState<string>("Cosmic Blue")
+  const [colorPalette, setColorPalette] = useState<string>(() => options[0])
 
   return (
     <CUSTOM_SELECT
+      label={"Color Palette"}
       options={options}
       colorPalette={colorPalette}
       setColorPalette={setColorPalette}

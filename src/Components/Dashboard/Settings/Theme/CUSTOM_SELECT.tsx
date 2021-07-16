@@ -3,10 +3,11 @@ import styled from "styled-components"
 import { BsCaretDownFill } from "react-icons/bs"
 
 const CUSTOM_SELECT: React.FC<{
+  label: string
   options: string[]
   colorPalette: string
   setColorPalette: React.Dispatch<React.SetStateAction<string>>
-}> = ({ options, colorPalette, setColorPalette }) => {
+}> = ({ options, colorPalette, setColorPalette, label }) => {
   const selectRef = useRef<HTMLDivElement>(null)
 
   const [active, setActive] = useState(false)
@@ -22,7 +23,7 @@ const CUSTOM_SELECT: React.FC<{
 
   return (
     <StyledField theme={{ height }}>
-      <div className="label">Color Palette</div>
+      <div className="label">{label}</div>
       <div className="select input" ref={selectRef}>
         <div className="selected" onClick={() => setActive(true)}>
           <span>{colorPalette}</span>
