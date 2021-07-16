@@ -13,7 +13,6 @@ import socketConfig from "./Socket.io/socket.config"
 import Router from "./Routes/normal.routes"
 import PrivateRouter from "./Routes/private.routes"
 
-console.log(`Worker ${process.pid} started`)
 new PassportConfig(passport).init()
 
 const PORT = process.env.PORT || 5000

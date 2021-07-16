@@ -2,6 +2,7 @@ import { PassportStatic } from "passport"
 import { Strategy as GoogleStrategy } from "passport-google-oauth2"
 import User from "../Models/user.model"
 import { GOOGLE_CALLBACK_URL } from "../Utilities/Endpoints"
+import { randomBytes } from "crypto"
 
 class Google {
   protected passport: PassportStatic
@@ -9,6 +10,10 @@ class Google {
   constructor(passport: PassportStatic) {
     this.passport = passport
   }
+
+  createUsername = (email: string): string => email.split("@", 1)[0]
+
+  genPassword = (length = 12): string => randomBytes(length).toString("hex")
 
   google = (): void => {
     this.passport.use(
@@ -23,7 +28,18 @@ class Google {
           try {
             const user = await User.findOne({ email: profile.email })
             if (user) return done(null, user)
-            else return done("Not found")
+            else {
+              const newUser = await User.create({
+                email: profile.email,
+                username: this.createUsername(profile.email),
+                password: this.genPassword(),
+                profilePicture: {
+                  large: profile.picture,
+                  thumbnail: profile.picture,
+                },
+              })
+              return done(null, newUser)
+            }
           } catch (err) {
             console.log({
               google: err,
