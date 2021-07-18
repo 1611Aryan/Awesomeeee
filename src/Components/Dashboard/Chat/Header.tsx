@@ -11,45 +11,32 @@ const Header: React.FC<{}> = () => {
 
   const imageRef = useRef<HTMLImageElement>(null)
 
+  const loadImage = () =>
+    imageRef.current ? imageRef.current.classList.add("visible") : ""
+
+  const selectedContact =
+    selected && contacts
+      ? contacts.filter(contact => contact.contactId === selected.contactId)[0]
+      : null
+
   return (
     <StyledHeader>
       <div className="profileContainer">
         <div className="profileImage">
           <img
             ref={imageRef}
-            onLoad={() =>
-              imageRef.current
-                ? (imageRef.current.style.clipPath = "circle(100% at center")
-                : ""
-            }
-            decoding="async"
-            src={
-              selected && contacts
-                ? contacts.filter(
-                    contact => contact.contactId === selected.contactId
-                  )[0].profilePicture.thumbnail
-                : ""
-            }
+            onLoad={loadImage}
+            src={selectedContact?.profilePicture.thumbnail}
             alt="contact profile"
           />
         </div>
         <div className="info">
-          <h1>
-            {selected &&
-              contacts &&
-              contacts.filter(
-                contact => contact.contactId === selected.contactId
-              )[0].name}
-          </h1>
-          {selected &&
-            contacts &&
-            contacts.filter(
-              contact => contact.contactId === selected.contactId
-            )[0].online && (
-              <div className="online">
-                <div className="dot"></div> <span>Online</span>
-              </div>
-            )}
+          <h1>{selectedContact?.name}</h1>
+          {selectedContact?.online && (
+            <div className="online">
+              <div className="dot"></div> <span>Online</span>
+            </div>
+          )}
         </div>
       </div>
       <HiDotsVertical />
@@ -98,13 +85,20 @@ const StyledHeader = styled.header`
       align-self: center;
       background: rgb(44, 44, 44);
       overflow: hidden;
+
+      .visible {
+        opacity: 1;
+      }
       img {
         height: 100%;
         width: 100%;
 
+        border-radius: 50%;
+
         object-fit: cover;
-        clip-path: circle(0);
-        transition: all 0.2s;
+
+        opacity: 0;
+        transition: all 200ms;
       }
     }
 

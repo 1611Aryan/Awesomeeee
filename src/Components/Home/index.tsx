@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react"
 import { Route, Switch } from "react-router"
-import Petal from "../Loaders/Petal"
+import Petal from "../Loaders/Petal/Petal"
 
 const Login = lazy(() => import("./Login"))
 const SignUp = lazy(() => import("./SignUp"))

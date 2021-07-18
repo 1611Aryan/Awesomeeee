@@ -2,6 +2,8 @@ import { IoMdSettings } from "react-icons/io"
 import { FiLogOut } from "react-icons/fi"
 import styled from "styled-components"
 import { useAccess } from "../../../../Providers/AccessProvider"
+import axios from "axios"
+import { logoutEndpoint } from "../../../../API_Endpoints"
 
 const Options: React.FC<{
   setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
@@ -12,8 +14,12 @@ const Options: React.FC<{
     setSettingsActive(true)
   }
 
-  const logout = () => {
+  const logout = async () => {
     setAccess({ loggedIn: false, username: null })
+    setAccess({ loggedIn: false, username: null })
+    await axios[logoutEndpoint.METHOD](logoutEndpoint.URL, {
+      withCredentials: true,
+    })
   }
 
   return (

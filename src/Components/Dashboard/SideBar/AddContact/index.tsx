@@ -1,8 +1,10 @@
 import { AnimatePresence } from "framer-motion"
-import { useState } from "react"
+import { lazy, Suspense, useState } from "react"
 import { FaUserPlus } from "react-icons/fa"
 import styled from "styled-components"
-import Modal from "./Modal"
+import Overlay from "../../../Loaders/Overlay/Overlay"
+
+const Modal = lazy(() => import("./Modal"))
 
 const AddContact = () => {
   const [addContact, setAddContact] = useState(false)
@@ -14,9 +16,11 @@ const AddContact = () => {
   return (
     <StyledAddContact>
       <FaUserPlus onClick={clickHandler} />
-      <AnimatePresence>
-        {addContact && <Modal setAddContact={setAddContact} />}
-      </AnimatePresence>
+      <Suspense fallback={<Overlay />}>
+        <AnimatePresence>
+          {addContact && <Modal setAddContact={setAddContact} />}
+        </AnimatePresence>
+      </Suspense>
     </StyledAddContact>
   )
 }

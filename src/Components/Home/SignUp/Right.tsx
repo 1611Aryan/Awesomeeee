@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 const Right: React.FC = () => {
   return (
@@ -12,8 +12,8 @@ const Right: React.FC = () => {
         </span>
       </p>
     </StyledRight>
-  );
-};
+  )
+}
 
 const StyledRight = styled.div`
   width: var(--rightWidth);
@@ -66,6 +66,10 @@ const StyledRight = styled.div`
       font-weight: 500;
     }
   }
-`;
 
-export default Right;
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
+`
+
+export default Right

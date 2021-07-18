@@ -3,8 +3,6 @@ import styled from "styled-components"
 import io from "socket.io-client"
 import axios from "axios"
 
-import sizeOf from "object-sizeof"
-
 import SideBar from "./SideBar"
 import Conversations from "./Conversations"
 import ClosedChat from "./ClosedChat"
@@ -13,7 +11,7 @@ import { useAccess } from "../../Providers/AccessProvider"
 import { useSelectedContact } from "../../Providers/SelectedContactProvider"
 import { useSocket } from "../../Providers/SocketProvider"
 import { actionsUser, userI } from "../../Actions/userActions"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import {
   actionsContacts,
   contactI,
@@ -24,7 +22,9 @@ import {
   logoutEndpoint,
   WEBSOCKET_ENDPOINT,
 } from "../../API_Endpoints"
-import Petal from "../Loaders/Petal"
+import Petal from "../Loaders/Petal/Petal"
+import { rootState } from "../../Reducers"
+import Overlay from "../Loaders/Overlay/Overlay"
 
 const Settings = lazy(() => import("./Settings"))
 const Chat = lazy(() => import("./Chat"))
@@ -35,6 +35,8 @@ const Dashboard: React.FC = () => {
   const { socket, setSocket } = useSocket()
   const { selected } = useSelectedContact()
   const { setAccess } = useAccess()
+
+  const { user } = useSelector((state: rootState) => state)
 
   const dispatch = useDispatch()
 
@@ -54,7 +56,6 @@ const Dashboard: React.FC = () => {
         }>(getProfile.URL, {
           withCredentials: true,
         })
-        console.log(sizeOf(res))
         dispatch({
           type: actionsUser.ADD_USER,
           payload: { user: res.data.user },
@@ -134,21 +135,23 @@ const Dashboard: React.FC = () => {
   }, [socket])
 
   return (
-    <StyledDashboard>
-      {settingsActive ? (
-        <Suspense fallback={<Petal />}>
-          <Settings setSettingsActive={setSettingsActive} />
-        </Suspense>
-      ) : (
-        <>
-          <SideBar setSettingsActive={setSettingsActive} />
-          <Conversations />
-          <Suspense fallback={<Petal />}>
-            {selected ? <Chat /> : <ClosedChat />}
-          </Suspense>
-        </>
+    <Suspense fallback={<Petal />}>
+      {user && (
+        <StyledDashboard>
+          {settingsActive ? (
+            <Settings setSettingsActive={setSettingsActive} />
+          ) : (
+            <>
+              <SideBar setSettingsActive={setSettingsActive} />
+              <Conversations />
+              <Suspense fallback={<Overlay />}>
+                {selected ? <Chat /> : <ClosedChat />}
+              </Suspense>
+            </>
+          )}
+        </StyledDashboard>
       )}
-    </StyledDashboard>
+    </Suspense>
   )
 }
 

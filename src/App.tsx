@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react"
 import { useAccess } from "./Providers/AccessProvider"
-import Petal from "./Components/Loaders/Petal"
+import Petal from "./Components/Loaders/Petal/Petal"
 
 const Dashboard = lazy(() => import("./Components/Dashboard"))
 const Home = lazy(() => import("./Components/Home"))

@@ -1,21 +1,4 @@
-import styled from "styled-components"
-
-const Petal = () => {
-  return (
-    <StyledPetalLoader>
-      <div className="loaderContainer">
-        <span className="wave5"></span>
-
-        <span className="wave1"></span>
-        <span className="wave2"></span>
-        <span className="wave3"></span>
-        <span className="wave4"></span>
-      </div>
-    </StyledPetalLoader>
-  )
-}
-
-const StyledPetalLoader = styled.div`
+.petal {
   position: fixed;
   top: 0;
   left: 0;
@@ -95,5 +78,4 @@ const StyledPetalLoader = styled.div`
       }
     }
   }
-`
-export default Petal
+}

@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
-import HeroText from "./Herotext";
-import Right from "./Right";
+import HeroText from "./Herotext"
+import Right from "./Right"
 
 const Main: React.FC = () => {
   return (
@@ -11,8 +11,8 @@ const Main: React.FC = () => {
       </div>
       <Right />
     </StyledMain>
-  );
-};
+  )
+}
 
 const StyledMain = styled.main`
   width: 100vw;
@@ -32,6 +32,12 @@ const StyledMain = styled.main`
     align-items: flex-start;
     flex-direction: column;
   }
-`;
 
-export default Main;
+  @media only screen and (max-width: 600px) {
+    .left {
+      display: none;
+    }
+  }
+`
+
+export default Main

@@ -9,11 +9,8 @@ const ContactProfilePicture: React.FC<{
 }> = ({ profilePicture }) => {
   const imageRef = useRef<HTMLImageElement>(null)
 
-  const loadImage = () => {
-    return imageRef.current
-      ? (imageRef.current.style.clipPath = "circle(100% at center")
-      : ""
-  }
+  const loadImage = () =>
+    imageRef.current ? imageRef.current.classList.add("visible") : ""
 
   return (
     <StyleProfilePicture>
@@ -37,13 +34,18 @@ const StyleProfilePicture = styled.div`
   align-self: center;
   background: rgb(44, 44, 44);
   overflow: hidden;
+
+  .visible {
+    opacity: 1;
+  }
+
   img {
     height: 100%;
     width: 100%;
     border-radius: 50%;
     object-fit: cover;
-    clip-path: circle(0);
-    transition: all 0.2s;
+    opacity: 0;
+    transition: all ease 0.2s;
   }
 `
 

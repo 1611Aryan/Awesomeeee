@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react"
+import styled from "styled-components"
+import { motion } from "framer-motion"
 
-const messages = ["Conversations", "Stories", "Talking"];
+const messages = ["Conversations", "Stories", "Talking"]
 
 const HeroText: React.FC = () => {
-  const [text, setText] = useState(messages[0]);
-  const [active, setActive] = useState(true);
+  const [text, setText] = useState(messages[0])
+  const [active, setActive] = useState(true)
 
   const variants = {
     initial: {
@@ -18,19 +18,19 @@ const HeroText: React.FC = () => {
     exit: {
       x: "100%",
     },
-  };
+  }
 
   useEffect(() => {
-    let i = 0;
+    let i = 0
     const interval = setInterval(() => {
-      i++;
-      setActive(false);
-      setActive(true);
-      setText(messages[i % messages.length]);
-    }, 2500);
+      i++
+      setActive(false)
+      setActive(true)
+      setText(messages[i % messages.length])
+    }, 2500)
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <StyledHeroText>
@@ -47,12 +47,12 @@ const HeroText: React.FC = () => {
       )}
       <p>BEGIN</p>
     </StyledHeroText>
-  );
-};
+  )
+}
 
 const StyledHeroText = styled.div`
   font-family: var(--fontHeading);
-  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
   font-weight: 400;
   color: white;
 
@@ -63,6 +63,6 @@ const StyledHeroText = styled.div`
   .bold {
     font-weight: 700;
   }
-`;
+`
 
-export default HeroText;
+export default HeroText

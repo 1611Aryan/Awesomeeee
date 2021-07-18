@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from "react-router-dom"
+import styled from "styled-components"
 
 const Header: React.FC = () => {
   return (
@@ -12,10 +12,12 @@ const Header: React.FC = () => {
         <button>Login</button>
       </Link>
     </StyledHeader>
-  );
-};
+  )
+}
 
 const StyledHeader = styled.header`
+  --headerFontSize: 2.5em;
+
   width: 100vw;
   height: var(--navHeight);
   padding: 0 var(--padding);
@@ -29,7 +31,11 @@ const StyledHeader = styled.header`
   position: relative;
   z-index: 10;
   h1 {
-    font-size: 2.5em;
+    font-size: clamp(
+      calc(var(--headerFontSize) - 0.75em),
+      4vw,
+      var(--headerFontSize)
+    );
     font-weight: 700;
     color: var(--primary);
   }
@@ -38,12 +44,25 @@ const StyledHeader = styled.header`
     padding: 0.42rem 1.1rem;
     background: #fff;
 
-    font-size: 1.25em;
+    font-size: clamp(
+      calc((var(--headerFontSize) - 0.75em) / 2),
+      4vw,
+      calc(var(--headerFontSize) / 2)
+    );
     font-weight: 700;
     color: var(--primary);
 
     border-radius: 6px;
   }
-`;
 
-export default Header;
+  @media only screen and (max-width: 600px) {
+    button {
+      color: #fff;
+      background: var(--primary);
+      border-radius: 3px;
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+  }
+`
+
+export default Header

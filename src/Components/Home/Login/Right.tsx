@@ -21,7 +21,7 @@ const StyledRight = styled.div`
   .whiteBg {
     position: absolute;
     top: 0;
-    right: 0%;
+    right: 0;
     width: 40vw;
     height: 100vh;
 
@@ -29,6 +29,18 @@ const StyledRight = styled.div`
     z-index: 1;
 
     background: #fff;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    .whiteBg {
+      bottom: 0;
+      left: 0;
+      width: 100vh;
+      height: 100vh;
+      border-radius: 50%;
+      transform: translate(-45%, 20%);
+    }
   }
 `
 

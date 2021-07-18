@@ -90,12 +90,15 @@ const StyledForm = styled.form`
   z-index: 5;
 
   .infoMessage {
-    height: 0.9em;
+    line-height: 1;
+    height: clamp(0.6em, 1vw, 0.8em);
+    font-size: clamp(0.6em, 1vw, 0.8em);
   }
 
   .successInfo {
     line-height: 1;
-    font-size: 0.9em;
+    height: clamp(0.6em, 1vw, 0.8em);
+    font-size: clamp(0.6em, 1vw, 0.8em);
     font-weight: 300;
     a {
       font-size: 1.05em;
@@ -107,7 +110,8 @@ const StyledForm = styled.form`
   .errorInfo {
     line-height: 1;
     color: red;
-    font-size: 0.9em;
+    height: clamp(0.6em, 1vw, 0.8em);
+    font-size: clamp(0.6em, 1vw, 0.8em);
   }
   .inputContainer {
     width: 100%;
@@ -117,13 +121,14 @@ const StyledForm = styled.form`
     margin: 1em 0;
 
     .error {
-      box-shadow: inset 1px 1px 5px rgba(255, 0, 0, 0.05),
-        inset -1px -1px 5px rgba(255, 0, 0, 0.05);
+      border: 1px solid rgba(255, 0, 0, 0.2);
     }
   }
 
   label {
-    font-size: 1.75em;
+    color: var(--primary);
+
+    font-size: clamp(1em, 4vw, 1.75em);
   }
 
   input {
@@ -132,7 +137,7 @@ const StyledForm = styled.form`
     border-radius: 5px;
 
     padding: 0.4em 0.5em;
-    font-size: 1.25em;
+    font-size: clamp(0.9em, 3vw, 1.1em);
   }
 
   button {
@@ -140,11 +145,26 @@ const StyledForm = styled.form`
     color: #fff;
     border-radius: 5px;
 
-    padding: 0.5em 1em;
-    font-size: 1.25em;
+    padding: clamp(0.3em, 2vw, 0.5em) 1em;
+    font-size: clamp(1em, 3vw, 1.25em);
     font-family: var(--fontHeading);
     letter-spacing: 1px;
     font-weight: 500;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .inputContainer {
+      label {
+        text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+      }
+      input {
+        width: 70%;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+      }
+      .error {
+        border: 1px solid rgba(255, 0, 0, 0.1);
+      }
+    }
   }
 `
 

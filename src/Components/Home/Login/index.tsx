@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
-import styled from "styled-components";
-import Header from "./Header";
-import Main from "./Main";
+import { motion } from "framer-motion"
+import styled from "styled-components"
+import Header from "./Header"
+import Main from "./Main"
 
 const Login: React.FC = () => {
   const variants = {
@@ -11,15 +11,15 @@ const Login: React.FC = () => {
     animate: {
       x: 0,
     },
-  };
+  }
 
   return (
     <StyledLogin variants={variants} initial="initial" animate="animate">
       <Header />
       <Main />
     </StyledLogin>
-  );
-};
+  )
+}
 
 const StyledLogin = styled(motion.div)`
   width: 100vw;
@@ -30,9 +30,9 @@ const StyledLogin = styled(motion.div)`
 
   will-change: transform;
 
-  --padding: clamp(2rem, 5vw, 4rem);
+  --padding: clamp(1em, 5vw, 4em);
   --navHeight: 10vh;
   --primary: #4d4476;
-`;
+`
 
-export default Login;
+export default Login
