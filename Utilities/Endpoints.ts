@@ -12,8 +12,9 @@ export const IMAGEKIT_ENDPOINT =
   "https://ik.imagekit.io/qhjbxokyvp1/Messenger_2_0"
 
 export const DEFAULT_PROFILE_IMAGE = {
+  FILEID: "60f707d1bfac3672bcef4d3c",
   LARGE:
-    "https://ik.imagekit.io/qhjbxokyvp1/Awesome/60b7fb1209590040ecfecbd9_mcbSfnGOa",
+    "https://ik.imagekit.io/qhjbxokyvp1/Awesome/60b7fb1209590040ecfecbd9_QqTHMOAeAI",
   THUMBNAIL:
-    "https://ik.imagekit.io/qhjbxokyvp1/tr:n-media_library_thumbnail/Awesome/60b7fb1209590040ecfecbd9_mcbSfnGOa",
+    "https://ik.imagekit.io/qhjbxokyvp1/tr:n-media_library_thumbnail/Awesome/60b7fb1209590040ecfecbd9_QqTHMOAeAI",
 }

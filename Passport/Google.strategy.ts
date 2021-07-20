@@ -33,10 +33,6 @@ class Google {
                 email: profile.email,
                 username: this.createUsername(profile.email),
                 password: this.genPassword(),
-                profilePicture: {
-                  large: profile.picture,
-                  thumbnail: profile.picture,
-                },
               })
               return done(null, newUser)
             }

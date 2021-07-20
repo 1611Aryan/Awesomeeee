@@ -12,7 +12,7 @@ export type contactI = {
   //Immutable
   contactId: string
   //URL=> image/id=>wont change
-  profilePicture: UserI["profilePicture"]
+  profilePicture: { thumbnail: string; large: string }
   //Constant
   roomId: string
   lastSeen: string
@@ -27,6 +27,7 @@ export type UserI = {
   profilePicture: {
     thumbnail: string
     large: string
+    fileId: string
   }
   contacts: contactI[]
   password: string
@@ -56,6 +57,7 @@ const UserSchema = new Schema<UserI>(
       },
       required: true,
       default: {
+        fileId: DEFAULT_PROFILE_IMAGE.FILEID,
         thumbnail: DEFAULT_PROFILE_IMAGE.THUMBNAIL,
         large: DEFAULT_PROFILE_IMAGE.LARGE,
       },

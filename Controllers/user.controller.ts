@@ -10,7 +10,10 @@ import { clearCache } from "./../Mongoose/cache"
 
 import optimizeImage from "../Utilities/optimizeImage"
 import deleteImage from "../Utilities/deleteImage"
-import { IMAGEKIT_ENDPOINT } from "../Utilities/Endpoints"
+import {
+  DEFAULT_PROFILE_IMAGE,
+  IMAGEKIT_ENDPOINT,
+} from "../Utilities/Endpoints"
 
 const imagekit = new ImageKit({
   publicKey: "public_3oRfceoym6fYdLSisJvQyec8czA=",
@@ -90,8 +93,19 @@ export const changeProfilePicture = async (
   const imagePath = path.join(__dirname, "..", "uploads", req.file.filename)
   const mimeType = req.file.mimetype
   let minified = false
+  const oldProfilePictureFileId: string = req.body.fileId
 
   try {
+    if (
+      oldProfilePictureFileId !== DEFAULT_PROFILE_IMAGE.FILEID &&
+      !oldProfilePictureFileId.includes("google-")
+    ) {
+      imagekit.deleteFile(oldProfilePictureFileId, (err, result) => {
+        if (err) console.log(err)
+        else console.log(result)
+      })
+    }
+
     let finalImagePath = imagePath
     if (req.file.size > 200_000) {
       await optimizeImage(imagePath, mimeType)
@@ -108,6 +122,7 @@ export const changeProfilePicture = async (
     const profilePicture = {
       large: response.url,
       thumbnail: response.thumbnailUrl,
+      fileId: response.fileId,
     }
 
     const user = await User.findByIdAndUpdate(id, {
@@ -117,7 +132,7 @@ export const changeProfilePicture = async (
     })
     if (user) {
       clearCache(id)
-      return res.status(200).send("Profile Picture Updated")
+      return res.status(200).send({ profilePicture })
     } else return res.sendStatus(404)
   } catch (err) {
     console.log({ changeProfilePicture: err })
@@ -152,8 +167,6 @@ export const addContact = async (
       const mutualContact = contact.contacts
         ? contact.contacts.filter(c => c.contactId === id)
         : null
-
-      console.log({ mutualContact })
 
       if (mutualContact && mutualContact[0]) {
         roomId = mutualContact[0].roomId
@@ -304,4 +317,8 @@ export const deleteContact = async (
   }
 }
 
-export const logout = (req: req): void => req.logOut()
+export const logout = (req: req, res: Response): void => {
+  req.logOut()
+  res.sendStatus(200)
+  return
+}
