@@ -41,6 +41,7 @@ const ProfilePicture: React.FC = () => {
 
   const submitProfilePicture = async (formData: FormData) => {
     try {
+      user && formData.append("fileId", user.profilePicture.fileId)
       const res = await axios[updateProfilePicture.METHOD](
         updateProfilePicture.URL,
         formData,
@@ -48,15 +49,16 @@ const ProfilePicture: React.FC = () => {
           withCredentials: true,
         }
       )
-      console.log(res)
+
       dispatch({
         type: actionsUser.UPDATE_USER,
         payload: {
           property: {
             key: "profilePicture",
             value: {
-              thumbnail: profilePicture.src,
-              large: profilePicture.src,
+              thumbnail: res.data.profilePicture.thumbnail,
+              large: res.data.profilePicture.large,
+              fileId: res.data.profilePicture.fileId,
             },
           },
         },

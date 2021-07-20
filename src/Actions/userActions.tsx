@@ -8,6 +8,7 @@ export type userI = {
   profilePicture: {
     large: string
     thumbnail: string
+    fileId: string
   }
 }
 

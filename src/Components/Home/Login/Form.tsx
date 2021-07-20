@@ -96,15 +96,16 @@ const Form: React.FC = () => {
           />
         </div>
       </div>
-      <OAuth />
+
       <button>Login</button>
+      <OAuth />
     </StyledForm>
   )
 }
 
 const StyledForm = styled.form`
   position: relative;
-  width: 100%;
+  width: 90%;
   padding: 0 var(--padding) 0 calc(var(--padding) * 1.25);
 
   display: flex;
@@ -120,15 +121,16 @@ const StyledForm = styled.form`
     width: 100%;
 
     label {
-      font-size: clamp(1em, 4vw, 1.75em);
+      font-size: clamp(1em, 4vw, 1.5em);
     }
 
     .errorMessage {
       color: red;
       line-height: 1;
-      height: clamp(0.6em, 1vw, 0.8em);
+      height: clamp(0.6em, 1vw, 0.9em);
       font-size: clamp(0.6em, 1vw, 0.8em);
       font-weight: 300;
+      margin: 0.1em 0;
     }
 
     div {
@@ -142,9 +144,9 @@ const StyledForm = styled.form`
       border-radius: 5px;
 
       padding: 0.5em;
-      font-size: clamp(0.9em, 3vw, 1.1em);
+      font-size: clamp(0.8em, 3vw, 1em);
 
-      margin-top: 0.5em;
+      margin-top: 0.25em;
       transition: box-shadow 0.3s;
     }
 
@@ -159,10 +161,9 @@ const StyledForm = styled.form`
     color: #fff;
     border-radius: 5px;
 
-    padding: clamp(0.3em, 2vw, 0.5em) 1em;
-    font-size: clamp(1em, 3vw, 1.25em);
-    font-family: var(--fontHeading);
-    letter-spacing: 1px;
+    padding: clamp(0.3em, 2vw, 0.6em) 1.5em;
+    font-size: clamp(0.8em, 3vw, 1em);
+
     font-weight: 500;
   }
 

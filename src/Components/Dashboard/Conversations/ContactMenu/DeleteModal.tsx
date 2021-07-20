@@ -1,6 +1,8 @@
 import axios from "axios"
 import React from "react"
+import { useDispatch } from "react-redux"
 import styled from "styled-components"
+import { actionsContacts } from "../../../../Actions/contactsAction"
 import { deleteContact } from "../../../../API_Endpoints"
 import { useSocket } from "../../../../Providers/SocketProvider"
 
@@ -19,13 +21,14 @@ const DeleteModal: React.FC<{
   cancel: () => void
 }> = ({ menuConfig, cancel }) => {
   const { socket } = useSocket()
+  const dispatch = useDispatch()
 
   const DeleteContact = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (menuConfig.contact)
       try {
-        const res = await axios[deleteContact.METHOD](
+        await axios[deleteContact.METHOD](
           deleteContact.URL,
           {
             contactId: menuConfig.contact.contactId,
@@ -34,9 +37,14 @@ const DeleteModal: React.FC<{
             withCredentials: true,
           }
         )
-        console.log(res)
+        dispatch({
+          type: actionsContacts.DELETE_CONTACT,
+          payload: {
+            deletedContactId: menuConfig.contact.contactId,
+          },
+        })
         socket && socket.emit("leaveRoom", menuConfig.contact.roomId)
-        cancel();
+        cancel()
       } catch (err) {
         console.log(err.response)
       }

@@ -43,7 +43,7 @@ const Modal: React.FC<{
     },
   }
 
-  const dispatchUser = useDispatch()
+  const dispatch = useDispatch()
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(input => ({
@@ -79,7 +79,7 @@ const Modal: React.FC<{
       console.log(res)
       setErr(res.data.message)
 
-      dispatchUser({
+      dispatch({
         type: actionsContacts.ADD_CONTACT,
         payload: { newContact: { ...res.data.contact, messages: null } },
       })

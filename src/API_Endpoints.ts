@@ -32,7 +32,7 @@ export const googleAuth: endpoint = {
 }
 
 export const signUpEndpoint: endpoint = {
-  URL: `${baseUrl}/signuo`,
+  URL: `${baseUrl}/signup`,
   METHOD: methods.POST,
 }
 

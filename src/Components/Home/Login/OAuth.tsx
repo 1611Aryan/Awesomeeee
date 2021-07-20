@@ -36,23 +36,19 @@ const OAuth: React.FC = () => {
     <StyledOAuth>
       <div className="or">
         <div className="line"></div>
-        <h3>OR</h3>
+        <h3>Or, login with</h3>
         <div className="line"></div>
       </div>
 
       <div className="providers">
         <div className="logo google" onClick={googleAuthHandler}>
-          <div className="imgContainer">
-            <img src={google} alt="google" />
-          </div>
-          <span>Sign in with Google</span>
+          <img src={google} alt="google" />
+          <span>Google</span>
         </div>
 
         <div className="logo facebook">
-          <div className="imgContainer">
-            <img src={facebook} alt="facebook" />
-          </div>
-          <span>Sign in with Facebook</span>
+          <img src={facebook} alt="facebook" />
+          <span>Facebook</span>
         </div>
       </div>
     </StyledOAuth>
@@ -61,7 +57,7 @@ const OAuth: React.FC = () => {
 
 const StyledOAuth = styled.div`
   width: 100%;
-  margin: clamp(0.5em, 3vw, 1em) 0 clamp(0.75em, 3vw, 1.5em);
+  margin: clamp(0.5em, 3vw, 1em) 0;
   .or {
     width: 100%;
     display: flex;
@@ -71,12 +67,13 @@ const StyledOAuth = styled.div`
     .line {
       width: 100%;
       height: 1px;
-      background: #8b8b8b;
+      background: #bebebe;
       flex: 1;
     }
     h3 {
-      font-size: clamp(0.9em, 4vw, 1.25em);
+      font-size: clamp(0.8em, 3vw, 1em);
       color: #8b8b8b;
+      font-weight: 700;
     }
   }
   .providers {
@@ -85,60 +82,35 @@ const StyledOAuth = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 2.5em;
   }
-
   .logo {
-    background: #4285f4;
+    border-radius: 15px;
+    box-shadow: 0 0 2px #0008;
 
-    border-radius: 2px;
+    padding: clamp(0.8em, 2vw, 0.8em) 2em;
+    font-size: clamp(0.8em, 3vw, 1em);
 
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     height: 100%;
 
     cursor: pointer;
-
-    .imgContainer {
-      width: calc(2.5em - 2px);
-      height: 100%;
-
-      background: #fff;
-      display: grid;
-      place-items: center;
-
-      border-radius: 1px;
-
-      img {
-        width: 50%;
-        object-fit: cover;
-      }
+    img {
+      width: 22px;
+      height: 22px;
     }
     span {
+      width: 9ch;
       font-family: var(--fontGoogle);
-      padding: 0 2rem 0 0.5rem;
-      font-size: clamp(0.6em, 3vw, 1em);
-      color: #fff;
+      margin-left: 1em;
+      color: #000;
     }
-  }
 
-  .google {
-    .imgContainer {
-      border: 1px solid #4285f4;
-    }
-  }
-  .facebook {
-    background: #4267b2;
-
-    .imgContainer {
-      background: none;
-      margin: 0;
-      height: 100%;
-      img {
-        width: 22px;
-        height: 22px;
-      }
+    &:hover,
+    &:focus {
+      box-shadow: none;
+      background: #f8f8f8;
     }
   }
 

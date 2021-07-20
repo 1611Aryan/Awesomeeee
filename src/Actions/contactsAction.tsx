@@ -9,7 +9,10 @@ export type messageI = {
 export type contactI = {
   name: userI["username"]
   contactId: userI["_id"]
-  profilePicture: userI["profilePicture"]
+  profilePicture: {
+    thumbnail: string
+    large: string
+  }
   roomId: string
   online: boolean | null
   lastSeen: string
@@ -24,6 +27,7 @@ export enum actionsContacts {
   ADD_CONTACT = "addContact",
   CHANGE_CONTACT_STATUS = "changeContactStatus",
   UPDATE_CONTACT = "updateContact",
+  DELETE_CONTACT = "deleteContact",
 }
 
 export type payload = {
@@ -45,6 +49,7 @@ export type payload = {
       value: any
     }[]
   }
+  deletedContactId: contactI["contactId"]
 }
 
 export const setContacts = (contacts: contactI[] | null) => ({

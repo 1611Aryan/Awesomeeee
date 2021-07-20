@@ -42,6 +42,7 @@ const Dashboard: React.FC = () => {
 
   const logout = async () => {
     setAccess({ loggedIn: false, username: null })
+    socket && socket.disconnect()
     await axios[logoutEndpoint.METHOD](logoutEndpoint.URL, {
       withCredentials: true,
     })

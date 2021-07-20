@@ -35,10 +35,9 @@ html[theme='large']{
 body{
     width:100vw;
     height:100vh;
-    overflow-x: hidden;
-
-     background: linear-gradient(to top, #2b5876, #4e4376);
-
+    overflow: hidden;
+    background: linear-gradient(to top, #2b5876, #4e4376);
+    background-repeat: no-repeat;
     user-select: none;
 }
 
@@ -46,21 +45,22 @@ button{
     border:0;
     cursor:pointer;
     &:focus{
-        outline:0
+        outline:0;
     }
 }
 
 input{
     border:0;
     &:focus{
-        outline:0
+        outline:0;
     }
 }
 
 a{
     color:inherit;
-    text-decoration: none;;
+    text-decoration: none;
 }
+
 `
 
 export default GlobalStyle

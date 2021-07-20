@@ -1,8 +1,6 @@
 import styles from "./Petal.module.scss"
 
 const Petal = () => {
-  console.log(styles)
-
   return (
     <div className={styles.petal}>
       <div className={styles.loaderContainer}>

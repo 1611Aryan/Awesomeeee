@@ -97,8 +97,8 @@ const StyledForm = styled.form`
 
   .successInfo {
     line-height: 1;
-    height: clamp(0.6em, 1vw, 0.8em);
-    font-size: clamp(0.6em, 1vw, 0.8em);
+    height: clamp(0.8em, 2vw, 1em);
+    font-size: clamp(0.8em, 2vw, 1em);
     font-weight: 300;
     a {
       font-size: 1.05em;

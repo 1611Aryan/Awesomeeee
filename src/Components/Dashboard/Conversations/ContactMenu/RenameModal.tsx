@@ -1,6 +1,8 @@
 import axios from "axios"
 import React, { useState } from "react"
+import { useDispatch } from "react-redux"
 import styled from "styled-components"
+import { actionsContacts } from "../../../../Actions/contactsAction"
 import { updateContact } from "../../../../API_Endpoints"
 
 import quill from "./../../../../Media/PNG/quill.png"
@@ -19,6 +21,8 @@ const RenameModal: React.FC<{
 }> = ({ menuConfig, cancel }) => {
   const [name, setName] = useState("")
 
+  const dispatch = useDispatch()
+
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
   }
@@ -27,7 +31,7 @@ const RenameModal: React.FC<{
     e.preventDefault()
     if (name && menuConfig.contact)
       try {
-        const res = await axios[updateContact.METHOD](
+        await axios[updateContact.METHOD](
           updateContact.URL,
           {
             contactId: menuConfig.contact.contactId,
@@ -37,10 +41,23 @@ const RenameModal: React.FC<{
             withCredentials: true,
           }
         )
-        console.log(res)
+        dispatch({
+          type: actionsContacts.UPDATE_CONTACT,
+          payload: {
+            updatedContacts: {
+              contactId: menuConfig.contact.contactId,
+              properties: [
+                {
+                  key: "name",
+                  value: name,
+                },
+              ],
+            },
+          },
+        })
         cancel()
       } catch (err) {
-        console.log(err.response)
+        err.response ? console.log(err.response) : console.log(err)
       }
   }
 
