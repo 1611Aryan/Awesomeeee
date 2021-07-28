@@ -103,6 +103,7 @@ class Local {
               email,
               username,
               password,
+              strategyUsed: "local",
             })
             return done(null, newUser)
           } catch (err) {

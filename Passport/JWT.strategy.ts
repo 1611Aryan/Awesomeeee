@@ -11,10 +11,7 @@ class JWT {
 
   #cookieExtractor = (req: Request): string => {
     let jwt = null
-    if (req && req.cookies) {
-      jwt = req.cookies["JWT"]
-    }
-
+    if (req && req.cookies) jwt = req.cookies["JWT"]
     return jwt
   }
 

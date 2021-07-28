@@ -2,20 +2,28 @@ import { Router } from "express"
 import multer from "multer"
 
 import {
-  addContact,
   changeProfilePicture,
+  finishProfileSetup,
   changeUsername,
   getProfile,
-  autoUpdateContact,
-  updateContact,
-  deleteContact,
+  verifyPassword,
+  changePassword,
   logout,
 } from "../Controllers/user.controller"
+
+import {
+  addContact,
+  autoUpdateContact,
+  deleteContact,
+  updateContact,
+} from "./../Controllers/contact.controller"
 
 const router = Router()
 const upload = multer({ dest: "uploads/" })
 
 router.get("/profile", getProfile)
+
+router.post("/profileSetup", upload.single("avatar"), finishProfileSetup)
 
 router.patch("/username", changeUsername)
 
@@ -23,11 +31,10 @@ router.patch("/profilePicture", upload.single("avatar"), changeProfilePicture)
 
 router.patch("/addContact", addContact)
 
-/*
- *Update when contact is clicked on client
- *No manual User Input required
- *For profilepicture updation
- */
+router.post("/verifyPassword", verifyPassword)
+
+router.post("/changePassword", changePassword)
+
 router.patch("/autoUpdateContact", autoUpdateContact)
 
 router.patch("/updateContact", updateContact)

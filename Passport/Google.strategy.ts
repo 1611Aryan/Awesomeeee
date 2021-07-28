@@ -33,6 +33,7 @@ class Google {
                 email: profile.email,
                 username: this.createUsername(profile.email),
                 password: this.genPassword(),
+                strategyUsed: "google",
               })
               return done(null, newUser)
             }
