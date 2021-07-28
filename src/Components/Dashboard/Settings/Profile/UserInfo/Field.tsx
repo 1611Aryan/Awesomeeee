@@ -1,16 +1,14 @@
-import React, { useRef } from "react"
-import { useState } from "react"
+import React, { useRef, useState } from "react"
 import styled from "styled-components"
 import { FaTimes } from "react-icons/fa"
 import { IoMdCheckmark } from "react-icons/io"
 
-// import { actionsUser, useUser } from "../../../../../../Providers/UserProvider"
 import { useDispatch, useSelector } from "react-redux"
 
 import axios from "axios"
-import { rootState } from "../../../../../Reducers"
-import { actionsUser } from "../../../../../Actions/userActions"
-import { updateUsername } from "../../../../../API_Endpoints"
+import { rootState } from "Reducers"
+import { actionsUser } from "Actions/userActions"
+import { updateUsername } from "API_Endpoints"
 import { StyledButton } from "../../Styles"
 
 const Field: React.FC<{
@@ -30,7 +28,7 @@ const Field: React.FC<{
   value: string | undefined
 }> = ({ info, setInfo, name, value }) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  //const { user, dispatchUser } = useUser()
+
   const user = useSelector((state: rootState) => state.user)
 
   const dispatch = useDispatch()
@@ -89,7 +87,7 @@ const Field: React.FC<{
 
       dispatch({
         type: actionsUser.UPDATE_USER,
-        payload: { property: { key: name, value: info?.[name] } },
+        payload: { properties: [{ key: name, value: info?.[name] }] },
       })
       console.log(res)
     } catch (err) {

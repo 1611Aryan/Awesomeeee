@@ -1,12 +1,11 @@
 import axios from "axios"
-import React, { useRef, useState } from "react"
-import { useEffect } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import styled from "styled-components"
-import { actionsUser } from "../../../../Actions/userActions"
-import { updateProfilePicture } from "../../../../API_Endpoints"
-import { rootState } from "../../../../Reducers"
+import { actionsUser, userI } from "Actions/userActions"
+import { updateProfilePicture } from "API_Endpoints"
+import { rootState } from "Reducers"
 
 const ProfilePicture: React.FC = () => {
   //Ref
@@ -18,10 +17,14 @@ const ProfilePicture: React.FC = () => {
   //State
   const [profilePicture, setProfilePicture] = useState<{
     src: string
-    file: any
+    file: File
+    default: boolean
   }>({
     src: user ? user.profilePicture.large : "",
-    file: null,
+    file: new File([user ? user.profilePicture.large : ""], "profile.png", {
+      type: "image/png",
+    }),
+    default: true,
   })
 
   //Handlers
@@ -30,37 +33,33 @@ const ProfilePicture: React.FC = () => {
   }
 
   const changeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProfilePicture(() => ({
-      file: e.target.files && e.target.files[0] ? e.target.files[0] : null,
-      src:
-        e.target.files && e.target.files[0]
-          ? URL.createObjectURL(e.target.files[0])
-          : "",
-    }))
+    if (e.target.files && e.target.files[0])
+      setProfilePicture({
+        file: e.target.files[0],
+        src: URL.createObjectURL(e.target.files[0]),
+        default: false,
+      })
   }
 
   const submitProfilePicture = async (formData: FormData) => {
     try {
       user && formData.append("fileId", user.profilePicture.fileId)
-      const res = await axios[updateProfilePicture.METHOD](
-        updateProfilePicture.URL,
-        formData,
-        {
-          withCredentials: true,
-        }
-      )
+      formData.append("isDefault", profilePicture.default.toString())
+      const res = await axios[updateProfilePicture.METHOD]<{
+        profilePicture: userI["profilePicture"]
+      }>(updateProfilePicture.URL, formData, {
+        withCredentials: true,
+      })
 
       dispatch({
         type: actionsUser.UPDATE_USER,
         payload: {
-          property: {
-            key: "profilePicture",
-            value: {
-              thumbnail: res.data.profilePicture.thumbnail,
-              large: res.data.profilePicture.large,
-              fileId: res.data.profilePicture.fileId,
+          properties: [
+            {
+              key: "profilePicture",
+              value: res.data.profilePicture,
             },
-          },
+          ],
         },
       })
     } catch (err) {
@@ -69,7 +68,7 @@ const ProfilePicture: React.FC = () => {
   }
 
   useEffect(() => {
-    if (profilePicture.file)
+    if (profilePicture.file && !profilePicture.default)
       (async () => {
         const formData = new FormData()
         formData.append("avatar", profilePicture.file, profilePicture.file.name)

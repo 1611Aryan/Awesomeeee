@@ -1,15 +1,14 @@
 import axios from "axios"
 import { motion } from "framer-motion"
-import React, { useState } from "react"
-import { useRef } from "react"
+import React, { useState, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { actionsContacts, contactI } from "../../../../Actions/contactsAction"
-import { addContact } from "../../../../API_Endpoints"
-import { useSocket } from "../../../../Providers/SocketProvider"
-import { rootState } from "../../../../Reducers"
+import { addContact } from "API_Endpoints"
+import { useSocket } from "Providers/SocketProvider"
+import { rootState } from "Reducers"
 
-import dog1 from "./../../../../Media/PNG/dog1.png"
+import dog1 from "Media/PNG/dog1.png"
 
 const Modal: React.FC<{
   setAddContact: React.Dispatch<React.SetStateAction<boolean>>

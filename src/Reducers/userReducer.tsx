@@ -1,17 +1,14 @@
 import * as userActions from "./../Actions/userActions"
 
-type reducer = {
-  user: userActions.userI | null
+type func = (
+  user: userActions.userI | null,
   action: {
     type: userActions.actionsUser
     payload: userActions.payload
   }
-}
+) => userActions.userI | null
 
-const addUser = (
-  _user: reducer["user"],
-  action: reducer["action"]
-): userActions.userI | null => {
+const addUser: func = (_user, action) => {
   if (action.payload.user)
     return {
       ...action.payload.user,
@@ -19,21 +16,19 @@ const addUser = (
   else throw new Error("Incorrect Payload")
 }
 
-const updateUser = (
-  user: reducer["user"],
-  action: reducer["action"]
-): userActions.userI | null => {
-  if (action.payload.property.key && action.payload.property.value)
+const updateUser: func = (user, action) => {
+  if (action.payload.properties) {
+    action.payload.properties.forEach(property => {
+      if (user) {
+        user = { ...user, [property.key]: property.value }
+      }
+    })
+
     return user
-      ? {
-          ...user,
-          [action.payload.property.key]: action.payload.property.value,
-        }
-      : null
-  else throw new Error("Incorrect Payload")
+  } else throw new Error("Incorrect Payload")
 }
 
-const UserReducer = (user: reducer["user"], action: reducer["action"]) => {
+const UserReducer: func = (user, action) => {
   switch (action.type) {
     case userActions.actionsUser.ADD_USER:
       return addUser(user, action)

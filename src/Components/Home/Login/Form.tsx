@@ -1,9 +1,9 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
-import { useAccess } from "../../../Providers/AccessProvider"
+import { Link } from "react-router-dom"
+import { useAccess } from "Providers/AccessProvider"
 
-import sizeOf from "object-sizeof"
-import { loginEndpoint } from "../../../API_Endpoints"
+import { loginEndpoint } from "API_Endpoints"
 import OAuth from "./OAuth"
 import styled from "styled-components"
 
@@ -43,7 +43,6 @@ const Form: React.FC = () => {
         { withCredentials: true }
       )
 
-      console.log(sizeOf(res))
       if (res.data.success)
         setAccess({ loggedIn: true, username: res.data.username })
     } catch (err) {
@@ -97,7 +96,13 @@ const Form: React.FC = () => {
         </div>
       </div>
 
-      <button>Login</button>
+      <div className="buttons">
+        <button>Login</button>
+        <span>
+          <Link to="/">Forgot Password?</Link>
+        </span>
+      </div>
+
       <OAuth />
     </StyledForm>
   )
@@ -155,16 +160,33 @@ const StyledForm = styled.form`
     }
   }
 
-  button {
-    align-self: flex-start;
-    background: #4d4476;
-    color: #fff;
-    border-radius: 5px;
+  .buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    padding: clamp(0.3em, 2vw, 0.6em) 1.5em;
-    font-size: clamp(0.8em, 3vw, 1em);
+    button {
+      align-self: flex-start;
+      background: #4d4476;
+      color: #fff;
+      border-radius: 5px;
 
-    font-weight: 500;
+      padding: clamp(0.3em, 2vw, 0.6em) 1.5em;
+      font-size: clamp(0.8em, 3vw, 1em);
+
+      font-weight: 500;
+    }
+    span {
+      display: inline-block;
+      padding: 0.3em 0;
+      font-size: clamp(0.7em, 3vw, 0.9em);
+      transition: color ease-out 100ms;
+      cursor: pointer;
+      &:hover {
+        color: #bcb243;
+      }
+    }
   }
 
   @media only screen and (max-width: 600px) {

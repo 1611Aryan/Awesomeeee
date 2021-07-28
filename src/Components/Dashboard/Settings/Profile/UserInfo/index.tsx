@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
-import { rootState } from "../../../../../Reducers"
+import { rootState } from "Reducers"
 import { StyledForm } from "../../Styles"
 
 import Field from "./Field"

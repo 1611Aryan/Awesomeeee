@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react"
 import { Route, Switch } from "react-router"
-import Petal from "../Loaders/Petal/Petal"
+import Petal from "Components/Loaders/Petal/Petal"
 
 const Login = lazy(() => import("./Login"))
 const SignUp = lazy(() => import("./SignUp"))
@@ -12,6 +12,7 @@ const Home: React.FC = () => {
         <Route path="/signup" exact>
           <SignUp />
         </Route>
+
         <Route path="/">
           <Login />
         </Route>

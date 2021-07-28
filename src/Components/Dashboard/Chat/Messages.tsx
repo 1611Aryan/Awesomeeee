@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
 
-import { useSelectedContact } from "../../../Providers/SelectedContactProvider"
-import { rootState } from "../../../Reducers"
+import { useSelectedContact } from "Providers/SelectedContactProvider"
+import { rootState } from "Reducers"
 
 import Message from "./Message"
 

@@ -2,7 +2,7 @@ import { AnimatePresence } from "framer-motion"
 import { lazy, Suspense, useState } from "react"
 import { FaUserPlus } from "react-icons/fa"
 import styled from "styled-components"
-import Overlay from "../../../Loaders/Overlay/Overlay"
+import Overlay from "Components/Loaders/Overlay/Overlay"
 
 const Modal = lazy(() => import("./Modal"))
 

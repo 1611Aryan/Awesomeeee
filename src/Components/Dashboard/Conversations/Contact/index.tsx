@@ -5,13 +5,13 @@ import styled from "styled-components"
 
 import sizeOf from "object-sizeof"
 
-import { actionsContacts, contactI } from "../../../../Actions/contactsAction"
-import { useSelectedContact } from "../../../../Providers/SelectedContactProvider"
+import { actionsContacts, contactI } from "Actions/contactsAction"
+import { useSelectedContact } from "Providers/SelectedContactProvider"
 import Content from "./ContactContent"
 import Options from "./ContactOptions"
 import ProfilePicture from "./ContactProfilePicture"
 
-import { autoUpdateContact } from "./../../../../API_Endpoints"
+import { autoUpdateContact } from "API_Endpoints"
 
 const Contact: React.FC<{
   contact: contactI

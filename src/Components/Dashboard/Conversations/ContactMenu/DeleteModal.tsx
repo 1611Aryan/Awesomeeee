@@ -2,11 +2,11 @@ import axios from "axios"
 import React from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { actionsContacts } from "../../../../Actions/contactsAction"
-import { deleteContact } from "../../../../API_Endpoints"
-import { useSocket } from "../../../../Providers/SocketProvider"
+import { actionsContacts } from "Actions/contactsAction"
+import { deleteContact } from "API_Endpoints"
+import { useSocket } from "Providers/SocketProvider"
 
-import dustbin from "./../../../../Media/PNG/dustbin.png"
+import dustbin from "Media/PNG/dustbin.png"
 
 const DeleteModal: React.FC<{
   menuConfig: {

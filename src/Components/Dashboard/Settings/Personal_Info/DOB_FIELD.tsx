@@ -22,7 +22,7 @@ const DOB_FIELD: React.FC = () => {
         padding: "0.65em 0.5em",
         fontSize: "0.9em",
         fontWeight: 500,
-        borderRadius: "5px",
+        borderRadius: "3px",
         color: "white",
         outline: "none",
         background: "linear-gradient(90deg, #6575ff, #4c5eff)",

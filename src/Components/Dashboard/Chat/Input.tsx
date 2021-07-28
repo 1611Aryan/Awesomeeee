@@ -1,14 +1,12 @@
 import styled from "styled-components"
 import { IoSend } from "react-icons/io5"
-import React, { useState } from "react"
-import { useSelectedContact } from "../../../Providers/SelectedContactProvider"
-import { useEffect } from "react"
-import { useRef } from "react"
-import { useSocket } from "../../../Providers/SocketProvider"
+import React, { useState, useEffect, useRef } from "react"
+import { useSelectedContact } from "Providers/SelectedContactProvider"
+import { useSocket } from "Providers/SocketProvider"
 
 import { useDispatch, useSelector } from "react-redux"
-import { rootState } from "../../../Reducers"
-import { actionsContacts } from "../../../Actions/contactsAction"
+import { rootState } from "Reducers"
+import { actionsContacts } from "Actions/contactsAction"
 
 const Input: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null)

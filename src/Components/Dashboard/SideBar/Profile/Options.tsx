@@ -1,10 +1,10 @@
 import { IoMdSettings } from "react-icons/io"
 import { FiLogOut } from "react-icons/fi"
 import styled from "styled-components"
-import { useAccess } from "../../../../Providers/AccessProvider"
+import { useAccess } from "Providers/AccessProvider"
 import axios from "axios"
-import { logoutEndpoint } from "../../../../API_Endpoints"
-import { useSocket } from "../../../../Providers/SocketProvider"
+import { logoutEndpoint } from "API_Endpoints"
+import { useSocket } from "Providers/SocketProvider"
 
 const Options: React.FC<{
   setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>

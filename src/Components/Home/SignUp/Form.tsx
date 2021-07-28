@@ -2,7 +2,7 @@ import axios from "axios"
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import { signUpEndpoint } from "../../../API_Endpoints"
+import { signUpEndpoint } from "API_Endpoints"
 
 const Form: React.FC = () => {
   const [input, setInput] = useState<{ email: string; password: string }>({
@@ -99,12 +99,12 @@ const StyledForm = styled.form`
     line-height: 1;
     height: clamp(0.8em, 2vw, 1em);
     font-size: clamp(0.8em, 2vw, 1em);
-    font-weight: 300;
+    font-weight: 400;
     a {
       font-size: 1.05em;
       text-decoration: underline;
       color: #4d4476;
-      font-weight: 500;
+      font-weight: 700;
     }
   }
   .errorInfo {

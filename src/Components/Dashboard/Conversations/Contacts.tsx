@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
 
-import { rootState } from "../../../Reducers"
+import { rootState } from "Reducers"
 import Contact from "./Contact"
 import ContactMenu from "./ContactMenu"
 

@@ -41,6 +41,11 @@ export const logoutEndpoint: endpoint = {
   METHOD: methods.GET,
 }
 
+export const profileSetup: endpoint = {
+  URL: `${baseUrl}/user/profileSetup`,
+  METHOD: methods.POST,
+}
+
 export const getProfile: endpoint = {
   URL: `${baseUrl}/user/profile`,
   METHOD: methods.GET,
@@ -74,4 +79,14 @@ export const updateContact: endpoint = {
 export const deleteContact: endpoint = {
   URL: `${baseUrl}/user/deleteContact`,
   METHOD: methods.PATCH,
+}
+
+export const verifyPassword: endpoint = {
+  URL: `${baseUrl}/user/verifyPassword`,
+  METHOD: methods.POST,
+}
+
+export const changePassword: endpoint = {
+  URL: `${baseUrl}/user/changePassword`,
+  METHOD: methods.POST,
 }

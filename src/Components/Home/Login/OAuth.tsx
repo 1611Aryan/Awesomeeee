@@ -1,7 +1,7 @@
-import google from "./../../../Media/PNG/google_icon_2048 (1).png"
-import facebook from "./../../../Media/PNG/facebook.png"
-import { baseUrl, googleAuth } from "../../../API_Endpoints"
-import { useAccess } from "../../../Providers/AccessProvider"
+import google from "Media/PNG/google_icon_2048 (1).png"
+import facebook from "Media/PNG/facebook.png"
+import { baseUrl, googleAuth } from "API_Endpoints"
+import { useAccess } from "Providers/AccessProvider"
 import styled from "styled-components"
 
 type payload = {
@@ -25,7 +25,6 @@ const OAuth: React.FC = () => {
 
     window.addEventListener("message", (message: MessageEvent<payload>) => {
       if (message.origin === baseUrl) {
-        console.log(message.data)
         if (message.data.success)
           setAccess({ loggedIn: true, username: message.data.username })
       }

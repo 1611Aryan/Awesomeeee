@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import styled from "styled-components"
-import { rootState } from "../../../../Reducers"
+import { rootState } from "Reducers"
 
 import Options from "./Options"
 

@@ -7,10 +7,10 @@ import SideBar from "./SideBar"
 import Conversations from "./Conversations"
 import ClosedChat from "./ClosedChat"
 
-import { useAccess } from "../../Providers/AccessProvider"
-import { useSelectedContact } from "../../Providers/SelectedContactProvider"
-import { useSocket } from "../../Providers/SocketProvider"
-import { actionsUser, userI } from "../../Actions/userActions"
+import { useAccess } from "Providers/AccessProvider"
+import { useSelectedContact } from "Providers/SelectedContactProvider"
+import { useSocket } from "Providers/SocketProvider"
+import { actionsUser, userI } from "Actions/userActions"
 import { useDispatch, useSelector } from "react-redux"
 import {
   actionsContacts,
@@ -26,8 +26,11 @@ import Petal from "../Loaders/Petal/Petal"
 import { rootState } from "../../Reducers"
 import Overlay from "../Loaders/Overlay/Overlay"
 
+import { AnimatePresence } from "framer-motion"
+
 const Settings = lazy(() => import("./Settings"))
 const Chat = lazy(() => import("./Chat"))
+const GettingStarted = lazy(() => import("./GettingStarted"))
 
 const Dashboard: React.FC = () => {
   const [settingsActive, setSettingsActive] = useState(false)
@@ -139,6 +142,11 @@ const Dashboard: React.FC = () => {
     <Suspense fallback={<Petal />}>
       {user && (
         <StyledDashboard>
+          <Suspense fallback={<Overlay />}>
+            <AnimatePresence>
+              {!user.profileSetup && <GettingStarted />}
+            </AnimatePresence>
+          </Suspense>
           {settingsActive ? (
             <Settings setSettingsActive={setSettingsActive} />
           ) : (

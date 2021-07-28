@@ -10,6 +10,8 @@ export type userI = {
     thumbnail: string
     fileId: string
   }
+  profileSetup: boolean
+  strategyUsed: "local" | "google"
 }
 
 export enum actionsUser {
@@ -25,19 +27,19 @@ export type payload = {
     roomId: string
     message: string
   }
-  property: {
-    key: string
-    value: string
-  }
+  properties: {
+    key: "profilePicture" | "profileSetup" | "username"
+    value: any
+  }[]
 }
 
 export const addUser = (user: payload["user"] | null) => {
   return { type: actionsUser.ADD_USER, payload: { user } }
 }
 
-export const updateUser = ({ key, value }: payload["property"]) => {
+export const updateUser = (...properties: payload["properties"]) => {
   return {
     type: actionsUser.UPDATE_USER,
-    payload: { property: { key, value } },
+    payload: { properties },
   }
 }

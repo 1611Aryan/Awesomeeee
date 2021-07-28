@@ -1,9 +1,9 @@
 import { useRef } from "react"
 import styled from "styled-components"
 import { HiDotsVertical } from "react-icons/hi"
-import { useSelectedContact } from "../../../Providers/SelectedContactProvider"
+import { useSelectedContact } from "Providers/SelectedContactProvider"
 import { useSelector } from "react-redux"
-import { rootState } from "../../../Reducers"
+import { rootState } from "Reducers"
 
 const Header: React.FC<{}> = () => {
   const { selected } = useSelectedContact()

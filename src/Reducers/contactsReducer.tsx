@@ -1,25 +1,19 @@
 import * as contactsAction from "./../Actions/contactsAction"
 
-type reducer = {
-  contacts: contactsAction.contactI[] | null
+type func = (
+  contacts: contactsAction.contactI[] | null,
   action: {
     type: contactsAction.actionsContacts
     payload: contactsAction.payload
   }
-}
+) => contactsAction.contactI[] | null
 
-const setContacts = (
-  contacts: reducer["contacts"],
-  action: reducer["action"]
-) => {
+const setContacts: func = (_contacts, action) => {
   if (action.payload.contacts) return [...action.payload.contacts]
   else throw new Error("Incorrect Payload")
 }
 
-const addMessage = (
-  contacts: reducer["contacts"],
-  action: reducer["action"]
-) => {
+const addMessage: func = (contacts, action) => {
   if (contacts && action.payload.message) {
     return contacts.map(contact => {
       if (contact.roomId === action.payload.message.roomId) {
@@ -43,10 +37,7 @@ const addMessage = (
   } else throw new Error("Incorrect Payload")
 }
 
-const addContact = (
-  contacts: reducer["contacts"],
-  action: reducer["action"]
-) => {
+const addContact: func = (contacts, action) => {
   if (action.payload.newContact)
     return contacts
       ? [...contacts, action.payload.newContact]
@@ -54,10 +45,7 @@ const addContact = (
   else throw new Error("Incorrect Payload")
 }
 
-const changeContactStatus = (
-  contacts: reducer["contacts"],
-  action: reducer["action"]
-) => {
+const changeContactStatus: func = (contacts, action) => {
   if (
     action.payload.contactStatus &&
     action.payload.contactStatus.contactId &&
@@ -73,10 +61,7 @@ const changeContactStatus = (
   } else throw new Error("Incorrect Payload")
 }
 
-const updateContact = (
-  contacts: reducer["contacts"],
-  action: reducer["action"]
-) => {
+const updateContact: func = (contacts, action) => {
   if (
     action.payload.updatedContacts &&
     action.payload.updatedContacts.contactId &&
@@ -97,10 +82,7 @@ const updateContact = (
   } else throw new Error("Incorrect Payload")
 }
 
-const deleteContact = (
-  contacts: reducer["contacts"],
-  action: reducer["action"]
-) => {
+const deleteContact: func = (contacts, action) => {
   if (action.payload.deletedContactId)
     return (
       contacts &&
@@ -111,10 +93,7 @@ const deleteContact = (
   else throw new Error("Incorrect Payload")
 }
 
-const contactsReducer = (
-  contacts: reducer["contacts"],
-  action: reducer["action"]
-): contactsAction.contactI[] | null => {
+const contactsReducer: func = (contacts, action) => {
   switch (action.type) {
     case contactsAction.actionsContacts.SET_CONTACTS:
       return setContacts(contacts, action)

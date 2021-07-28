@@ -1,6 +1,7 @@
 import { HiArrowLeft } from "react-icons/hi"
 import { AiFillFormatPainter } from "react-icons/ai"
 import { CgProfile, CgInfo } from "react-icons/cg"
+import { IoMdLock } from "react-icons/io"
 import styled from "styled-components"
 import { useState } from "react"
 
@@ -25,39 +26,50 @@ const SideBar: React.FC<{
         <h1>Settings</h1>
 
         <ul>
-          <a href="#profile">
-            <li
-              tabIndex={0}
-              className={selectOption("profile")}
-              onFocus={() => setSelected("profile")}
-              onClick={() => setSelected("profile")}
-            >
+          <li
+            tabIndex={0}
+            className={selectOption("profile")}
+            onFocus={() => setSelected("profile")}
+            onClick={() => setSelected("profile")}
+          >
+            <a href="#profile">
               <CgProfile />
-              <span>My Profile</span>
-            </li>
-          </a>
-          <a href="#info">
-            <li
-              tabIndex={0}
-              className={selectOption("info")}
-              onFocus={() => setSelected("info")}
-              onClick={() => setSelected("info")}
-            >
+              <span>My Profile</span>{" "}
+            </a>
+          </li>
+          <li
+            tabIndex={0}
+            className={selectOption("info")}
+            onFocus={() => setSelected("info")}
+            onClick={() => setSelected("info")}
+          >
+            <a href="#info">
               <CgInfo />
               <span>Personal Info</span>
-            </li>
-          </a>
-          <a href="#theme">
-            <li
-              tabIndex={0}
-              className={selectOption("theme")}
-              onFocus={() => setSelected("theme")}
-              onClick={() => setSelected("theme")}
-            >
+            </a>
+          </li>
+          <li
+            tabIndex={0}
+            className={selectOption("theme")}
+            onFocus={() => setSelected("theme")}
+            onClick={() => setSelected("theme")}
+          >
+            <a href="#theme">
               <AiFillFormatPainter />
               <span>Theme</span>
-            </li>
-          </a>
+            </a>
+          </li>
+          <li
+            tabIndex={0}
+            className={selectOption("myAccount")}
+            onFocus={() => setSelected("myAccount")}
+            onClick={() => setSelected("myAccount")}
+          >
+            <a href="#myAccount">
+              <IoMdLock />
+              <span>My Account</span>
+            </a>
+          </li>
         </ul>
       </div>
     </StyledOptions>
@@ -97,18 +109,15 @@ const StyledOptions = styled.section`
   }
 
   ul {
+    width: 100%;
     list-style-type: none;
     padding: 0 1em;
 
     li {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-
+      width: 100%;
       color: rgba(255, 255, 255, 0.9);
 
       margin: 0.25em 0;
-      padding: 0.75rem 0.75em 0.75em 0.5em;
 
       border-radius: 2px;
 
@@ -117,6 +126,14 @@ const StyledOptions = styled.section`
       font-size: 1.25em;
 
       transition: all 0.2s;
+      a {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        padding: 0.75rem 0.75em 0.75em 0.5em;
+      }
       svg {
         transition: all 0.2s;
       }

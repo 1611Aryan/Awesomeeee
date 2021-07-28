@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import MyAccount from "./MyAccount"
 import PersonalInfo from "./Personal_Info"
 import Profile from "./Profile"
 import Theme from "./Theme"
@@ -9,6 +10,7 @@ const Content: React.FC = () => {
       <Profile />
       <PersonalInfo />
       <Theme />
+      <MyAccount />
     </StyledContent>
   )
 }

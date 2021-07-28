@@ -28,8 +28,6 @@ const StyledLogin = styled(motion.div)`
   overflow: hidden;
   background: linear-gradient(to top, #2b5876, #4e4376);
 
-  will-change: transform;
-
   --padding: clamp(1em, 5vw, 4em);
   --navHeight: 10vh;
   --primary: #4d4476;

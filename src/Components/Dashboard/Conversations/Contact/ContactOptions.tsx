@@ -1,8 +1,7 @@
-import React from "react"
-import { useRef } from "react"
+import React, { useRef } from "react"
 import { BsThreeDotsVertical } from "react-icons/bs"
 import styled from "styled-components"
-import { contactI } from "../../../../Actions/contactsAction"
+import { contactI } from "Actions/contactsAction"
 
 const ContactOptions: React.FC<{
   contact: contactI

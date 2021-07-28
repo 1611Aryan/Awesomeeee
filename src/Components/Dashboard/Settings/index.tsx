@@ -26,19 +26,8 @@ const StyledSettings = styled.section`
   justify-content: flex-start;
   align-items: flex-start;
 
-  background: linear-gradient(to top, #2b5876, #4e4376);
-
   --LeftPanelWidth: 30vw;
   --RightPanelWidth: calc(100vw - var(--LeftPanelWidth));
-
-  --labelFontSize: 1.1em;
-  --labelFontWeight: 400;
-  --labelColor: #b8b8b8;
-
-  --inputFontSize: 1em;
-  --inputFontWeight: 300;
-  --inputColor: rgba(255, 255, 255, 0.8);
-  --inputMargin: 0.5em 0;
 `
 
 export default Settings

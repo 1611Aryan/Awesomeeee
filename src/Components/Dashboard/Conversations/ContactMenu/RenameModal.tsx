@@ -2,10 +2,10 @@ import axios from "axios"
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import { actionsContacts } from "../../../../Actions/contactsAction"
-import { updateContact } from "../../../../API_Endpoints"
+import { actionsContacts } from "Actions/contactsAction"
+import { updateContact } from "API_Endpoints"
 
-import quill from "./../../../../Media/PNG/quill.png"
+import quill from "Media/PNG/quill.png"
 
 const RenameModal: React.FC<{
   menuConfig: {
