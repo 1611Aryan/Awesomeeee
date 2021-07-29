@@ -55,7 +55,7 @@ const Page2: React.FC<{
       }>(profileSetup.URL, formData, {
         withCredentials: true,
       })
-      setLoading(false)
+
       console.log(res.data)
       if (res.data.profileSetup) {
         dispatch({
@@ -76,6 +76,8 @@ const Page2: React.FC<{
       }
     } catch (err) {
       console.log(err)
+    } finally {
+      setLoading(false)
     }
   }
 
