@@ -98,7 +98,9 @@ const Page2: React.FC<{
               onChange={changeHandler}
             />
           </div>
-          <button onClick={chooseImage}>Change Profile Picture</button>
+          <button type="button" onClick={chooseImage}>
+            Change Profile Picture
+          </button>
           <button>Finish Setup</button>
         </form>
       </div>

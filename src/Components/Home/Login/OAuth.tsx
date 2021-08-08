@@ -1,5 +1,4 @@
 import google from "Media/PNG/google_icon_2048 (1).png"
-import facebook from "Media/PNG/facebook.png"
 import { baseUrl, googleAuth } from "API_Endpoints"
 import { useAccess } from "Providers/AccessProvider"
 import styled from "styled-components"
@@ -43,11 +42,6 @@ const OAuth: React.FC = () => {
         <div className="logo google" onClick={googleAuthHandler}>
           <img src={google} alt="google" />
           <span>Google</span>
-        </div>
-
-        <div className="logo facebook">
-          <img src={facebook} alt="facebook" />
-          <span>Facebook</span>
         </div>
       </div>
     </StyledOAuth>

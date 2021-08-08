@@ -5,10 +5,17 @@ import styled from "styled-components"
 import { rootState } from "Reducers"
 import Contact from "./Contact"
 import ContactMenu from "./ContactMenu"
+import { contactI } from "Actions/contactsAction"
 
 const Contacts: React.FC<{
   searchBarBottom: number | undefined
-}> = ({ searchBarBottom }) => {
+  setContactPageVis: React.Dispatch<
+    React.SetStateAction<{
+      visible: boolean
+      contact: contactI | null
+    }>
+  >
+}> = ({ searchBarBottom, setContactPageVis }) => {
   const { contacts } = useSelector((state: rootState) => state)
 
   const [menuConfig, setMenuConfig] = useState<{
@@ -27,6 +34,7 @@ const Contacts: React.FC<{
         {contacts &&
           contacts.map((contact, index) => (
             <Contact
+              setContactPageVis={setContactPageVis}
               setMenuConfig={setMenuConfig}
               key={index}
               contact={contact}

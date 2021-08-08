@@ -26,7 +26,13 @@ const Contact: React.FC<{
       } | null
     }>
   >
-}> = ({ contact, setMenuConfig }) => {
+  setContactPageVis: React.Dispatch<
+    React.SetStateAction<{
+      visible: boolean
+      contact: contactI | null
+    }>
+  >
+}> = ({ contact, setMenuConfig, setContactPageVis }) => {
   const { selected, setSelected } = useSelectedContact()
   const dispatchContact = useDispatch()
 
@@ -112,7 +118,7 @@ const Contact: React.FC<{
       }
       tabIndex={1}
     >
-      <ProfilePicture profilePicture={contact.profilePicture} />
+      <ProfilePicture setContactPageVis={setContactPageVis} contact={contact} />
       <Content contact={contact} />
       <Options setMenuConfig={setMenuConfig} contact={contact} />
     </StyledContact>

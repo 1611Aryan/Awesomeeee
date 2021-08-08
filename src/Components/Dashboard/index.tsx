@@ -4,7 +4,7 @@ import io from "socket.io-client"
 import axios from "axios"
 
 import SideBar from "./SideBar"
-import Conversations from "./Conversations"
+import Conversations from "./ContactList"
 import ClosedChat from "./ClosedChat"
 
 import { useAccess } from "Providers/AccessProvider"

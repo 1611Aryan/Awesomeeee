@@ -1,8 +1,15 @@
+import { useState } from "react"
 import { TiArrowBackOutline } from "react-icons/ti"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import Step1 from "./Step1"
+import Step2 from "./Step2"
+import Step3 from "./Step3"
 
 const Content: React.FC = () => {
+  const [step, setStep] = useState(1)
+  const [email, setEmail] = useState("")
+
   return (
     <StyledContent>
       <div className="header">
@@ -11,14 +18,9 @@ const Content: React.FC = () => {
         </Link>
       </div>
       <h1>Forgot Password</h1>
-      <div className="main">
-        <form>
-          <label htmlFor="email">Enter your Username or Email</label>
-          <input type="email" required autoFocus />
-
-          <button>Next</button>
-        </form>
-      </div>
+      {step === 1 && <Step1 setStep={setStep} setEmail={setEmail} />}
+      {step === 2 && <Step2 setStep={setStep} email={email} />}
+      {step === 3 && <Step3 email={email} />}
     </StyledContent>
   )
 }
@@ -69,7 +71,26 @@ const StyledContent = styled.div`
       align-items: start;
 
       > * {
-        margin-top: 1em;
+        margin-top: 0.75em;
+      }
+
+      p {
+        font-size: 0.9em;
+        opacity: 0.8;
+      }
+
+      .err {
+        line-height: 1;
+        height: 0.75em;
+        color: red;
+        font-size: 0.75em;
+      }
+
+      .success {
+        line-height: 1;
+        height: 0.75em;
+        color: darkgreen;
+        font-size: 0.75em;
       }
 
       label {
@@ -77,8 +98,9 @@ const StyledContent = styled.div`
       }
       input {
         width: 100%;
-        font-size: 1.1em;
+        font-size: 1em;
         padding: 0.3em;
+        opacity: 0.9;
         border-radius: 5px;
         border: 1px solid #464977;
       }

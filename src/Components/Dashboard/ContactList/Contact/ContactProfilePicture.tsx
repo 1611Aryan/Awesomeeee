@@ -1,25 +1,38 @@
-import { useRef } from "react"
+import { contactI } from "Actions/contactsAction"
+import React, { useRef } from "react"
 import styled from "styled-components"
 
 const ContactProfilePicture: React.FC<{
-  profilePicture: {
-    large: string
-    thumbnail: string
-  }
-}> = ({ profilePicture }) => {
+  contact: contactI
+  setContactPageVis: React.Dispatch<
+    React.SetStateAction<{
+      visible: boolean
+      contact: contactI | null
+    }>
+  >
+}> = ({ contact, setContactPageVis }) => {
   const imageRef = useRef<HTMLImageElement>(null)
 
   const loadImage = () =>
     imageRef.current ? imageRef.current.classList.add("visible") : ""
 
+  const clickHandler = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setContactPageVis(state => ({
+      ...state,
+      visible: true,
+      contact,
+    }))
+  }
+
   return (
-    <StyleProfilePicture>
+    <StyleProfilePicture onClick={clickHandler}>
       <img
         ref={imageRef}
         loading="lazy"
         decoding="async"
         onLoad={loadImage}
-        src={profilePicture.thumbnail}
+        src={contact.profilePicture.thumbnail}
         alt="contact profile"
       />
     </StyleProfilePicture>

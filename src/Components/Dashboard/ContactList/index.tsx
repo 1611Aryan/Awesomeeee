@@ -1,12 +1,21 @@
+import { contactI } from "Actions/contactsAction"
 import React, { useState } from "react"
 
 import styled from "styled-components"
+import ContactPage from "../ContactPage"
 
 import Contacts from "./Contacts"
 import SearchBar from "./SearchBar"
 
 const Conversations: React.FC = () => {
   const [searchBarBottom, setSearchBarBottom] = useState<number>()
+  const [contactPageVis, setContactPageVis] = useState<{
+    visible: boolean
+    contact: contactI | null
+  }>({
+    visible: false,
+    contact: null,
+  })
 
   return (
     <StyledConversations>
@@ -17,7 +26,17 @@ const Conversations: React.FC = () => {
 
       <SearchBar setSearchBarBottom={setSearchBarBottom} />
 
-      <Contacts searchBarBottom={searchBarBottom} />
+      <Contacts
+        searchBarBottom={searchBarBottom}
+        setContactPageVis={setContactPageVis}
+      />
+
+      {contactPageVis.visible && (
+        <ContactPage
+          contactPageVis={contactPageVis}
+          setContactPageVis={setContactPageVis}
+        />
+      )}
     </StyledConversations>
   )
 }
