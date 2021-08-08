@@ -15,7 +15,9 @@ const MongoConfig = (): void => {
 
   const connection = mongoose.connection
 
-  connection.once("open", () => console.log("Database is Connected"))
+  connection.once("open", () =>
+    console.log("\x1b[36mDatabase is Connected\x1b[0m")
+  )
 }
 
 export default MongoConfig

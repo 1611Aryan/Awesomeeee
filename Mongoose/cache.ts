@@ -39,7 +39,10 @@ Query.prototype.exec = async function () {
   }
 
   const result = await exec.apply(this, arguments)
-  await redisClient.hset(this.primaryKey, [key, JSON.stringify(result)])
+  await redisClient.hset(this.primaryKey, [
+    key.toString(),
+    JSON.stringify(result),
+  ])
 
   return result
 }

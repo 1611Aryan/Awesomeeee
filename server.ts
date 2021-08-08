@@ -32,4 +32,6 @@ app.use(
   PrivateRouter
 )
 
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+server.listen(PORT, () =>
+  console.log(`\x1b[36mServer running on port ${PORT}\x1b[0m`)
+)

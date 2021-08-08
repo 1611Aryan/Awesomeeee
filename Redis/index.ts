@@ -4,7 +4,7 @@ const redisUrl = process.env.REDIS_URL || "redis://localhost:6379"
 const redisClient = createNodeRedisClient(redisUrl)
 
 redisClient.nodeRedis.on("connect", () =>
-  console.log("Redis Server is Connected")
+  console.log("\x1b[36mRedis Server is Connected\x1b[0m")
 )
 
 redisClient.nodeRedis.on("error", err => {

@@ -9,6 +9,8 @@ export type contactI = {
   //User Entered => won't change automatically
   //Mutable
   name: string
+  //Mutable
+  username: string
   //Immutable
   contactId: string
   //URL=> image/id=>wont change
@@ -68,6 +70,7 @@ const UserSchema = new Schema<UserI>(
       type: [
         {
           name: String,
+          username: String,
           profilePicture: {
             thumbnail: String,
             large: String,

@@ -3,6 +3,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2"
 import User from "../Models/user.model"
 import { GOOGLE_CALLBACK_URL } from "../Utilities/Endpoints"
 import { randomBytes } from "crypto"
+import { transporter, sender } from "../NodeMailer"
 
 class Google {
   protected passport: PassportStatic
@@ -35,6 +36,15 @@ class Google {
                 password: this.genPassword(),
                 strategyUsed: "google",
               })
+
+              const options = {
+                from: sender,
+                to: profile.email,
+                subject: "Welcome To Messenger",
+                html: `<body><h1>Welcome</h1><p>Hello</p></body>`,
+              }
+              transporter.sendMail(options)
+
               return done(null, newUser)
             }
           } catch (err) {

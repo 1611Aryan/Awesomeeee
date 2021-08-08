@@ -1,6 +1,7 @@
 import { PassportStatic } from "passport"
-
 import { Strategy as LocalStrategy } from "passport-local"
+
+import { sender, transporter } from "../NodeMailer"
 
 import User from "../Models/user.model"
 
@@ -105,6 +106,14 @@ class Local {
               password,
               strategyUsed: "local",
             })
+
+            const options = {
+              from: sender,
+              to: email,
+              subject: "Welcome To Messenger",
+              html: `<body><h1>Welcome</h1><p>Hello</p></body>`,
+            }
+            transporter.sendMail(options)
             return done(null, newUser)
           } catch (err) {
             console.log({ signUp: err })

@@ -50,16 +50,18 @@ export const addContact: controller = async (req, res) => {
         profilePicture: 0,
       }).lean()
 
-      const contactExists = user.contacts.filter(
-        c => c.contactId === contact._id.toString()
-      )
+      const contactExists =
+        (user.contacts &&
+          user.contacts.filter(c => c.contactId === contact._id.toString())) ||
+        null
 
-      if (contactExists[0]) {
+      if (contactExists && contactExists[0]) {
         return res.status(409).send({ message: "Contact Already Exists" })
       }
 
       const newContact = {
         name: contactName,
+        username: contactUsername,
         contactId: contact._id.toString(),
         profilePicture: contact.profilePicture,
         roomId,

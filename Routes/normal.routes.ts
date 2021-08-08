@@ -6,6 +6,11 @@ import { createHash } from "crypto"
 import passport from "passport"
 import { UserI } from "../Models/user.model"
 import { CLIENT_URL } from "../Utilities/Endpoints"
+import {
+  forgotPassword_step1,
+  forgotPassword_step2,
+  forgotPassword_step3,
+} from "../Controllers/user.controller"
 
 const router = Router()
 
@@ -102,7 +107,6 @@ router.get("/auth/google/callback", (req, res) =>
           return res
             .status(200)
             .cookie("JWT", token, {
-              //7 Days
               maxAge: 604_800_000,
               httpOnly: true,
               sameSite: "none",
@@ -115,6 +119,12 @@ router.get("/auth/google/callback", (req, res) =>
     }
   )(req, res)
 )
+
+router.post("/forgotPassword-1", forgotPassword_step1)
+
+router.post("/forgotPassword-2", forgotPassword_step2)
+
+router.patch("/forgotPassword-3", forgotPassword_step3)
 
 router.delete("/iDontFeelSoGood", (req, res) =>
   passport.authenticate("delete", (err, _user: UserI, info) => {
