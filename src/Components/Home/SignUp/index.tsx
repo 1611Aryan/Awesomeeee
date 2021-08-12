@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import { motion } from "framer-motion"
 
-import Header from "./Header"
 import Main from "./Main"
+import Header from "../Styles/Header"
 
 const SignUp: React.FC = () => {
   const variants = {
@@ -17,7 +17,7 @@ const SignUp: React.FC = () => {
 
   return (
     <StyledSignUp variants={variants} initial="initial" animate="animate">
-      <Header />
+      <Header useCase="signup" />
       <Main />
     </StyledSignUp>
   )

@@ -115,40 +115,43 @@ const StyledForm = styled.form`
   }
   .inputContainer {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-    margin: 1em 0;
 
-    .error {
+    > * {
+      margin: 1em 0 0 0;
+    }
+
+    .highlight {
       border: 1px solid rgba(255, 0, 0, 0.2);
+    }
+
+    label {
+      color: var(--primary);
+      font-size: clamp(1em, 4vw, 1.5em);
+      display: block;
+      width: 100%;
+    }
+
+    input {
+      width: 50%;
+      background: #ececec;
+      color: #383838;
+      border-radius: 5px;
+
+      padding: 0.5em;
+      font-size: clamp(0.8em, 3vw, 1em);
+
+      transition: box-shadow 0.3s;
     }
   }
 
-  label {
-    color: var(--primary);
-
-    font-size: clamp(1em, 4vw, 1.75em);
-  }
-
-  input {
-    width: 60%;
-    background: #ececec;
-    border-radius: 5px;
-
-    padding: 0.4em 0.5em;
-    font-size: clamp(0.9em, 3vw, 1.1em);
-  }
-
   button {
+    margin: 1em 0 0;
     background: #4d4476;
     color: #fff;
     border-radius: 5px;
+    padding: clamp(0.3em, 2vw, 0.6em) 1.5em;
+    font-size: clamp(0.8em, 3vw, 1em);
 
-    padding: clamp(0.3em, 2vw, 0.5em) 1em;
-    font-size: clamp(1em, 3vw, 1.25em);
-    font-family: var(--fontHeading);
-    letter-spacing: 1px;
     font-weight: 500;
   }
 

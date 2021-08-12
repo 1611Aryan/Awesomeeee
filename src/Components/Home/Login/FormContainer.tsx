@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 import Form from "./Form"
 
-const Right = () => {
+const FormContainer = () => {
   return (
     <StyledRight>
       <div className="whiteBg"></div>
@@ -30,18 +30,6 @@ const StyledRight = styled.div`
 
     background: #fff;
   }
-
-  @media only screen and (max-width: 600px) {
-    width: 100%;
-    .whiteBg {
-      bottom: 0;
-      left: 0;
-      width: 100vh;
-      height: 100vh;
-      border-radius: 50%;
-      transform: translate(-45%, 20%);
-    }
-  }
 `
 
-export default Right
+export default FormContainer

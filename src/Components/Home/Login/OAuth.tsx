@@ -106,13 +106,6 @@ const StyledOAuth = styled.div`
       background: #f8f8f8;
     }
   }
-
-  @media only screen and (max-width: 600px) {
-    .providers {
-      height: 2em;
-      gap: 1em;
-    }
-  }
 `
 
 export default OAuth

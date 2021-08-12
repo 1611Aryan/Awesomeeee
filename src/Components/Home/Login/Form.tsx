@@ -62,7 +62,7 @@ const Form: React.FC = () => {
 
   return (
     <StyledForm onSubmit={submitHandler}>
-      <div className="inputContainer">
+      <StyledInputContainer>
         <label htmlFor="username_email">Username/Email</label>
         <div>
           <p className="errorMessage">
@@ -75,12 +75,12 @@ const Form: React.FC = () => {
             required
             value={input.username_email}
             onChange={changeHandler}
-            className={error && error.type === "username" ? "error" : ""}
+            className={error && error.type === "username" ? "highlight" : ""}
           />
         </div>
-      </div>
-      <div className="inputContainer">
-        <label htmlFor="password">Password</label>{" "}
+      </StyledInputContainer>
+      <StyledInputContainer>
+        <label htmlFor="password">Password</label>
         <div>
           <p className="errorMessage">
             {error && error.type === "password" ? error.info : ""}
@@ -91,10 +91,10 @@ const Form: React.FC = () => {
             required
             value={input.password}
             onChange={changeHandler}
-            className={error && error.type === "password" ? "error" : ""}
+            className={error && error.type === "password" ? "highlight" : ""}
           />
         </div>
-      </div>
+      </StyledInputContainer>
 
       <div className="buttons">
         <button>Login</button>
@@ -122,43 +122,6 @@ const StyledForm = styled.form`
   color: var(--primary);
 
   z-index: 2;
-  .inputContainer {
-    width: 100%;
-
-    label {
-      font-size: clamp(1em, 4vw, 1.5em);
-    }
-
-    .errorMessage {
-      color: red;
-      line-height: 1;
-      height: clamp(0.6em, 1vw, 0.9em);
-      font-size: clamp(0.6em, 1vw, 0.8em);
-      font-weight: 300;
-      margin: 0.1em 0;
-    }
-
-    div {
-      margin: 0.5em 0 1em 0;
-    }
-
-    input {
-      width: 100%;
-      background: #ececec;
-      color: #383838;
-      border-radius: 5px;
-
-      padding: 0.5em;
-      font-size: clamp(0.8em, 3vw, 1em);
-
-      margin-top: 0.25em;
-      transition: box-shadow 0.3s;
-    }
-
-    .error {
-      border: 1px solid rgba(255, 0, 0, 0.2);
-    }
-  }
 
   .buttons {
     width: 100%;
@@ -188,19 +151,43 @@ const StyledForm = styled.form`
       }
     }
   }
+`
 
-  @media only screen and (max-width: 600px) {
-    .inputContainer {
-      label {
-        text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-      }
-      input {
-        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-      }
-      .error {
-        border: 1px solid rgba(255, 0, 0, 0.1);
-      }
-    }
+const StyledInputContainer = styled.div`
+  width: 100%;
+
+  label {
+    font-size: clamp(1em, 4vw, 1.5em);
+  }
+
+  .errorMessage {
+    color: red;
+    line-height: 1;
+    height: clamp(0.6em, 1vw, 0.9em);
+    font-size: clamp(0.6em, 1vw, 0.8em);
+    font-weight: 300;
+    margin: 0.1em 0;
+  }
+
+  div {
+    margin: 0.5em 0 1em 0;
+  }
+
+  input {
+    width: 100%;
+    background: #ececec;
+    color: #383838;
+    border-radius: 5px;
+
+    padding: 0.5em;
+    font-size: clamp(0.8em, 3vw, 1em);
+
+    margin-top: 0.25em;
+    transition: box-shadow 0.3s;
+  }
+
+  .highlight {
+    border: 1px solid rgba(255, 0, 0, 0.2);
   }
 `
 
