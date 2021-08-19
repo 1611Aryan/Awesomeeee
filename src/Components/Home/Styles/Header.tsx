@@ -12,13 +12,11 @@ const Header: React.FC<{ useCase: "login" | "signup" }> = ({ useCase }) => {
 
   useEffect(() => {
     window.addEventListener("loginOpened", () => {
-      if (window.innerWidth < 500) {
-        console.log("Opened")
+      if (window.innerWidth < 500)
         setTheme(theme => ({
           ...theme,
           headingColor: "var(--primary)",
         }))
-      }
     })
   }, [])
 

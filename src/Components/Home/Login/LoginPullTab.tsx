@@ -129,9 +129,7 @@ const StyledPullTab = styled.div`
 
   display: flex;
 
-transform: translateX(0);
-
-  transition: all ease 100ms;
+  transform: translateX(0%);
 
   .tab {
     position: absolute;

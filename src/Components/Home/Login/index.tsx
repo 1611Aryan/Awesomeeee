@@ -37,17 +37,29 @@ const Login: React.FC = () => {
       </StyledMain>
     </StyledLogin>
   ) : (
-    <StyledLogin variants={variants} initial="initial" animate="animate">
+    <StyledLoginSmall>
       <Header useCase="login" />
       <StyledMain>
         <HeroText />
         <LoginPullTab />
       </StyledMain>
-    </StyledLogin>
+    </StyledLoginSmall>
   )
 }
 
 const StyledLogin = styled(motion.div)`
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to top, #2b5876, #4e4376);
+
+  --padding: clamp(1em, 5vw, 4em);
+  --navHeight: 10vh;
+  --primary: #4d4476;
+`
+
+const StyledLoginSmall = styled.div`
   width: 100vw;
   height: 100vh;
   position: relative;
@@ -70,6 +82,8 @@ const StyledMain = styled.main`
 
   .visibleLogin {
     transform: translate(-83.275%);
+
+    transition: all ease 100ms;
   }
 `
 
