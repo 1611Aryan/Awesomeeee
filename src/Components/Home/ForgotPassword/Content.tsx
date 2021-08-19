@@ -47,14 +47,14 @@ const StyledContent = styled.div`
     grid-template-columns: 33.3% 33.3% 33.3%;
     svg {
       cursor: pointer;
-      font-size: 2em;
+      font-size: clamp(1.5em, 3vw, 2em);
     }
   }
   h1 {
     width: 60%;
     margin: 0 auto;
     color: #464977;
-    font-size: 2em;
+    font-size: clamp(1.5em, 3vw, 2em);
   }
   .main {
     width: 60%;
@@ -94,11 +94,12 @@ const StyledContent = styled.div`
       }
 
       label {
-        font-size: 1.1em;
+        font-size: clamp(1em, 2vw, 1.1em);
+        font-weight: 500;
       }
       input {
         width: 100%;
-        font-size: 1em;
+        font-size: clamp(0.9em, 3vw, 1em);
         padding: 0.3em;
         opacity: 0.9;
         border-radius: 5px;
@@ -109,10 +110,31 @@ const StyledContent = styled.div`
         color: #fff;
         border-radius: 5px;
 
-        padding: clamp(0.3em, 2vw, 0.6em) 1.5em;
-        font-size: clamp(0.7em, 2vw, 0.9em);
+        padding: clamp(0.3em, 2vw, 0.6em) clamp(1.2em, 3vw, 1.5em);
+        font-size: clamp(0.8em, 2vw, 0.9em);
 
         font-weight: 500;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+
+    h1 {
+      margin-top: 1em;
+      width: 80%;
+    }
+
+    .main {
+      width: 80%;
+
+      > * {
+        margin: 1em 0;
+      }
+
+      button {
+        margin-top: 1em;
       }
     }
   }

@@ -1,12 +1,26 @@
+import { useState } from "react"
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 const Header: React.FC<{ useCase: "login" | "signup" }> = ({ useCase }) => {
-  const theme = {
+  const [theme, setTheme] = useState({
     headingColor: useCase === "login" ? "#fff" : "var(--primary)",
     buttonBg: useCase === "login" ? "var(--primary)" : "#fff",
     buttonColor: useCase === "login" ? "#fff" : "var(--primary)",
-  }
+  })
+
+  useEffect(() => {
+    window.addEventListener("loginOpened", () => {
+      if (window.innerWidth < 500) {
+        console.log("Opened")
+        setTheme(theme => ({
+          ...theme,
+          headingColor: "var(--primary)",
+        }))
+      }
+    })
+  }, [])
 
   return (
     <StyledHeader theme={theme}>
@@ -65,15 +79,6 @@ const StyledHeader = styled.header`
     color: ${props => props.theme.buttonColor};
 
     border-radius: 6px;
-  }
-
-  @media only screen and (max-width: 600px) {
-    button {
-      color: ${props => props.theme.buttonBg};
-      background: ${props => props.theme.buttonColor};
-      border-radius: 3px;
-      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    }
   }
 `
 

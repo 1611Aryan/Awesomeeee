@@ -80,7 +80,9 @@ const StyledOAuth = styled.div`
     border-radius: 15px;
     box-shadow: 0 0 2px #0008;
 
-    padding: clamp(0.8em, 2vw, 0.8em) 2em;
+    background: #fff;
+
+    padding: clamp(0.8em, 2vw, 0.8em) clamp(1em, 3vw, 2em);
     font-size: clamp(0.8em, 3vw, 1em);
 
     display: flex;
@@ -90,11 +92,11 @@ const StyledOAuth = styled.div`
 
     cursor: pointer;
     img {
-      width: 22px;
-      height: 22px;
+      width: clamp(18px, 3vw, 22px);
+      height: clamp(18px, 3vw, 22px);
     }
     span {
-      width: 9ch;
+      width: clamp(7ch, 2vw, 9ch);
       font-family: var(--fontGoogle);
       margin-left: 1em;
       color: #000;
@@ -104,6 +106,23 @@ const StyledOAuth = styled.div`
     &:focus {
       box-shadow: none;
       background: #f8f8f8;
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    .or {
+      .line {
+        background: #fff;
+      }
+      h3 {
+        color: #fff;
+        font-size: 0.9em;
+        font-weight: 400;
+      }
+    }
+
+    .logo {
+      box-shadow: none;
     }
   }
 `

@@ -5,6 +5,8 @@ import HeroText from "./Herotext"
 import FormContainer from "./FormContainer"
 import Header from "../Styles/Header"
 import LoginPullTab from "./LoginPullTab"
+import { useEffect } from "react"
+import { useState } from "react"
 
 const Login: React.FC = () => {
   const variants = {
@@ -16,7 +18,17 @@ const Login: React.FC = () => {
     },
   }
 
-  return window.innerWidth >= 500 ? (
+  const [width, setWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setWidth(window.innerWidth)
+    })
+
+    return () => window.removeEventListener("resize", () => {})
+  }, [])
+
+  return width >= 500 ? (
     <StyledLogin variants={variants} initial="initial" animate="animate">
       <Header useCase="login" />
       <StyledMain>
