@@ -12,6 +12,7 @@ import { SocketProvider } from "./Providers/SocketProvider"
 import { createStore } from "redux"
 import { Provider as ReduxProvider } from "react-redux"
 import reducers from "./Reducers"
+import { WidthProvider } from "Providers/WidthProvider"
 
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
@@ -24,17 +25,19 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
-    <AccessProvider>
-      <ReduxProvider store={store}>
-        <SocketProvider>
-          <SelectedContactProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </SelectedContactProvider>
-        </SocketProvider>
-      </ReduxProvider>
-    </AccessProvider>
+    <WidthProvider>
+      <AccessProvider>
+        <ReduxProvider store={store}>
+          <SocketProvider>
+            <SelectedContactProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </SelectedContactProvider>
+          </SocketProvider>
+        </ReduxProvider>
+      </AccessProvider>
+    </WidthProvider>
   </React.StrictMode>,
   document.getElementById("root")
 )

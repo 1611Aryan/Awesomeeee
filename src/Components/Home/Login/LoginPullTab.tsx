@@ -7,6 +7,7 @@ import { loginEndpoint } from "API_Endpoints"
 import axios from "axios"
 import OAuth from "./OAuth"
 import { Link } from "react-router-dom"
+import { useWidth } from "Providers/WidthProvider"
 
 type payload = {
   success: boolean
@@ -27,6 +28,8 @@ const LoginPullTab = () => {
     type: "username" | "password"
     info: string
   } | null>(null)
+
+  const { width } = useWidth()
 
   const scootOver = () => {
     setDisplayLogin(true)
@@ -60,6 +63,15 @@ const LoginPullTab = () => {
       setError(err.response.data)
     }
   }
+
+  useEffect(() => {
+    if (width < 500)
+      window.addEventListener("home", () => {
+        setDisplayLogin(false)
+      })
+
+    return () => window.removeEventListener("home", () => {})
+  }, [width])
 
   useEffect(() => {
     if (error) {
@@ -129,7 +141,7 @@ const StyledPullTab = styled.div`
 
   display: flex;
 
-  transform: translateX(0%);
+  transition: transform ease-in 100ms;
 
   .tab {
     position: absolute;

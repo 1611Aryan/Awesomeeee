@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useWidth } from "Providers/WidthProvider"
+import React, { useState } from "react"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
@@ -10,19 +11,38 @@ const Header: React.FC<{ useCase: "login" | "signup" }> = ({ useCase }) => {
     buttonColor: useCase === "login" ? "#fff" : "var(--primary)",
   })
 
+  const { width } = useWidth()
+
   useEffect(() => {
     window.addEventListener("loginOpened", () => {
-      if (window.innerWidth < 500)
+      if (width < 500)
         setTheme(theme => ({
           ...theme,
           headingColor: "var(--primary)",
         }))
     })
-  }, [])
+
+    return () => window.removeEventListener("loginOpened", () => {})
+  }, [width])
+
+  const clickHandler = (
+    e: React.MouseEvent<HTMLHeadingElement, MouseEvent>
+  ) => {
+    if (width < 500) {
+      e.stopPropagation()
+      const event = new Event("home")
+
+      window.dispatchEvent(event)
+      setTheme(theme => ({
+        ...theme,
+        headingColor: "#fff",
+      }))
+    }
+  }
 
   return (
     <StyledHeader theme={theme}>
-      <h1>
+      <h1 onClick={clickHandler}>
         <Link to="/">Messenger</Link>
       </h1>
 
