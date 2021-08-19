@@ -35,6 +35,10 @@ const StyledContent = styled.section`
     background: #fff8;
     border-radius: 5px;
   }
+
+  @media only screen and (max-width: 500px) {
+    padding-right: 0%;
+  }
 `
 
 export default Content

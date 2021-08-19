@@ -15,7 +15,8 @@ const Contacts: React.FC<{
       contact: contactI | null
     }>
   >
-}> = ({ searchBarBottom, setContactPageVis }) => {
+  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ searchBarBottom, setContactPageVis, setShowConversations }) => {
   const { contacts } = useSelector((state: rootState) => state)
 
   const [menuConfig, setMenuConfig] = useState<{
@@ -34,6 +35,7 @@ const Contacts: React.FC<{
         {contacts &&
           contacts.map((contact, index) => (
             <Contact
+              setShowConversations={setShowConversations}
               setContactPageVis={setContactPageVis}
               setMenuConfig={setMenuConfig}
               key={index}

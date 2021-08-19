@@ -48,7 +48,7 @@ const Header: React.FC<{}> = () => {
 const StyledHeader = styled.header`
   width: 100%;
   height: var(--headerHeight);
-  padding: var(--HeaderPadding) 1.5em;
+  padding: clamp(0.25em, 3vw, 0.5em) clamp(1em, 3vw, 1.5em);
 
   display: flex;
   justify-content: space-between;
@@ -76,9 +76,8 @@ const StyledHeader = styled.header`
     align-items: center;
 
     .profileImage {
-      width: calc(var(--headerHeight) * 0.8);
-      max-width: 20vw;
-      height: calc(var(--headerHeight) * 0.8);
+      width: clamp(2.5em, 4vw, 4em);
+      height: clamp(2.5em, 4vw, 4em);
 
       border-radius: 50%;
 

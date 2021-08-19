@@ -9,7 +9,7 @@ import { rootState } from "Reducers"
 import { actionsContacts } from "Actions/contactsAction"
 
 const Input: React.FC = () => {
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
 
   const [input, setInput] = useState("")
 
@@ -25,7 +25,7 @@ const Input: React.FC = () => {
     }
   }, [selected])
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value)
   }
 
@@ -55,12 +55,11 @@ const Input: React.FC = () => {
     <StyledInput>
       <div className="border"></div>
       <form onSubmit={submitHandler}>
-        <input
-          type="text"
+        <textarea
           value={input}
           ref={inputRef}
           onChange={changeHandler}
-        />
+        ></textarea>
         <button>
           <IoSend />
         </button>
@@ -86,28 +85,35 @@ const StyledInput = styled.div`
     background: linear-gradient(to bottom, #dadada88, transparent);
   }
   form {
-    padding: 0.8em 0.75em;
+    padding: clamp(0.6em, 2vw, 0.8em) clamp(0.5em, 2vw, 0.75em);
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-between;
 
-    input {
+    textarea {
       width: 100%;
 
       background: rgb(16, 16, 16, 0.5);
       border-radius: 5px 0 0 5px;
       padding: calc(var(--InputFontSize) / 3) calc(var(--InputFontSize) / 2);
-      font-size: var(--InputFontSize);
+      font-size: clamp(0.8em, 2vw, 1em);
       font-family: var(--fontContent);
       color: #bdbdbd;
+      resize: none;
+
+      border: none;
+
+      &:focus {
+        outline: none;
+      }
     }
     button {
       background: rgb(16, 16, 16, 0.5);
       border-radius: 0 5px 5px 0;
       color: #bdbdbd;
       padding: calc(var(--InputFontSize) / 3) calc(var(--InputFontSize) / 1.5);
-      font-size: calc(var(--InputFontSize) * 1.25);
+      font-size: clamp(1em, 2vw, 1.25em);
 
       display: grid;
       place-items: center;

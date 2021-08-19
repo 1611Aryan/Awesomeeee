@@ -78,4 +78,11 @@
       }
     }
   }
+
+  @media only screen and (max-width: 500px) {
+    .loaderContainer {
+      width: 70vw;
+      height: 70vw;
+    }
+  }
 }

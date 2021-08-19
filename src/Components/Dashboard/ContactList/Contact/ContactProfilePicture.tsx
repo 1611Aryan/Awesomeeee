@@ -40,8 +40,8 @@ const ContactProfilePicture: React.FC<{
 }
 
 const StyleProfilePicture = styled.div`
-  width: var(--contactImageSize);
-  height: var(--contactImageSize);
+  width: clamp(2.5em, 4vw, 3em);
+  height: clamp(2.5em, 4vw, 3em);
   border-radius: 50%;
 
   align-self: center;

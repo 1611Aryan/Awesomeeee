@@ -70,17 +70,15 @@ const StyledMessage = styled.li`
   min-width: 5%;
   width: auto;
   max-width: 55%;
-  padding: calc(var(--MessagesFontSize) * 1.25)
-    calc(var(--MessagesFontSize) * 0.75);
+  padding: clamp(0.5em, 2vw, 1em) clamp(0.5em, 2vw, 0.75em);
 
   font-family: var(--fontContent);
   font-weight: 400;
-  font-size: var(--MessagesFontSize);
+  font-size: clamp(0.7em, 1vw, 0.9em);
   line-height: 1.35;
   letter-spacing: 0.3px;
   word-spacing: 0.5px;
   word-break: break-word;
-  text-align: center;
 
   color: #efefef;
   background: ${props => props.theme.background};

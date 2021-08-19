@@ -79,7 +79,7 @@ const SideBar: React.FC<{
 const StyledOptions = styled.section`
   width: var(--LeftPanelWidth);
   height: 100vh;
-  padding: 1.5em 0;
+  padding: clamp(0.75em, 2vw, 1.5em) 0;
 
   overflow: hidden;
 
@@ -92,7 +92,7 @@ const StyledOptions = styled.section`
     width: 35%;
     text-align: right;
     .backButton {
-      font-size: 1.75em;
+      font-size: clamp(1em, 3vw, 1.75em);
       color: rgba(255, 255, 255, 0.8);
       cursor: pointer;
     }
@@ -103,27 +103,27 @@ const StyledOptions = styled.section`
   }
 
   h1 {
-    margin: 0.5em 0 0.75em;
-    font-size: 3em;
+    margin: clamp(0.2em, 1vw, 0.5em) 0 clamp(0.5em, 2vw, 0.75em);
+    font-size: clamp(1.25em, 4vw, 3em);
     color: #fff;
   }
 
   ul {
     width: 100%;
     list-style-type: none;
-    padding: 0 1em;
+    padding: 0 clamp(0.25em, 1vw, 1em);
 
     li {
       width: 100%;
       color: rgba(255, 255, 255, 0.9);
 
-      margin: 0.25em 0;
+      margin: clamp(0.15em, 0.75vw, 0.25em) 0;
 
       border-radius: 2px;
 
       cursor: pointer;
 
-      font-size: 1.25em;
+      font-size: clamp(0.8em, 2vw, 1.25em);
 
       transition: all 0.2s;
       a {
@@ -132,13 +132,14 @@ const StyledOptions = styled.section`
         justify-content: flex-start;
         align-items: center;
 
-        padding: 0.75rem 0.75em 0.75em 0.5em;
+        padding: clamp(0.5em, 1vw, 0.75em) clamp(0.5em, 1vw, 0.75em)
+          clamp(0.5em, 1vw, 0.75em) 0.5em;
       }
       svg {
         transition: all 0.2s;
       }
       span {
-        font-size: 0.9em;
+        font-size: clamp(0.7em, 1vw, 0.9em);
         font-weight: 300;
         margin-left: 0.5em;
         transition: all 0.1s;
@@ -149,6 +150,18 @@ const StyledOptions = styled.section`
       transform: scale(1.1);
       background: rgba(255, 255, 255, 0.2);
       color: #fff;
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    padding: clamp(0.75em, 2vw, 1.5em) 0.5em;
+    .back {
+      width: 100%;
+      text-align: left;
+    }
+
+    .content {
+      margin-left: 00%;
     }
   }
 `

@@ -86,7 +86,7 @@ const StyledDeleteModal = styled.div`
   align-items: flex-start;
   flex-direction: column;
 
-  padding: 0em 1em;
+  padding: 0em clamp(0.7em, 2vw, 1em);
 
   position: relative;
 
@@ -102,6 +102,11 @@ const StyledDeleteModal = styled.div`
 
     opacity: 0.2;
     filter: blur(1px);
+  }
+
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+    height: 40%;
   }
 `
 
@@ -125,6 +130,7 @@ const StyledForm = styled.form`
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     text-align: center;
     margin-bottom: 4em;
+    font-size: clamp(1em, 3vw, 1.5em);
   }
 
   .buttons {
@@ -135,7 +141,7 @@ const StyledForm = styled.form`
     gap: 2em;
     button {
       min-width: 20%;
-      font-size: 1.1em;
+      font-size: clamp(0.9em, 3vw, 1.1em);
       font-family: var(--fontContent);
       background: #567d;
       color: white;

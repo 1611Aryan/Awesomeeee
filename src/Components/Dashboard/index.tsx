@@ -34,6 +34,7 @@ const GettingStarted = lazy(() => import("./GettingStarted"))
 
 const Dashboard: React.FC = () => {
   const [settingsActive, setSettingsActive] = useState(false)
+  const [showConversations, setShowConversations] = useState(true)
 
   const { socket, setSocket } = useSocket()
   const { selected } = useSelectedContact()
@@ -151,11 +152,17 @@ const Dashboard: React.FC = () => {
             <Settings setSettingsActive={setSettingsActive} />
           ) : (
             <>
-              <SideBar setSettingsActive={setSettingsActive} />
-              <Conversations />
-              <Suspense fallback={<Overlay />}>
-                {selected ? <Chat /> : <ClosedChat />}
-              </Suspense>
+              <SideBar
+                setSettingsActive={setSettingsActive}
+                setShowConversations={setShowConversations}
+              />
+              {showConversations ? (
+                <Conversations setShowConversations={setShowConversations} />
+              ) : (
+                <Suspense fallback={<Overlay />}>
+                  {selected ? <Chat /> : <ClosedChat />}
+                </Suspense>
+              )}
             </>
           )}
         </StyledDashboard>
@@ -182,9 +189,16 @@ const StyledDashboard = styled.main`
   --headerHeight: 10vh;
 
   --topPadding: calc(var(--conversationsWidth) * 0.1);
-  --headingSize: calc(var(--conversationsWidth) * 0.087);
+  --headingSize: 2em;
   --sideBarHeading: calc(var(--sideBarWidth) * 0.8);
   --searchBarMarginT: calc(var(--conversationsWidth) * 0.1);
+
+  @media only screen and (max-width: 500px) {
+    --sideBarWidth: 10vw;
+    --chatWidth: calc(100vw - var(--sideBarWidth));
+    // --chatWidth: 0;
+    --conversationsWidth: 90vw;
+  }
 `
 
 export default Dashboard

@@ -31,9 +31,8 @@ const StyledProfile = styled.div`
   overflow: hidden;
 
   .imgContainer {
-    width: calc(var(--sideBarWidth) - 1em);
-    height: calc(var(--sideBarWidth) - 1em);
-    max-height: calc(10vw - 1em);
+    width: 100%;
+    aspect-ratio: 1/1;
 
     z-index: 2;
     img {

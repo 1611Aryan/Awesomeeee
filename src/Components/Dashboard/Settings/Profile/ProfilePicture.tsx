@@ -124,13 +124,13 @@ const StyledProfilePicture = styled.div`
     justify-content: center;
     align-items: flex-end;
     flex-direction: column;
-    gap: 2em;
+    gap: clamp(1.5em, 3vw, 2em);
     button {
       border: 0;
       border-radius: 5px;
-      padding: 0.75em;
+      padding: clamp(0.5em, 1vw, 0.75em);
 
-      font-size: 1.05em;
+      font-size: clamp(0.8em, 1vw, 1em);
       color: white;
 
       &:focus {
@@ -155,8 +155,8 @@ const StyledProfilePicture = styled.div`
 `
 
 const StyledProfilePictureContainer = styled.div`
-  width: calc(100% * var(--imgSize));
-  height: calc(var(--RightPanelWidth) * 85.7 / 100 * var(--imgSize) - 5.5em);
+  width: clamp(5em, 7vw, 18em);
+  height: clamp(5em, 7vw, 18em);
   border-radius: 7px;
 
   overflow: hidden;

@@ -28,14 +28,12 @@ const StyledClosedChat = styled.div`
     transform: translate(-50%, -50%);
 
     width: 60%;
-    height: calc(0.6 * var(--chatWidth));
+    aspect-ratio: 1/1;
 
     background: radial-gradient(
       rgba(255, 226, 89, 0.5),
       rgba(255, 167, 81, 0.5)
     );
-
-    animation: AnimationName 10s infinite;
 
     border-radius: 50%;
   }
@@ -49,10 +47,22 @@ const StyledClosedChat = styled.div`
     width: clamp(40%, 28ch, 90%);
 
     font-family: var(--fontHeading);
-    font-size: 4em;
+    font-size: clamp(2em, 4vw, 4em);
     color: #fff;
 
     text-align: center;
+  }
+
+  @media only screen and (max-width: 500px) {
+    position: fixed;
+    top: 0;
+    left: calc(100vw - var(--conversationsWidth));
+
+    pointer-events: none;
+
+    .circle {
+      width: 100%;
+    }
   }
 `
 

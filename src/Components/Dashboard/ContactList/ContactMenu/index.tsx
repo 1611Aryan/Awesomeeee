@@ -76,7 +76,6 @@ const ContactMenu: React.FC<{
 }
 
 const StyledMenu = styled.ul`
-  //To hide Element but still being focusable
   opacity: 0;
   border: 0;
   height: 1px;
@@ -96,6 +95,7 @@ const StyledMenu = styled.ul`
   position: absolute;
   top: ${props => props.theme.positionY}px;
   right: calc(var(--contactPadding) + var(--conversationsWidth) / 38.46);
+
   transform: translate(100%);
 
   border-radius: 4px;
@@ -116,12 +116,12 @@ const StyledMenu = styled.ul`
 
   li {
     flex: 1;
-    padding: 0.75em 0.65em;
+    padding: clamp(0.5em, 1vw, 0.75em) clamp(0.45em, 1vw, 0.65em);
     position: relative;
     width: 100%;
     height: 100%;
     color: #fffc;
-    font-size: var(--contactNameSize);
+    font-size: clamp(0.9em, 2vw, 1em);
     font-weight: 300;
     letter-spacing: 0.5px;
 
@@ -145,6 +145,12 @@ const StyledMenu = styled.ul`
       width: calc(100% - 0.325em * 2);
       background: linear-gradient(to bottom, #fffa, transparent);
     }
+  }
+
+  @media only screen and (max-width: 500px) {
+    width: 30vw;
+
+    right: calc(40vw);
   }
 `
 

@@ -7,7 +7,9 @@ import ContactPage from "../ContactPage"
 import Contacts from "./Contacts"
 import SearchBar from "./SearchBar"
 
-const Conversations: React.FC = () => {
+const Conversations: React.FC<{
+  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ setShowConversations }) => {
   const [searchBarBottom, setSearchBarBottom] = useState<number>()
   const [contactPageVis, setContactPageVis] = useState<{
     visible: boolean
@@ -29,6 +31,7 @@ const Conversations: React.FC = () => {
       <Contacts
         searchBarBottom={searchBarBottom}
         setContactPageVis={setContactPageVis}
+        setShowConversations={setShowConversations}
       />
 
       {contactPageVis.visible && (
@@ -62,7 +65,7 @@ const StyledConversations = styled.div`
       color: white;
       font-family: var(--fontHeading);
       font-weight: 500;
-      font-size: var(--headingSize);
+      font-size: clamp(1.25em, 3vw, 1.5em);
       line-height: 1;
     }
   }
@@ -78,9 +81,14 @@ const StyledConversations = styled.div`
   }
 
   //Contacts
-  --contactNameSize: calc(var(--conversationsWidth) * 0.052);
-  --contactTextSize: calc(var(--conversationsWidth) * 0.037);
-  --contactImageSize: calc((var(--conversationsWidth) - 1.3em) / 6.5);
+  --contactNameSize: 1em;
+  --contactTextSize: 0.7em;
+
+  @media only screen and (max-width: 500px) {
+    position: fixed;
+    top: 0;
+    left: calc(100vw - var(--conversationsWidth));
+  }
 `
 
 export default Conversations

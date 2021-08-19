@@ -44,6 +44,13 @@ const StyledChat = styled(motion.main)`
 
   --MessagesHeight: calc(100vh - var(--headerHeight) - var(--InputHeight));
   --MessagesFontSize: calc(var(--conversationsWidth) * 0.044);
+
+  @media only screen and (max-width: 500px) {
+    position: fixed;
+    top: 0;
+    left: calc(100vw - var(--conversationsWidth));
+    --InputHeight: calc(var(--conversationsWidth) / 6);
+  }
 `
 
 export default Chat

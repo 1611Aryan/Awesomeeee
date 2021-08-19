@@ -27,9 +27,7 @@ const SearchBar: React.FC<{
 const StyledSearchBar = styled.div`
   width: 100%;
 
-  font-size: 1rem;
-
-  margin: 0.5em 0;
+  margin: clamp(0.3em, 1vw, 0.5em) 0;
 
   form {
     width: 100%;
@@ -41,7 +39,7 @@ const StyledSearchBar = styled.div`
       background: rgb(16, 16, 16, 0.5);
       border-radius: 5px 0 0 5px;
       padding: 0.35em 0.5em;
-      font-size: var(--contactTextSize);
+      font-size: clamp(0.8em, 2vw, 1rem);
       font-family: var(--fontContent);
       color: #bdbdbd;
     }
@@ -50,7 +48,7 @@ const StyledSearchBar = styled.div`
       border-radius: 0 5px 5px 0;
       color: #bdbdbd;
       padding: 0.35em 0.5em;
-      font-size: calc(var(--contactTextSize) * 1.5);
+      font-size: clamp(1em, 2vw, 1.2rem);
 
       display: grid;
       place-items: center;

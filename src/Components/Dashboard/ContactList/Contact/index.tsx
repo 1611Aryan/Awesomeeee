@@ -32,7 +32,8 @@ const Contact: React.FC<{
       contact: contactI | null
     }>
   >
-}> = ({ contact, setMenuConfig, setContactPageVis }) => {
+  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ contact, setMenuConfig, setContactPageVis, setShowConversations }) => {
   const { selected, setSelected } = useSelectedContact()
   const dispatchContact = useDispatch()
 
@@ -41,6 +42,7 @@ const Contact: React.FC<{
       roomId: contact.roomId,
       contactId: contact.contactId,
     })
+    setShowConversations(false)
   }
 
   useEffect(() => {
@@ -127,8 +129,7 @@ const Contact: React.FC<{
 
 const StyledContact = styled.li`
   width: 100%;
-  padding: calc(var(--conversationsWidth) / 22)
-    calc(var(--conversationsWidth) / 38.46);
+  padding: clamp(0.7em, 1vw, 0.8em) clamp(0.4em, 1vw, 0.5em);
 
   overflow: hidden;
 

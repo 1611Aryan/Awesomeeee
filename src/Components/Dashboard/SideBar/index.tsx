@@ -1,25 +1,26 @@
 import styled from "styled-components"
-import AddContact from "./AddContact"
 
 import Profile from "./Profile"
+import SubMenu from "./SubMenu"
 
 const SideBar: React.FC<{
   setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ setSettingsActive }) => {
+  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ setSettingsActive, setShowConversations }) => {
   return (
     <StyledSideBar>
       <h1>M</h1>
-      <AddContact />
+      <SubMenu setShowConversations={setShowConversations} />
       <Profile setSettingsActive={setSettingsActive} />
     </StyledSideBar>
   )
 }
 
 const StyledSideBar = styled.div`
-  width: clamp(3vw, var(--sideBarWidth), 10vw);
+  width: var(--sideBarWidth);
 
   height: 100vh;
-  padding: 1rem 0.5rem;
+  padding: 1em clamp(0.35em, 1vw, 0.5em);
 
   display: flex;
   justify-content: space-between;
@@ -29,7 +30,7 @@ const StyledSideBar = styled.div`
   background: rgb(16, 16, 16, 0.5);
   h1 {
     font-family: var(--fontHeading);
-    font-size: var(--sideBarHeading);
+    font-size: clamp(1.5em, 3vw, 3em);
 
     color: white;
   }

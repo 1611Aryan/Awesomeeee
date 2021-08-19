@@ -30,7 +30,7 @@ const UserInfo: React.FC = () => {
 }
 
 const ReStyledForm = styled(StyledForm)`
-  margin-top: 2em;
+  margin-top: clamp(1em, 3vw, 2em);
 `
 
 export default UserInfo

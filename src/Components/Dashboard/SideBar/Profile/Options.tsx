@@ -48,7 +48,7 @@ const StyledOptions = styled.div`
   transition: transform ease-in-out 0.2s;
   svg {
     color: #000000;
-    font-size: 1.5em;
+    font-size: clamp(1.2em, 3vw, 1.5em);
     cursor: pointer;
 
     transform: scaleY(0.5);

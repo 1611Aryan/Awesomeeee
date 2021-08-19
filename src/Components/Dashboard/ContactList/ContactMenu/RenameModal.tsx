@@ -65,26 +65,32 @@ const RenameModal: React.FC<{
     <StyledRenameModal>
       <StyledForm onSubmit={rename}>
         <h1>Rename Contact</h1>
-        <label htmlFor="name">Name: </label>
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={changeHandler}
-          placeholder={menuConfig.contact ? menuConfig.contact.contactName : ""}
-          autoFocus
-          required
-        />
-        <div className="buttons">
-          <button type="submit">Change</button>
-          <button type="button" onClick={cancel}>
-            Abort
-          </button>
+        <div className="content">
+          <div className="form">
+            <label htmlFor="name">Name: </label>
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={changeHandler}
+              placeholder={
+                menuConfig.contact ? menuConfig.contact.contactName : ""
+              }
+              autoFocus
+              required
+            />
+            <div className="buttons">
+              <button type="submit">Change</button>
+              <button type="button" onClick={cancel}>
+                Abort
+              </button>
+            </div>
+          </div>
+          <StyledImage>
+            <img src={quill} alt="Quill" />
+          </StyledImage>
         </div>
       </StyledForm>
-      <StyledImage>
-        <img src={quill} alt="Quill" />
-      </StyledImage>
     </StyledRenameModal>
   )
 }
@@ -101,15 +107,19 @@ const StyledRenameModal = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  padding: 0em 1.5em;
+  padding: 0em clamp(1em, 3vw, 1.5em);
+
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+  }
 `
 
 const StyledForm = styled.form`
-  width: 50%;
+  width: 100%;
   height: 100%;
 
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: flex-start;
   flex-direction: column;
 
@@ -117,22 +127,35 @@ const StyledForm = styled.form`
   font-family: var(--fontContent);
 
   * {
-    margin: 1em 0;
+    margin: clamp(0.5em, 2vw, 1em) 0;
   }
 
   h1 {
+    width: 100%;
     font-family: var(--fontHeading);
     color: white;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+    font-size: clamp(1.5em, 3vw, 2em);
+  }
+
+  .content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .form {
+    width: 80%;
   }
 
   label {
-    font-size: 1.2em;
+    font-size: clamp(0.9em, 2vw, 1.2em);
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
   }
   input {
     width: 100%;
-    font-size: 1.1em;
+    font-size: clamp(0.8em, 2vw, 1.1em);
 
     font-family: var(--fontContent);
     font-weight: 300;
@@ -162,7 +185,7 @@ const StyledForm = styled.form`
     width: 100%;
     button {
       min-width: 30%;
-      font-size: 1em;
+      font-size: clamp(0.8em, 2vw, 1em);
       font-family: var(--fontContent);
       background: #567d;
       color: white;

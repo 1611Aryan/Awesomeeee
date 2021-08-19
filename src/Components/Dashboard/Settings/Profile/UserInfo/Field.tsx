@@ -149,7 +149,7 @@ const StyledField = styled.div`
 
   input {
     width: 100%;
-    padding: 0.25em;
+    padding: clamp(0.15em, 0.5vw, 0.25em);
 
     border: 0;
     border-radius: 2px;
@@ -166,7 +166,7 @@ const StyledField = styled.div`
   input[readonly] {
     border-bottom: 1px solid transparent;
     background: transparent;
-    padding: 0.25em 0;
+    padding: clamp(0.15em, 0.5vw, 0.25em) 0;
   }
 
   .buttons {
@@ -176,7 +176,7 @@ const StyledField = styled.div`
     align-items: center;
     svg {
       cursor: pointer;
-      font-size: 1.5em;
+      font-size: clamp(1em, 3vw, 1.5em);
 
       transition: all 0.1s;
       color: rgba(255, 255, 255, 0.4);
