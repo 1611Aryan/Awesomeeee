@@ -8,7 +8,7 @@ import Page2 from "./Page2"
 const GettingStarted = () => {
   const pagesRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState(false)
-  const formData = new FormData()
+  const formData = useRef(new FormData())
 
   const variants = {
     initial: {
@@ -50,8 +50,8 @@ const GettingStarted = () => {
         )}
         <div className="blob"></div> <div className="blob"></div>
         <div ref={pagesRef} className="pages">
-          <Page1 formData={formData} pagesRef={pagesRef} />
-          <Page2 formData={formData} setLoading={setLoading} />
+          <Page1 formData={formData.current} pagesRef={pagesRef} />
+          <Page2 formData={formData.current} setLoading={setLoading} />
         </div>
       </div>
     </StyledGettingStarted>

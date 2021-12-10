@@ -26,7 +26,7 @@ const Page1: React.FC<{
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     formData.append("username", input.username)
-    formData.append("password", input.password)
+    input.password && formData.append("password", input.password)
     if (pagesRef.current) pagesRef.current.style.transform = "translateX(-50%)"
   }
 

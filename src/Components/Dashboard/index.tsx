@@ -1,14 +1,10 @@
-import { useState, useEffect, lazy, Suspense } from "react"
+import { useEffect, lazy, Suspense } from "react"
 import styled from "styled-components"
 import io from "socket.io-client"
 import axios from "axios"
 
-import SideBar from "./SideBar"
-import Conversations from "./ContactList"
-import ClosedChat from "./ClosedChat"
-
 import { useAccess } from "Providers/AccessProvider"
-import { useSelectedContact } from "Providers/SelectedContactProvider"
+
 import { useSocket } from "Providers/SocketProvider"
 import { actionsUser, userI } from "Actions/userActions"
 import { useDispatch, useSelector } from "react-redux"
@@ -27,17 +23,13 @@ import { rootState } from "../../Reducers"
 import Overlay from "../Loaders/Overlay/Overlay"
 
 import { AnimatePresence } from "framer-motion"
+import { Outlet } from "react-router-dom"
 
-const Settings = lazy(() => import("./Settings"))
-const Chat = lazy(() => import("./Chat"))
 const GettingStarted = lazy(() => import("./GettingStarted"))
 
 const Dashboard: React.FC = () => {
-  const [settingsActive, setSettingsActive] = useState(false)
-  const [showConversations, setShowConversations] = useState(true)
-
   const { socket, setSocket } = useSocket()
-  const { selected } = useSelectedContact()
+
   const { setAccess } = useAccess()
 
   const { user } = useSelector((state: rootState) => state)
@@ -148,23 +140,7 @@ const Dashboard: React.FC = () => {
               {!user.profileSetup && <GettingStarted />}
             </AnimatePresence>
           </Suspense>
-          {settingsActive ? (
-            <Settings setSettingsActive={setSettingsActive} />
-          ) : (
-            <>
-              <SideBar
-                setSettingsActive={setSettingsActive}
-                setShowConversations={setShowConversations}
-              />
-              {showConversations ? (
-                <Conversations setShowConversations={setShowConversations} />
-              ) : (
-                <Suspense fallback={<Overlay />}>
-                  {selected ? <Chat /> : <ClosedChat />}
-                </Suspense>
-              )}
-            </>
-          )}
+          <Outlet />
         </StyledDashboard>
       )}
     </Suspense>

@@ -5,16 +5,11 @@ import { useAccess } from "Providers/AccessProvider"
 import axios from "axios"
 import { logoutEndpoint } from "API_Endpoints"
 import { useSocket } from "Providers/SocketProvider"
+import { Link } from "react-router-dom"
 
-const Options: React.FC<{
-  setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ setSettingsActive }) => {
+const Options: React.FC = () => {
   const { setAccess } = useAccess()
   const { socket } = useSocket()
-
-  const openSettings = () => {
-    setSettingsActive(true)
-  }
 
   const logout = async () => {
     setAccess({ loggedIn: false, username: null })
@@ -26,7 +21,9 @@ const Options: React.FC<{
 
   return (
     <StyledOptions className="options">
-      <IoMdSettings onClick={openSettings} />
+      <Link to="/dashboard/settings">
+        <IoMdSettings />
+      </Link>
       <FiLogOut onClick={logout} />
     </StyledOptions>
   )

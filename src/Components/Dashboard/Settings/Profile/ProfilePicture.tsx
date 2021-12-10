@@ -80,7 +80,7 @@ const ProfilePicture: React.FC = () => {
 
   return (
     <StyledProfilePicture>
-      <form encType="multpart/form-data" onSubmit={e => e.preventDefault()}>
+      <form onSubmit={e => e.preventDefault()}>
         <StyledProfilePictureContainer>
           <img onClick={chooseProfilePicture} src={profilePicture.src} alt="" />
           <label htmlFor="avatar"></label>
@@ -155,8 +155,8 @@ const StyledProfilePicture = styled.div`
 `
 
 const StyledProfilePictureContainer = styled.div`
-  width: clamp(5em, 7vw, 18em);
-  height: clamp(5em, 7vw, 18em);
+  width: calc(100% * var(--imgSize));
+
   border-radius: 7px;
 
   overflow: hidden;

@@ -4,14 +4,12 @@ import { rootState } from "Reducers"
 
 import Options from "./Options"
 
-const Profile: React.FC<{
-  setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ setSettingsActive }) => {
+const Profile: React.FC = () => {
   const { user } = useSelector((state: rootState) => state)
 
   return (
     <StyledProfile tabIndex={1}>
-      <Options setSettingsActive={setSettingsActive} />
+      <Options />
       <div className="imgContainer">
         <img src={user?.profilePicture.thumbnail} alt="" />
       </div>

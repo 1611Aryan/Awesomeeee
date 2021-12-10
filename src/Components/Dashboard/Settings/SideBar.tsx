@@ -4,15 +4,10 @@ import { CgProfile, CgInfo } from "react-icons/cg"
 import { IoMdLock } from "react-icons/io"
 import styled from "styled-components"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
-const SideBar: React.FC<{
-  setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ setSettingsActive }) => {
+const SideBar = () => {
   const [selected, setSelected] = useState("profile")
-
-  const closeSettings = () => {
-    setSettingsActive(false)
-  }
 
   const selectOption = (option: string) =>
     option === selected ? "selected" : ""
@@ -20,7 +15,9 @@ const SideBar: React.FC<{
   return (
     <StyledOptions>
       <div className="back">
-        <HiArrowLeft className="backButton" onClick={closeSettings} />
+        <Link to="/dashboard">
+          <HiArrowLeft className="backButton" />
+        </Link>
       </div>
       <div className="content">
         <h1>Settings</h1>

@@ -4,14 +4,13 @@ import Profile from "./Profile"
 import SubMenu from "./SubMenu"
 
 const SideBar: React.FC<{
-  setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ setSettingsActive, setShowConversations }) => {
+}> = ({ setShowConversations }) => {
   return (
     <StyledSideBar>
       <h1>M</h1>
       <SubMenu setShowConversations={setShowConversations} />
-      <Profile setSettingsActive={setSettingsActive} />
+      <Profile />
     </StyledSideBar>
   )
 }

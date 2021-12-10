@@ -3,7 +3,7 @@ import { profileSetup } from "API_Endpoints"
 import axios from "axios"
 import Profile from "Media/PNG/profile.png"
 
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import styled from "styled-components"
 
@@ -19,9 +19,7 @@ const Page2: React.FC<{
     default: boolean
   }>({
     src: Profile,
-    file: new File([Profile], "default.png", {
-      type: "image/png",
-    }),
+    file: null,
     default: true,
   })
 
@@ -56,7 +54,6 @@ const Page2: React.FC<{
         withCredentials: true,
       })
 
-      console.log(res.data)
       if (res.data.profileSetup) {
         dispatch({
           type: actionsUser.UPDATE_USER,
@@ -80,6 +77,11 @@ const Page2: React.FC<{
       setLoading(false)
     }
   }
+
+  useEffect(
+    () => () => URL.revokeObjectURL(profilePicture.src),
+    [profilePicture]
+  )
 
   return (
     <StyledPage1>

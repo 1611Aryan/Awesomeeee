@@ -2,12 +2,10 @@ import styled from "styled-components"
 import SideBar from "./SideBar"
 import Content from "./Content"
 
-const Settings: React.FC<{
-  setSettingsActive: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ setSettingsActive }) => {
+const Settings = () => {
   return (
     <StyledSettings>
-      <SideBar setSettingsActive={setSettingsActive} />
+      <SideBar />
       <Content />
     </StyledSettings>
   )

@@ -2,7 +2,7 @@ import React, { useContext, createContext } from "react"
 
 import useLocalStorage from "../Hooks/useLocalStorage"
 
-type access = { loggedIn: boolean; username: null | string }
+export type access = { loggedIn: boolean; username: null | string }
 
 const AccessContext = createContext<{
   access: access | null
