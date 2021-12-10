@@ -2,8 +2,7 @@ import { PassportStatic } from "passport"
 import { Strategy as GoogleStrategy } from "passport-google-oauth2"
 import User from "../Models/user.model"
 import { GOOGLE_CALLBACK_URL } from "../Utilities/Endpoints"
-import { randomBytes } from "crypto"
-import { transporter, sender } from "../NodeMailer"
+import { nanoid } from "nanoid"
 
 class Google {
   protected passport: PassportStatic
@@ -14,7 +13,7 @@ class Google {
 
   createUsername = (email: string): string => email.split("@", 1)[0]
 
-  genPassword = (length = 12): string => randomBytes(length).toString("hex")
+  genPassword = (length = 12): string => nanoid(length)
 
   google = (): void => {
     this.passport.use(
@@ -27,6 +26,7 @@ class Google {
         },
         async (accessToken, refreshToken, profile, done) => {
           try {
+            console.log(profile)
             const user = await User.findOne({ email: profile.email })
             if (user) return done(null, user)
             else {
@@ -35,15 +35,11 @@ class Google {
                 username: this.createUsername(profile.email),
                 password: this.genPassword(),
                 strategyUsed: "google",
+                profilePicture: {
+                  thumbnail: profile.picture,
+                  large: profile.picture,
+                },
               })
-
-              const options = {
-                from: sender,
-                to: profile.email,
-                subject: "Welcome To Messenger",
-                html: `<body><h1>Welcome</h1><p>Hello</p></body>`,
-              }
-              transporter.sendMail(options)
 
               return done(null, newUser)
             }

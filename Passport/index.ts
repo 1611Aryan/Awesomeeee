@@ -12,6 +12,7 @@ class PassportConfig extends Mixin(Local, JWT, Google) {
   constructor(passport: PassportStatic) {
     super(passport)
     this.passport = passport
+    this.init()
   }
 
   serialize = () =>
@@ -26,9 +27,6 @@ class PassportConfig extends Mixin(Local, JWT, Google) {
     this.delete()
     this.jwt()
     this.google()
-
-    this.serialize()
-    this.deserialize()
   }
 }
 export default PassportConfig

@@ -5,15 +5,17 @@ process.env.NODE_ENV !== "production" &&
 
 import passport from "passport"
 
-import ExpressConfig from "./Express/config"
-import PassportConfig from "./Passport/passport.config"
-import MongoConfig from "./Mongoose/config"
-import socketConfig from "./Socket.io/socket.config"
+import ExpressConfig from "./Express"
+import PassportConfig from "./Passport"
+import chalk from "chalk"
+import MongoConfig from "./Mongoose"
+import socketConfig from "./Socket.io"
 
 import Router from "./Routes/normal.routes"
 import PrivateRouter from "./Routes/private.routes"
+import ImageKitConfig from "./ImageKit/ImageKit.Config"
 
-new PassportConfig(passport).init()
+new PassportConfig(passport)
 
 const PORT = process.env.PORT || 5000
 
@@ -24,6 +26,7 @@ const server = http.createServer(app)
 
 socketConfig(server)
 MongoConfig()
+export const imagekit = ImageKitConfig()
 
 app.use("/", Router)
 app.use(
@@ -33,5 +36,5 @@ app.use(
 )
 
 server.listen(PORT, () =>
-  console.log(`\x1b[36mServer running on port ${PORT}\x1b[0m`)
+  console.log(chalk.green.bold(`Server running on port ${PORT}`))
 )

@@ -1,154 +1,17 @@
-/* eslint-disable @typescript-eslint/no-extra-semi */
-import { Request, Response } from "express-serve-static-core"
-import ImageKit from "imagekit"
-import path from "path"
-import fs from "fs/promises"
-
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
-import redisClient from "./../Redis"
+import redisClient from "../Redis"
 
-import User, { UserI } from "./../Models/user.model"
-import { clearCache } from "./../Mongoose/cache"
+import User from "../Models/user.model"
 
-import optimizeImage from "../Utilities/optimizeImage"
-import deleteImage from "../Utilities/deleteImage"
-import {
-  DEFAULT_PROFILE_IMAGE,
-  IMAGEKIT_ENDPOINT,
-} from "../Utilities/Endpoints"
-import toBoolean from "../Utilities/toBoolean"
 import { sender, transporter } from "../NodeMailer"
-import codeGen from "../Utilities/codeGen"
-import { randomBytes } from "crypto"
 
-const imagekit = new ImageKit({
-  publicKey: "public_3oRfceoym6fYdLSisJvQyec8czA=",
-  privateKey: process.env.IMAGE_KIT_PRIVATE_KEY,
-  urlEndpoint: IMAGEKIT_ENDPOINT,
-})
-
-type req = Request & {
-  user: {
-    id: string
-    iat: string
-    username: string
-  }
-}
-
-type controller = (req: req, res: Response) => Promise<Response>
+import { nanoid } from "nanoid"
+import { controller } from "./controller"
 
 enum SETS {
   ALLOW_PASSWORD_CHANGE = "ALLOW_PASSWORD_CHANGE",
   VERIFICATION_CODE = "VERIFICATION_CODE",
-}
-
-//*UTILS
-const deletePreviouslyStoredImage = (FILE_ID: string) => {
-  if (
-    FILE_ID !== DEFAULT_PROFILE_IMAGE.FILE_ID &&
-    !FILE_ID.includes("google-")
-  ) {
-    imagekit.deleteFile(FILE_ID, (err, result) => {
-      if (err) console.log({ imageKitDelete: err })
-      else console.log({ result })
-    })
-  }
-}
-
-const uploadImage = async (
-  imagePath: string,
-  id: string
-): Promise<UserI["profilePicture"]> => {
-  try {
-    const response = await imagekit.upload({
-      file: await fs.readFile(imagePath),
-      fileName: id,
-      folder: "Awesome",
-    })
-
-    return {
-      large: response.url,
-      thumbnail: response.thumbnailUrl,
-      fileId: response.fileId,
-    }
-  } catch (err) {
-    throw new Error(err)
-  }
-}
-
-export const finishProfileSetup: controller = async (req, res) => {
-  const id = req.user.id
-  const isDefault = toBoolean(req.body.isDefault)
-
-  console.log(!!isDefault)
-
-  let imagePath, mimeType
-
-  if (!isDefault) {
-    imagePath = path.join(__dirname, "..", "uploads", req.file.filename)
-    mimeType = req.file.mimetype
-  }
-
-  let minified = false
-  try {
-    //?To check if user has never set their profile before
-    const userPermissionCheck = await User.findById(id)
-    if (userPermissionCheck) {
-      if (!userPermissionCheck.profileSetup) {
-        const username = req.body.username
-        const password = req.body?.password
-        const hashedPassword = await bcrypt.hash(password, 10)
-
-        //Cancel if default don't invoke the function
-        ;[minified, imagePath] = await optimizeImage(
-          isDefault,
-          imagePath,
-          mimeType,
-          req.file.size
-        )
-
-        const profilePicture = isDefault
-          ? {
-              fileId: DEFAULT_PROFILE_IMAGE.FILE_ID,
-              thumbnail: DEFAULT_PROFILE_IMAGE.THUMBNAIL,
-              large: DEFAULT_PROFILE_IMAGE.LARGE,
-            }
-          : await uploadImage(imagePath, id)
-
-        const user = isDefault
-          ? await User.findByIdAndUpdate(id, {
-              $set: {
-                username,
-                password: hashedPassword,
-                profileSetup: true,
-              },
-            })
-          : await User.findByIdAndUpdate(id, {
-              $set: {
-                username,
-                password: hashedPassword,
-                profilePicture,
-                profileSetup: true,
-              },
-            }).lean()
-
-        if (user) {
-          clearCache(id)
-
-          return res.status(200).send({
-            profileSetup: true,
-            profilePicture,
-          })
-        } else return res.sendStatus(500)
-      } else return res.sendStatus(403)
-    } else return res.sendStatus(500)
-  } catch (err) {
-    console.log({ finishSetup: err })
-    return res.status(500).send(err)
-  } finally {
-    deleteImage(imagePath, minified)
-  }
 }
 
 export const getProfile: controller = async (req, res) => {
@@ -178,72 +41,10 @@ export const getProfile: controller = async (req, res) => {
   }
 }
 
-export const changeUsername: controller = async (req, res) => {
-  try {
-    const id = req.user.id
-    const username = req.body.username
-
-    const existingUser = await User.findOne({ username }).lean()
-
-    if (existingUser) return res.status(409).send("Username already Taken")
-
-    const user = await User.findByIdAndUpdate(id, {
-      $set: {
-        username,
-      },
-    })
-
-    if (user) {
-      clearCache(id)
-      return res.status(200).send("Username Changed")
-    } else return res.sendStatus(404)
-  } catch (err) {
-    console.log({ changeUsername: err })
-    return res.status(500).send(err)
-  }
-}
-
-export const changeProfilePicture: controller = async (req, res) => {
-  const id = req.user.id
-  const isDefault = toBoolean(req.body.isDefault)
-  let imagePath, mimeType
-
-  if (!isDefault) {
-    imagePath = path.join(__dirname, "..", "uploads", req.file.filename)
-    mimeType = req.file.mimetype
-  }
-
-  const FILE_ID: string = req.body.fileId
-  let minified = false
-
-  try {
-    !isDefault && deletePreviouslyStoredImage(FILE_ID)
-    ;[minified, imagePath] = await optimizeImage(
-      isDefault,
-      imagePath,
-      mimeType,
-      req.file.size
-    )
-
-    if (!isDefault) {
-      const profilePicture = await uploadImage(imagePath, id)
-
-      const user = await User.findByIdAndUpdate(id, {
-        $set: {
-          profilePicture,
-        },
-      }).lean()
-      if (user) {
-        clearCache(id)
-        return res.status(200).send({ profilePicture })
-      } else return res.sendStatus(404)
-    } else return res.status(400)
-  } catch (err) {
-    console.log({ changeProfilePicture: err })
-    return res.status(500).send(err)
-  } finally {
-    deleteImage(imagePath, minified)
-  }
+export const logout: controller = (req, res) => {
+  req.logOut()
+  res.clearCookie("JWT").sendStatus(200)
+  return
 }
 
 export const verifyPassword: controller = async (req, res) => {
@@ -291,7 +92,6 @@ export const changePassword: controller = async (req, res) => {
   }
 }
 
-//* Send Code to Requested Account
 export const forgotPassword_step1: controller = async (req, res) => {
   try {
     const email = req.body.email.trim() as string
@@ -305,7 +105,7 @@ export const forgotPassword_step1: controller = async (req, res) => {
       ],
     }).lean()
 
-    const code = codeGen()
+    const code = nanoid(6)
 
     if (userCheck) {
       const options = {
@@ -372,7 +172,7 @@ export const forgotPassword_step2: controller = async (req, res) => {
 
       const payload = {
         email,
-        code: randomBytes(15).toString("hex"),
+        code: nanoid(15),
       }
 
       const token = jwt.sign(payload, process.env.JWT_SECRET)
@@ -449,10 +249,4 @@ export const forgotPassword_step3: controller = async (req, res) => {
     console.log({ changePassword: err })
     return res.status(500).send(err)
   }
-}
-
-export const logout = (req: req, res: Response): void => {
-  req.logOut()
-  res.clearCookie("JWT").sendStatus(200)
-  return
 }

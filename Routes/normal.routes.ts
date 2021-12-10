@@ -1,4 +1,4 @@
-import { Router } from "express"
+import { Response, Router } from "express"
 import { Document } from "mongoose"
 import jwt from "jsonwebtoken"
 import { createHash } from "crypto"
@@ -10,56 +10,57 @@ import {
   forgotPassword_step1,
   forgotPassword_step2,
   forgotPassword_step3,
-} from "../Controllers/user.controller"
+} from "../Controllers/User.Controller"
 
 const router = Router()
+
+const errHandler = (
+  err: { [key: string]: string },
+  info: { [key: string]: string },
+  res: Response
+) => {
+  if (err) {
+    if (typeof err === "number") return res.sendStatus(err)
+    if (err.status && err.message && typeof err.status === "number")
+      return res.status(err.status).send(err.message)
+    return res.send(err)
+  }
+  if (info && info.message) return res.status(400).send(info.message)
+}
 
 router.get("/", (_req, res) => res.redirect(CLIENT_URL))
 
 router.post("/signup", (req, res) =>
   passport.authenticate("signup", async (err, user: UserI, info) => {
-    if (err) {
-      if (typeof err === "number") return res.sendStatus(err)
-      if (err.status && err.message && typeof err.status === "number")
-        return res.status(err.status).send(err.message)
-      return res.send(err)
-    }
-    if (info && info.message) return res.status(409).send(info.message)
+    errHandler(err, info, res)
     return res.send(true)
   })(req, res)
 )
 
 router.post("/login", (req, res) =>
   passport.authenticate("login", async (err, user: UserI & Document, info) => {
-    if (err) {
-      if (typeof err === "number") return res.sendStatus(err)
-      if (err.status && err.message && typeof err.status === "number")
-        return res.status(err.status).send(err.message)
-      return res.send(err)
-    }
-    if (info && info.message) return res.status(400).send(info.message)
-    else {
-      req.logIn(user, { session: false }, async err => {
-        if (err) res.send(err)
-        const payload = {
-          id: user._id,
-          username: user.username,
-        }
+    errHandler(err, info, res)
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET)
+    req.logIn(user, { session: false }, async err => {
+      if (err) res.send(err)
+      const payload = {
+        id: user._id,
+        username: user.username,
+      }
 
-        return res
-          .cookie("JWT", token, {
-            //7 Days
-            maxAge: 604_800_000,
-            httpOnly: true,
-            sameSite: "none",
-            secure: true,
-          })
-          .status(200)
-          .send({ success: true, username: user.username })
-      })
-    }
+      const token = jwt.sign(payload, process.env.JWT_SECRET)
+
+      return res
+        .cookie("JWT", token, {
+          //7 Days
+          maxAge: 604_800_000,
+          httpOnly: true,
+          sameSite: "none",
+          secure: true,
+        })
+        .status(200)
+        .send({ success: true, username: user.username })
+    })
   })(req, res)
 )
 

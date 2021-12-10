@@ -4,7 +4,6 @@ import { IVerifyOptions } from "passport-local"
 import { DEFAULT_PROFILE_IMAGE } from "../Utilities/Endpoints"
 
 export type contactI = {
-  //Document id
   _id: Document["_id"]
   //User Entered => won't change automatically
   //Mutable

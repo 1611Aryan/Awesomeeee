@@ -1,5 +1,3 @@
-const toBoolean = (string: string): boolean => {
-  if (string === "false") return false
-  else return true
-}
+const toBoolean = (string: string): boolean => string === "true"
+
 export default toBoolean

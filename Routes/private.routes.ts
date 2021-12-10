@@ -1,29 +1,31 @@
 import { Router } from "express"
 import multer from "multer"
+import { profileSetup } from "../Controllers/ProfileSetup.Controller"
 
 import {
-  changeProfilePicture,
-  finishProfileSetup,
-  changeUsername,
   getProfile,
   verifyPassword,
   changePassword,
   logout,
-} from "../Controllers/user.controller"
+} from "../Controllers/User.Controller"
 
 import {
   addContact,
   autoUpdateContact,
   deleteContact,
   updateContact,
-} from "./../Controllers/contact.controller"
+} from "../Controllers/Contact.Controller"
+import {
+  changeProfilePicture,
+  changeUsername,
+} from "../Controllers/EditProfile"
 
 const router = Router()
 const upload = multer({ dest: "uploads/" })
 
 router.get("/profile", getProfile)
 
-router.post("/profileSetup", upload.single("avatar"), finishProfileSetup)
+router.post("/profileSetup", upload.single("avatar"), profileSetup)
 
 router.patch("/username", changeUsername)
 

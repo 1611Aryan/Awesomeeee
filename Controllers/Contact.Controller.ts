@@ -1,24 +1,13 @@
 /* eslint-disable @typescript-eslint/no-extra-semi */
-import { Request, Response } from "express-serve-static-core"
-
-import { v4 as uuid } from "uuid"
+import { nanoid } from "nanoid"
 
 import User, { contactI } from "../Models/user.model"
 import { clearCache } from "../Mongoose/cache"
-
-type req = Request & {
-  user: {
-    id: string
-    iat: string
-    username: string
-  }
-}
-
-type controller = (req: req, res: Response) => Promise<Response>
+import { controller } from "./controller"
 
 export const addContact: controller = async (req, res) => {
   const id = req.user.id
-  let roomId = uuid()
+  let roomId = nanoid()
   const contactName = req.body.name
   const contactUsername = req.body.username
 

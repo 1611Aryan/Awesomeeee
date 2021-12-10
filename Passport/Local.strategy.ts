@@ -1,16 +1,12 @@
 import { PassportStatic } from "passport"
 import { Strategy as LocalStrategy } from "passport-local"
 
-import { sender, transporter } from "../NodeMailer"
-
 import User from "../Models/user.model"
 
 interface UserInput {
   email: string
   username: string
   password: string
-
-  email_username: string
 }
 
 class Local {
@@ -25,51 +21,44 @@ class Local {
   login = (): unknown =>
     this.passport.use(
       "login",
-      new LocalStrategy(
-        {
-          usernameField: "username",
-          passwordField: "password",
-          session: false,
-        },
-        async (username, password, done) => {
-          try {
-            const user = await User.findOne({
-              $or: [{ email: username }, { username }],
-            })
+      new LocalStrategy(async (username, password, done) => {
+        try {
+          const user = await User.findOne({
+            $or: [{ email: username }, { username }],
+          })
 
-            if (!user)
-              return done(
-                {
-                  status: 403,
-                  message: {
-                    type: "username",
-                    info: "Incorrect username or email",
-                  },
+          if (!user)
+            return done(
+              {
+                status: 403,
+                message: {
+                  type: "username",
+                  info: "Incorrect username or email",
                 },
-                false
-              )
+              },
+              false
+            )
 
-            const passwordIsValid = await user.validatePassword(password, done)
+          const passwordIsValid = await user.validatePassword(password, done)
 
-            if (!passwordIsValid)
-              return done(
-                {
-                  status: 403,
-                  message: {
-                    type: "password",
-                    info: "Incorrect password",
-                  },
+          if (!passwordIsValid)
+            return done(
+              {
+                status: 403,
+                message: {
+                  type: "password",
+                  info: "Incorrect password",
                 },
-                false
-              )
+              },
+              false
+            )
 
-            return done(null, user)
-          } catch (err) {
-            console.log({ login: err })
-            return done(err)
-          }
+          return done(null, user)
+        } catch (err) {
+          console.log({ login: err })
+          return done(err)
         }
-      )
+      })
     )
 
   signup = (): unknown =>
@@ -107,13 +96,6 @@ class Local {
               strategyUsed: "local",
             })
 
-            const options = {
-              from: sender,
-              to: email,
-              subject: "Welcome To Messenger",
-              html: `<body><h1>Welcome</h1><p>Hello</p></body>`,
-            }
-            transporter.sendMail(options)
             return done(null, newUser)
           } catch (err) {
             console.log({ signUp: err })

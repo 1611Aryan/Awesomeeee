@@ -1,3 +1,4 @@
+import chalk from "chalk"
 import mongoose from "mongoose"
 import "./cache"
 
@@ -16,7 +17,7 @@ const MongoConfig = (): void => {
   const connection = mongoose.connection
 
   connection.once("open", () =>
-    console.log("\x1b[36mDatabase is Connected\x1b[0m")
+    console.log(chalk.green.bold("Database is Connected"))
   )
 }
 
