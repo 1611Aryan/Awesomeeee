@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { StyledButton } from "../Styles"
 
 const PasswordField: React.FC<{

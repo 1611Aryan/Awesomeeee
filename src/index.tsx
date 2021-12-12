@@ -9,18 +9,10 @@ import { AccessProvider } from "./Providers/AccessProvider"
 import { SelectedContactProvider } from "./Providers/SelectedContactProvider"
 import { SocketProvider } from "./Providers/SocketProvider"
 
-import { createStore } from "redux"
 import { Provider as ReduxProvider } from "react-redux"
-import reducers from "./Reducers"
-import { WidthProvider } from "Providers/WidthProvider"
 
-/* eslint-disable no-underscore-dangle */
-const store = createStore(
-  reducers,
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-)
-/* eslint-enable */
+import { WidthProvider } from "Providers/WidthProvider"
+import store from "Redux/Store"
 
 ReactDOM.render(
   <React.StrictMode>

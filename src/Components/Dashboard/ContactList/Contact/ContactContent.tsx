@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import { contactI } from "Actions/contactsAction"
+import { contactI } from "Redux/Slices/Contact.Slice"
+import styled from "@emotion/styled"
 
 const ContactContent: React.FC<{ contact: contactI }> = ({ contact }) => {
   return (

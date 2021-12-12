@@ -1,7 +1,7 @@
 import google from "Media/PNG/google_icon_2048 (1).png"
 import { baseUrl, googleAuth } from "API_Endpoints"
 import { useAccess } from "Providers/AccessProvider"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 type payload = {
   success: boolean

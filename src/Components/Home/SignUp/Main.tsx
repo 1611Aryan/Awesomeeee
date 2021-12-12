@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import Left from "./Left";
-import Right from "./Right";
+import styled from "@emotion/styled"
+import Left from "./Left"
+import Right from "./Right"
 
 const Main: React.FC = () => {
   return (
@@ -8,8 +8,8 @@ const Main: React.FC = () => {
       <Left />
       <Right />
     </StyledMain>
-  );
-};
+  )
+}
 
 const StyledMain = styled.main`
   width: 100vw;
@@ -18,6 +18,6 @@ const StyledMain = styled.main`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-`;
+`
 
-export default Main;
+export default Main

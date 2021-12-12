@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { useRef } from "react"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import Page1 from "./Page1"
 import Page2 from "./Page2"
 

@@ -1,7 +1,7 @@
 import axios from "axios"
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { signUpEndpoint } from "API_Endpoints"
 
 const Form: React.FC = () => {
@@ -30,7 +30,7 @@ const Form: React.FC = () => {
         setSuccess(true)
         setError(null)
       }
-    } catch (err) {
+    } catch (err: any) {
       setSuccess(false)
       setError(err.response.data)
       console.log(err.response.data)

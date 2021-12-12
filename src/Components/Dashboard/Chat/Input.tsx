@@ -1,12 +1,11 @@
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { IoSend } from "react-icons/io5"
 import React, { useState, useEffect, useRef } from "react"
 import { useSelectedContact } from "Providers/SelectedContactProvider"
 import { useSocket } from "Providers/SocketProvider"
-
-import { useDispatch, useSelector } from "react-redux"
-import { rootState } from "Reducers"
-import { actionsContacts } from "Actions/contactsAction"
+import useTypedSelector from "Hooks/useTypedSelector"
+import useTypedDispatch from "Hooks/useTypedDispatch"
+import { addMessage } from "Redux/Slices/Contact.Slice"
 
 const Input: React.FC = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -14,8 +13,8 @@ const Input: React.FC = () => {
   const [input, setInput] = useState("")
 
   const { socket } = useSocket()
-  const { user } = useSelector((state: rootState) => state)
-  const dispatch = useDispatch()
+  const { user } = useTypedSelector(state => state.user)
+  const dispatch = useTypedDispatch()
   const { selected } = useSelectedContact()
 
   useEffect(() => {
@@ -41,12 +40,9 @@ const Input: React.FC = () => {
         selected.roomId,
         selected.contactId
       )
-      dispatch({
-        type: actionsContacts.ADD_MESSAGE,
-        payload: {
-          message: { roomId: selected.roomId, message: input, sender: "me" },
-        },
-      })
+      dispatch(
+        addMessage({ roomId: selected.roomId, message: input, sender: "me" })
+      )
       setInput("")
     }
   }

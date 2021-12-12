@@ -1,17 +1,16 @@
 import axios from "axios"
 import { motion } from "framer-motion"
 import React, { useState, useRef } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import styled from "styled-components"
-import {
-  actionsContacts,
-  contactI,
-} from "../../../../../Actions/contactsAction"
-import { addContact } from "API_Endpoints"
+
+import styled from "@emotion/styled"
+
+import { addContactEndpoint } from "API_Endpoints"
 import { useSocket } from "Providers/SocketProvider"
-import { rootState } from "Reducers"
 
 import dog1 from "Media/PNG/dog1.png"
+import useTypedSelector from "Hooks/useTypedSelector"
+import useTypedDispatch from "Hooks/useTypedDispatch"
+import { contactI, addContact } from "Redux/Slices/Contact.Slice"
 
 const Modal: React.FC<{
   setAddContact: React.Dispatch<React.SetStateAction<boolean>>
@@ -24,7 +23,7 @@ const Modal: React.FC<{
   })
   const [err, setErr] = useState("")
 
-  const { user } = useSelector((state: rootState) => state)
+  const { user } = useTypedSelector(state => state.user)
   const { socket } = useSocket()
 
   const variants = {
@@ -45,7 +44,7 @@ const Modal: React.FC<{
     },
   }
 
-  const dispatch = useDispatch()
+  const dispatch = useTypedDispatch()
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(input => ({
@@ -65,11 +64,11 @@ const Modal: React.FC<{
       setErr("You can't add yourself as a contact")
 
     try {
-      const res = await axios[addContact.METHOD]<{
+      const res = await axios[addContactEndpoint.METHOD]<{
         message: string
         contact: contactI
       }>(
-        addContact.URL,
+        addContactEndpoint.URL,
         {
           name: input.nickname,
           username: input.username,
@@ -81,13 +80,10 @@ const Modal: React.FC<{
       console.log(res)
       setErr(res.data.message)
 
-      dispatch({
-        type: actionsContacts.ADD_CONTACT,
-        payload: { newContact: { ...res.data.contact, messages: null } },
-      })
+      dispatch(addContact({ ...res.data.contact, messages: [] }))
       socket && socket.emit("joinRoom", res.data.contact.roomId)
       closeModal()
-    } catch (err) {
+    } catch (err: any) {
       console.log(err)
       err.response.data.message && typeof err.response.data.message === "string"
         ? setErr(err.response.data.message)

@@ -1,8 +1,6 @@
+import useTypedSelector from "Hooks/useTypedSelector"
 import { useLayoutEffect, useMemo, useState } from "react"
-import { useSelector } from "react-redux"
-import styled from "styled-components"
-
-import { rootState } from "Reducers"
+import styled from "@emotion/styled"
 
 interface theme {
   background: string
@@ -21,7 +19,7 @@ const Message: React.FC<{
   }
 }> = ({ message }) => {
   const [theme, setTheme] = useState<theme>()
-  const { user } = useSelector((state: rootState) => state)
+  const { user } = useTypedSelector(state => state.user)
 
   const themeCriteria = useMemo(() => {
     return message.sender === "me" || message.sender === user?.username
@@ -59,7 +57,7 @@ const Message: React.FC<{
   return <StyledMessage theme={theme}>{message.message.trim()}</StyledMessage>
 }
 
-const StyledMessage = styled.li`
+const StyledMessage = styled.li<{ theme: theme | undefined }>`
   --triangleWidth: 0.3em;
   --triangleHeight: 0.5em;
   --margin: calc(var(--MessagesFontSize) * 0.45);

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import passwordLogo from "Media/PNG/password.png"
 import React, { useState } from "react"
 import VerifyModal from "./VerifyModal"

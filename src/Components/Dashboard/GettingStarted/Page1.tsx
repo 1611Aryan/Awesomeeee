@@ -1,9 +1,8 @@
+import useTypedSelector from "Hooks/useTypedSelector"
 import Greeting from "Media/PNG/Greeting.png"
-import React from "react"
-import { useState } from "react"
-import { useSelector } from "react-redux"
-import { rootState } from "Reducers"
-import styled from "styled-components"
+import React, { useState } from "react"
+
+import styled from "@emotion/styled"
 
 const Page1: React.FC<{
   pagesRef: React.RefObject<HTMLDivElement>
@@ -14,7 +13,7 @@ const Page1: React.FC<{
     password: "",
   })
 
-  const { user } = useSelector((state: rootState) => state)
+  const { user } = useTypedSelector(state => state.user)
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(input => ({

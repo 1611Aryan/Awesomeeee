@@ -1,18 +1,19 @@
 import axios from "axios"
 import React, { useRef, useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
 
-import styled from "styled-components"
-import { actionsUser, userI } from "Actions/userActions"
+import styled from "@emotion/styled"
+
 import { updateProfilePicture } from "API_Endpoints"
-import { rootState } from "Reducers"
+import useTypedSelector from "Hooks/useTypedSelector"
+import useTypedDispatch from "Hooks/useTypedDispatch"
+import { updateUser, userI } from "Redux/Slices/User.Slice"
 
 const ProfilePicture: React.FC = () => {
   //Ref
   const inputFileRef = useRef<HTMLInputElement>(null)
 
-  const { user } = useSelector((state: rootState) => state)
-  const dispatch = useDispatch()
+  const { user } = useTypedSelector(state => state.user)
+  const dispatch = useTypedDispatch()
 
   //State
   const [profilePicture, setProfilePicture] = useState<{
@@ -51,17 +52,14 @@ const ProfilePicture: React.FC = () => {
         withCredentials: true,
       })
 
-      dispatch({
-        type: actionsUser.UPDATE_USER,
-        payload: {
-          properties: [
-            {
-              key: "profilePicture",
-              value: res.data.profilePicture,
-            },
-          ],
-        },
-      })
+      dispatch(
+        updateUser([
+          {
+            key: "profilePicture",
+            value: res.data.profilePicture,
+          },
+        ])
+      )
     } catch (err) {
       console.log(err)
     }

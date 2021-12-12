@@ -2,7 +2,7 @@ import { HiArrowLeft } from "react-icons/hi"
 import { AiFillFormatPainter } from "react-icons/ai"
 import { CgProfile, CgInfo } from "react-icons/cg"
 import { IoMdLock } from "react-icons/io"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 

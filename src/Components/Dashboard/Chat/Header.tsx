@@ -1,13 +1,12 @@
 import { useRef } from "react"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { HiDotsVertical } from "react-icons/hi"
 import { useSelectedContact } from "Providers/SelectedContactProvider"
-import { useSelector } from "react-redux"
-import { rootState } from "Reducers"
+import useTypedSelector from "Hooks/useTypedSelector"
 
 const Header: React.FC<{}> = () => {
   const { selected } = useSelectedContact()
-  const { contacts } = useSelector((state: rootState) => state)
+  const { contacts } = useTypedSelector(state => state.contact)
 
   const imageRef = useRef<HTMLImageElement>(null)
 

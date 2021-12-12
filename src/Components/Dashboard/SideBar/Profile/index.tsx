@@ -1,11 +1,10 @@
-import { useSelector } from "react-redux"
-import styled from "styled-components"
-import { rootState } from "Reducers"
+import useTypedSelector from "Hooks/useTypedSelector"
+import styled from "@emotion/styled"
 
 import Options from "./Options"
 
 const Profile: React.FC = () => {
-  const { user } = useSelector((state: rootState) => state)
+  const { user } = useTypedSelector(state => state.user)
 
   return (
     <StyledProfile tabIndex={1}>

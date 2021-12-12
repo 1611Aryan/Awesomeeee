@@ -2,7 +2,7 @@ import { useWidth } from "Providers/WidthProvider"
 import React, { useState } from "react"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 const Header: React.FC<{ useCase: "login" | "signup" }> = ({ useCase }) => {
   const [theme, setTheme] = useState({
@@ -59,7 +59,13 @@ const Header: React.FC<{ useCase: "login" | "signup" }> = ({ useCase }) => {
   )
 }
 
-const StyledHeader = styled.header`
+const StyledHeader = styled.header<{
+  theme: {
+    headingColor: string
+    buttonBg: string
+    buttonColor: string
+  }
+}>`
   --headerFontSize: 2.5em;
 
   width: 100vw;

@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import { BsThreeDotsVertical } from "react-icons/bs"
-import styled from "styled-components"
-import { contactI } from "Actions/contactsAction"
+import { contactI } from "Redux/Slices/Contact.Slice"
+import styled from "@emotion/styled"
 
 const ContactOptions: React.FC<{
   contact: contactI

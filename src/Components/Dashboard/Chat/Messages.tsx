@@ -1,17 +1,17 @@
 import { useEffect, useRef } from "react"
-import { useSelector } from "react-redux"
-import styled from "styled-components"
+
+import styled from "@emotion/styled"
 
 import { useSelectedContact } from "Providers/SelectedContactProvider"
-import { rootState } from "Reducers"
 
 import Message from "./Message"
+import useTypedSelector from "Hooks/useTypedSelector"
 
 const Messages: React.FC<{}> = () => {
   const ulRef = useRef<HTMLUListElement>(null)
 
   const { messages } = useSelectedContact()
-  const { contacts } = useSelector((state: rootState) => state)
+  const { contacts } = useTypedSelector(state => state.contact)
 
   useEffect(() => {
     if (ulRef.current) ulRef.current.scrollTop = ulRef.current.scrollHeight

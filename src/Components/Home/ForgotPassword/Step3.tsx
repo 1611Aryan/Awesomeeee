@@ -42,7 +42,7 @@ const Step3: React.FC<{ email: string }> = ({ email }) => {
             type: "success",
             message: "Password Changed",
           })
-      } catch (err) {
+      } catch (err: any) {
         console.log(err)
 
         if (err.response && err.response.status && err.response.status === 404)

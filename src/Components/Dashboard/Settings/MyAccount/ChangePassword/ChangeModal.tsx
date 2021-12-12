@@ -1,7 +1,7 @@
 import { changePassword } from "API_Endpoints"
 import axios from "axios"
 import { useState } from "react"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 const ChangeModal: React.FC<{
   setPasswordModalVis: React.Dispatch<React.SetStateAction<boolean>>
@@ -27,7 +27,7 @@ const ChangeModal: React.FC<{
         )
         console.log(res)
       }
-    } catch (err) {
+    } catch (err: any) {
       err.response
         ? console.log(err.response, err.response.data)
         : console.log(err)

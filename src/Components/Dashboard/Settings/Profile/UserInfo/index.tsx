@@ -1,13 +1,12 @@
+import useTypedSelector from "Hooks/useTypedSelector"
 import React, { useState } from "react"
-import { useSelector } from "react-redux"
-import styled from "styled-components"
-import { rootState } from "Reducers"
+import styled from "@emotion/styled"
 import { StyledForm } from "../../Styles"
 
 import Field from "./Field"
 
 const UserInfo: React.FC = () => {
-  const user = useSelector((state: rootState) => state.user)
+  const { user } = useTypedSelector(state => state.user)
 
   const [info, setInfo] = useState({
     username: user ? user.username : "",

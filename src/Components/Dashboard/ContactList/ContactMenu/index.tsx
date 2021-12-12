@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 import Modal from "./Modal"
 
@@ -75,7 +75,7 @@ const ContactMenu: React.FC<{
   )
 }
 
-const StyledMenu = styled.ul`
+const StyledMenu = styled.ul<{ theme: { positionY: number } }>`
   opacity: 0;
   border: 0;
   height: 1px;

@@ -1,6 +1,6 @@
 import { IoMdSettings } from "react-icons/io"
 import { FiLogOut } from "react-icons/fi"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { useAccess } from "Providers/AccessProvider"
 import axios from "axios"
 import { logoutEndpoint } from "API_Endpoints"

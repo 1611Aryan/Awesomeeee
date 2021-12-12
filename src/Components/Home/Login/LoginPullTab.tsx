@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { FiChevronLeft } from "react-icons/fi"
 import { useEffect, useState } from "react"
 import { useAccess } from "Providers/AccessProvider"
@@ -58,7 +58,7 @@ const LoginPullTab = () => {
 
       if (res.data.success)
         setAccess({ loggedIn: true, username: res.data.username })
-    } catch (err) {
+    } catch (err: any) {
       console.log(err.response.data)
       setError(err.response.data)
     }

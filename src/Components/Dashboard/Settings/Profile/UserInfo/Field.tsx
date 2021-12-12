@@ -1,15 +1,15 @@
 import React, { useRef, useState } from "react"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { FaTimes } from "react-icons/fa"
 import { IoMdCheckmark } from "react-icons/io"
 
-import { useDispatch, useSelector } from "react-redux"
-
 import axios from "axios"
-import { rootState } from "Reducers"
-import { actionsUser } from "Actions/userActions"
+
 import { updateUsername } from "API_Endpoints"
 import { StyledButton } from "../../Styles"
+import useTypedSelector from "Hooks/useTypedSelector"
+import useTypedDispatch from "Hooks/useTypedDispatch"
+import { updateUser } from "Redux/Slices/User.Slice"
 
 const Field: React.FC<{
   info: {
@@ -29,9 +29,9 @@ const Field: React.FC<{
 }> = ({ info, setInfo, name, value }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const user = useSelector((state: rootState) => state.user)
+  const { user } = useTypedSelector(state => state.user)
 
-  const dispatch = useDispatch()
+  const dispatch = useTypedDispatch()
 
   const [activated, setActivated] = useState(false)
 
@@ -85,10 +85,7 @@ const Field: React.FC<{
         }
       )
 
-      dispatch({
-        type: actionsUser.UPDATE_USER,
-        payload: { properties: [{ key: name, value: info?.[name] }] },
-      })
+      dispatch(updateUser([{ key: name, value: info?.[name] }]))
       console.log(res)
     } catch (err) {
       console.log(err)

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 import { HiSearch } from "react-icons/hi"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 const SearchBar: React.FC<{
   setSearchBarBottom: React.Dispatch<React.SetStateAction<number | undefined>>

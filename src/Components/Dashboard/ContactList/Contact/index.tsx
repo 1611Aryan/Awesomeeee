@@ -1,17 +1,15 @@
 import axios from "axios"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
-import sizeOf from "object-sizeof"
-
-import { actionsContacts, contactI } from "Actions/contactsAction"
 import { useSelectedContact } from "Providers/SelectedContactProvider"
 import Content from "./ContactContent"
 import Options from "./ContactOptions"
 import ProfilePicture from "./ContactProfilePicture"
 
 import { autoUpdateContact } from "API_Endpoints"
+import { contactI, updateContact } from "Redux/Slices/Contact.Slice"
+import useTypedDispatch from "Hooks/useTypedDispatch"
 
 const Contact: React.FC<{
   contact: contactI
@@ -35,7 +33,7 @@ const Contact: React.FC<{
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ contact, setMenuConfig, setContactPageVis, setShowConversations }) => {
   const { selected, setSelected } = useSelectedContact()
-  const dispatchContact = useDispatch()
+  const dispatchContact = useTypedDispatch()
 
   const clickHandler = () => {
     setSelected({
@@ -70,41 +68,33 @@ const Contact: React.FC<{
             }
           )
 
-          console.log(sizeOf(res))
-
           if (
             res.data.message === "Updating Contact" &&
             res.data.payload &&
             res.data.payload.profilePicture
           ) {
-            dispatchContact({
-              type: actionsContacts.UPDATE_CONTACT,
-              payload: {
-                updatedContacts: {
-                  contactId: contact.contactId,
-                  properties: [
-                    {
-                      key: "profilePicture",
-                      value: res.data.payload?.profilePicture,
-                    },
-                    { key: "lastUpdated", value: Date.now() },
-                  ],
-                },
-              },
-            })
+            dispatchContact(
+              updateContact({
+                contactId: contact.contactId,
+                properties: [
+                  {
+                    key: "profilePicture",
+                    value: res.data.payload?.profilePicture,
+                  },
+                  { key: "lastUpdated", value: Date.now() },
+                ],
+              })
+            )
           } else {
-            dispatchContact({
-              type: actionsContacts.UPDATE_CONTACT,
-              payload: {
-                updatedContacts: {
-                  contactId: contact.contactId,
-                  properties: [{ key: "lastUpdated", value: Date.now() }],
-                },
-              },
-            })
+            dispatchContact(
+              updateContact({
+                contactId: contact.contactId,
+                properties: [{ key: "lastUpdated", value: Date.now() }],
+              })
+            )
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         console.log(err, err.response)
       }
     })()

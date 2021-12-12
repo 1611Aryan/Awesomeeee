@@ -1,5 +1,5 @@
 import { useWidth } from "Providers/WidthProvider"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import AddContact from "./AddContact"
 import OpenContact from "./OpenContacts"
 

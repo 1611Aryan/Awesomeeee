@@ -1,7 +1,7 @@
 import { verifyPassword } from "API_Endpoints"
 import axios from "axios"
 import { useState } from "react"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 const VerifyModal: React.FC<{
   setPasswordModalVis: React.Dispatch<React.SetStateAction<boolean>>
@@ -29,7 +29,7 @@ const VerifyModal: React.FC<{
         console.log(res.data)
         setSuccess(res.data.success)
       }
-    } catch (err) {
+    } catch (err: any) {
       setSuccess(false)
       console.log(err.response ? err.response : err)
     }

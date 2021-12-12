@@ -1,29 +1,33 @@
 import { useEffect, lazy, Suspense } from "react"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import io from "socket.io-client"
 import axios from "axios"
 
 import { useAccess } from "Providers/AccessProvider"
 
 import { useSocket } from "Providers/SocketProvider"
-import { actionsUser, userI } from "Actions/userActions"
-import { useDispatch, useSelector } from "react-redux"
-import {
-  actionsContacts,
-  contactI,
-  messageI,
-} from "../../Actions/contactsAction"
+
 import {
   getProfile,
   logoutEndpoint,
   WEBSOCKET_ENDPOINT,
 } from "../../API_Endpoints"
 import Petal from "../Loaders/Petal/Petal"
-import { rootState } from "../../Reducers"
+
 import Overlay from "../Loaders/Overlay/Overlay"
 
 import { AnimatePresence } from "framer-motion"
 import { Outlet } from "react-router-dom"
+import useTypedSelector from "Hooks/useTypedSelector"
+import useTypedDispatch from "Hooks/useTypedDispatch"
+import {
+  addContacts,
+  addMessage,
+  changeContactStatus,
+  contactI,
+  messageI,
+} from "Redux/Slices/Contact.Slice"
+import { addUser, userI } from "Redux/Slices/User.Slice"
 
 const GettingStarted = lazy(() => import("./GettingStarted"))
 
@@ -32,9 +36,9 @@ const Dashboard: React.FC = () => {
 
   const { setAccess } = useAccess()
 
-  const { user } = useSelector((state: rootState) => state)
+  const { user } = useTypedSelector(state => state.user)
 
-  const dispatch = useDispatch()
+  const dispatch = useTypedDispatch()
 
   const logout = async () => {
     setAccess({ loggedIn: false, username: null })
@@ -49,27 +53,12 @@ const Dashboard: React.FC = () => {
       try {
         const res = await axios[getProfile.METHOD]<{
           user: userI
-          contacts: contactI[] | null
+          contacts: contactI[]
         }>(getProfile.URL, {
           withCredentials: true,
         })
-        dispatch({
-          type: actionsUser.ADD_USER,
-          payload: { user: res.data.user },
-        })
-        dispatch({
-          type: actionsContacts.SET_CONTACTS,
-          payload: {
-            contacts: res.data.contacts
-              ? res.data.contacts.map(contact => {
-                  return {
-                    ...contact,
-                    messages: null,
-                  }
-                })
-              : null,
-          },
-        })
+        dispatch(addUser(res.data.user))
+        dispatch(addContacts(res.data.contacts))
 
         const rooms = res.data.contacts
           ? res.data.contacts.map(contact => contact.roomId)
@@ -101,10 +90,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     socket &&
       socket.on("online", ({ contactId, status }) => {
-        dispatch({
-          type: actionsContacts.CHANGE_CONTACT_STATUS,
-          payload: { contactStatus: { contactId, status } },
-        })
+        dispatch(changeContactStatus({ contactId, status }))
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket])
@@ -114,13 +100,8 @@ const Dashboard: React.FC = () => {
     socket &&
       socket.on(
         "recieveMessage",
-        ({ room, sender, message }: messageI & { room: string }) => {
-          dispatch({
-            type: actionsContacts.ADD_MESSAGE,
-            payload: {
-              message: { roomId: room, sender, message },
-            },
-          })
+        ({ roomId, sender, message }: messageI & { roomId: string }) => {
+          dispatch(addMessage({ message, sender, roomId }))
         }
       )
     // eslint-disable-next-line react-hooks/exhaustive-deps

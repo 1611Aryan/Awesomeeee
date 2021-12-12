@@ -1,7 +1,7 @@
-import { contactI } from "Actions/contactsAction"
 import React, { useState } from "react"
+import { contactI } from "Redux/Slices/Contact.Slice"
 
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import ContactPage from "../ContactPage"
 
 import Contacts from "./Contacts"

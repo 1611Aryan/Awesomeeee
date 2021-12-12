@@ -27,7 +27,7 @@ const Step1: React.FC<{
       })
       setEmail(input)
       if (res.data.success) setStep(2)
-    } catch (err) {
+    } catch (err: any) {
       console.log(err)
       if (err.response && err.response.status && err.response.status === 404)
         setMessage(err.response.data.message)

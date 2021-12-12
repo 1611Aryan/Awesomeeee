@@ -1,8 +1,8 @@
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { FaTimes } from "react-icons/fa"
-import { contactI } from "Actions/contactsAction"
 import { useEffect, useState } from "react"
 import { average } from "color.js"
+import { contactI } from "Redux/Slices/Contact.Slice"
 
 const ContactPage: React.FC<{
   contactPageVis: {
@@ -70,7 +70,7 @@ const ContactPage: React.FC<{
   )
 }
 
-const StyledContactPage = styled.section`
+const StyledContactPage = styled.section<{ theme: { bg: string } }>`
   position: fixed;
   top: 0;
   left: var(--sideBarWidth);

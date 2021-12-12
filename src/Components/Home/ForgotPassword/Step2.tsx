@@ -31,7 +31,7 @@ const Step2: React.FC<{
         }
       )
       if (res.data.success) setStep(3)
-    } catch (err) {
+    } catch (err: any) {
       console.log(err.response.status)
       if (err.response && err.response.status && err.response.status === 404)
         setMessage(err.response.data.message)

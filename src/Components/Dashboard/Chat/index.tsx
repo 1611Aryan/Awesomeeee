@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import Header from "./Header"
 import Input from "./Input"
 import Messages from "./Messages"

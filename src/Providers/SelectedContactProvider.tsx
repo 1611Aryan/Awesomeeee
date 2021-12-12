@@ -1,8 +1,7 @@
+import useTypedSelector from "Hooks/useTypedSelector"
 import React, { useContext, createContext, useState } from "react"
-import { useSelector } from "react-redux"
-import { contactI } from "../Actions/contactsAction"
 
-import { rootState } from "../Reducers"
+import { contactI } from "Redux/Slices/Contact.Slice"
 
 export type selectedI = {
   contactId: contactI["contactId"]
@@ -16,7 +15,7 @@ const SelectedContactContext = createContext<{
 }>({
   selected: null,
   setSelected: () => {},
-  messages: null,
+  messages: [],
 })
 
 export const useSelectedContact = () => useContext(SelectedContactContext)
@@ -26,14 +25,11 @@ export const SelectedContactProvider: React.FC<{
 }> = ({ children }) => {
   const [selected, setSelected] = useState<selectedI | null>(null)
 
-  const { contacts } = useSelector((state: rootState) => state)
+  const { contacts } = useTypedSelector(state => state.contact)
 
-  const messages =
-    contacts && selected
-      ? contacts.filter(contact => contact.roomId === selected.roomId)[0] &&
-        contacts.filter(contact => contact.roomId === selected.roomId)[0]
-          .messages
-      : null
+  const messages = selected
+    ? contacts.filter(contact => contact.roomId === selected.roomId)[0].messages
+    : []
 
   return (
     <SelectedContactContext.Provider

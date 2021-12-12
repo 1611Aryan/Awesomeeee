@@ -1,6 +1,6 @@
-import { contactI } from "Actions/contactsAction"
 import React, { useRef } from "react"
-import styled from "styled-components"
+import { contactI } from "Redux/Slices/Contact.Slice"
+import styled from "@emotion/styled"
 
 const ContactProfilePicture: React.FC<{
   contact: contactI

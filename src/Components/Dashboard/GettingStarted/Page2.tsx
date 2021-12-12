@@ -1,11 +1,11 @@
-import { actionsUser, userI } from "Actions/userActions"
 import { profileSetup } from "API_Endpoints"
 import axios from "axios"
+import useTypedDispatch from "Hooks/useTypedDispatch"
 import Profile from "Media/PNG/profile.png"
 
 import React, { useEffect, useRef, useState } from "react"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
+import { updateUser, userI } from "Redux/Slices/User.Slice"
+import styled from "@emotion/styled"
 
 const Page2: React.FC<{
   formData: FormData
@@ -23,7 +23,7 @@ const Page2: React.FC<{
     default: true,
   })
 
-  const dispatch = useDispatch()
+  const dispatch = useTypedDispatch()
 
   const chooseImage = () => {
     inputRef.current?.click()
@@ -55,21 +55,18 @@ const Page2: React.FC<{
       })
 
       if (res.data.profileSetup) {
-        dispatch({
-          type: actionsUser.UPDATE_USER,
-          payload: {
-            properties: [
-              {
-                key: "profileSetup",
-                value: res.data.profileSetup,
-              },
-              {
-                key: "profilePicture",
-                value: res.data.profilePicture,
-              },
-            ],
-          },
-        })
+        dispatch(
+          updateUser([
+            {
+              key: "profileSetup" as "username",
+              value: res.data.profileSetup,
+            },
+            {
+              key: "profilePicture",
+              value: res.data.profilePicture,
+            },
+          ])
+        )
       }
     } catch (err) {
       console.log(err)

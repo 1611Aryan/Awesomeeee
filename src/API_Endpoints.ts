@@ -76,7 +76,7 @@ export const updateUsername: endpoint = {
   METHOD: methods.PATCH,
 }
 
-export const addContact: endpoint = {
+export const addContactEndpoint: endpoint = {
   URL: `${baseUrl}/user/addContact`,
   METHOD: methods.PATCH,
 }
@@ -86,12 +86,12 @@ export const autoUpdateContact: endpoint = {
   METHOD: methods.PATCH,
 }
 
-export const updateContact: endpoint = {
+export const updateContactEndpoint: endpoint = {
   URL: `${baseUrl}/user/updateContact`,
   METHOD: methods.PATCH,
 }
 
-export const deleteContact: endpoint = {
+export const deleteContactEndpoint: endpoint = {
   URL: `${baseUrl}/user/deleteContact`,
   METHOD: methods.PATCH,
 }

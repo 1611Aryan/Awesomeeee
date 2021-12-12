@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import MyAccount from "./MyAccount"
 import PersonalInfo from "./Personal_Info"
 import Profile from "./Profile"

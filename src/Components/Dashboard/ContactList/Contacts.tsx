@@ -1,11 +1,10 @@
+import useTypedSelector from "Hooks/useTypedSelector"
 import { useState } from "react"
-import { useSelector } from "react-redux"
-import styled from "styled-components"
+import { contactI } from "Redux/Slices/Contact.Slice"
+import styled from "@emotion/styled"
 
-import { rootState } from "Reducers"
 import Contact from "./Contact"
 import ContactMenu from "./ContactMenu"
-import { contactI } from "Actions/contactsAction"
 
 const Contacts: React.FC<{
   searchBarBottom: number | undefined
@@ -17,7 +16,7 @@ const Contacts: React.FC<{
   >
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
 }> = ({ searchBarBottom, setContactPageVis, setShowConversations }) => {
-  const { contacts } = useSelector((state: rootState) => state)
+  const { contacts } = useTypedSelector(state => state.contact)
 
   const [menuConfig, setMenuConfig] = useState<{
     positionY: number
@@ -30,7 +29,7 @@ const Contacts: React.FC<{
   })
 
   return (
-    <StyledContacts theme={{ top: searchBarBottom }}>
+    <StyledContacts theme={{ top: searchBarBottom || 0 }}>
       <ul className="contacts">
         {contacts &&
           contacts.map((contact, index) => (
@@ -48,7 +47,7 @@ const Contacts: React.FC<{
   )
 }
 
-const StyledContacts = styled.div`
+const StyledContacts = styled.div<{ theme: { top: number } }>`
   width: 100%;
   height: ${props => window.innerHeight - props.theme.top - 15}px;
   flex: 1;

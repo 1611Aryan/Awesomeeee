@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 import HeroText from "./Herotext"
 import FormContainer from "./FormContainer"

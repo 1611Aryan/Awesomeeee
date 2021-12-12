@@ -1,11 +1,13 @@
 import axios from "axios"
 import React, { useState } from "react"
-import { useDispatch } from "react-redux"
-import styled from "styled-components"
-import { actionsContacts } from "Actions/contactsAction"
-import { updateContact } from "API_Endpoints"
+
+import styled from "@emotion/styled"
+
+import { updateContactEndpoint } from "API_Endpoints"
 
 import quill from "Media/PNG/quill.png"
+import useTypedDispatch from "Hooks/useTypedDispatch"
+import { updateContact } from "Redux/Slices/Contact.Slice"
 
 const RenameModal: React.FC<{
   menuConfig: {
@@ -21,7 +23,7 @@ const RenameModal: React.FC<{
 }> = ({ menuConfig, cancel }) => {
   const [name, setName] = useState("")
 
-  const dispatch = useDispatch()
+  const dispatch = useTypedDispatch()
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
@@ -31,8 +33,8 @@ const RenameModal: React.FC<{
     e.preventDefault()
     if (name && menuConfig.contact)
       try {
-        await axios[updateContact.METHOD](
-          updateContact.URL,
+        await axios[updateContactEndpoint.METHOD](
+          updateContactEndpoint.URL,
           {
             contactId: menuConfig.contact.contactId,
             newName: name,
@@ -41,22 +43,19 @@ const RenameModal: React.FC<{
             withCredentials: true,
           }
         )
-        dispatch({
-          type: actionsContacts.UPDATE_CONTACT,
-          payload: {
-            updatedContacts: {
-              contactId: menuConfig.contact.contactId,
-              properties: [
-                {
-                  key: "name",
-                  value: name,
-                },
-              ],
-            },
-          },
-        })
+        dispatch(
+          updateContact({
+            contactId: menuConfig.contact.contactId,
+            properties: [
+              {
+                key: "name",
+                value: name,
+              },
+            ],
+          })
+        )
         cancel()
-      } catch (err) {
+      } catch (err: any) {
         err.response ? console.log(err.response) : console.log(err)
       }
   }

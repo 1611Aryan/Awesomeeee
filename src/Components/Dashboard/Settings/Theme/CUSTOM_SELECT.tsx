@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { BsCaretDownFill } from "react-icons/bs"
 
 const CUSTOM_SELECT: React.FC<{
@@ -49,7 +49,7 @@ const CUSTOM_SELECT: React.FC<{
   )
 }
 
-const StyledField = styled.div`
+const StyledField = styled.div<{ theme: { height: number } }>`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;

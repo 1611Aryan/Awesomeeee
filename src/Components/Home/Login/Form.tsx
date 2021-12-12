@@ -5,7 +5,7 @@ import { useAccess } from "Providers/AccessProvider"
 
 import { loginEndpoint } from "API_Endpoints"
 import OAuth from "./OAuth"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 
 type payload = {
   success: boolean
@@ -45,7 +45,7 @@ const Form: React.FC = () => {
 
       if (res.data.success)
         setAccess({ loggedIn: true, username: res.data.username })
-    } catch (err) {
+    } catch (err: any) {
       console.log(err.response.data)
       setError(err.response.data)
     }
