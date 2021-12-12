@@ -31,7 +31,7 @@ export const getProfile: controller = async (req, res) => {
           profileSetup: user.profileSetup,
           strategyUsed: user.strategyUsed,
         },
-        contacts: user.contacts ? user.contacts : null,
+        contacts: user.contacts,
       })
 
     return res.sendStatus(500)
