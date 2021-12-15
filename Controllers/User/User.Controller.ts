@@ -1,13 +1,13 @@
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
-import redisClient from "../Redis"
+import redisClient from "../../Redis"
 
-import User from "../Models/user.model"
+import User from "../../Models/user.model"
 
-import { sender, transporter } from "../NodeMailer"
+import { sender, transporter } from "../../NodeMailer"
 
 import { nanoid } from "nanoid"
-import { controller } from "./controller"
+import { controller } from "../controller"
 
 enum SETS {
   ALLOW_PASSWORD_CHANGE = "ALLOW_PASSWORD_CHANGE",
@@ -17,7 +17,6 @@ enum SETS {
 export const getProfile: controller = async (req, res) => {
   try {
     const id = req.user.id
-
     const user = await User.findById(id, { password: 0 }).cache(id).lean()
 
     if (user)

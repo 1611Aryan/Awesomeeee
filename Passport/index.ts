@@ -15,12 +15,6 @@ class PassportConfig extends Mixin(Local, JWT, Google) {
     this.init()
   }
 
-  serialize = () =>
-    this.passport.serializeUser((user, done) => done(null, user))
-
-  deserialize = () =>
-    this.passport.deserializeUser((user, done) => done(null, user))
-
   init = () => {
     this.login()
     this.signup()

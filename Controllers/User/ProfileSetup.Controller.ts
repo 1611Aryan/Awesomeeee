@@ -1,12 +1,12 @@
 import path from "path"
 
-import { controller } from "./controller"
+import { controller } from "./../controller"
 
 import bcrypt from "bcrypt"
-import User from "../Models/user.model"
-import { clearCache } from "../Mongoose/cache"
+import User from "../../Models/user.model"
+import { clearCache } from "../../Mongoose/cache"
 import { Response } from "express"
-import { optimizeImage, uploadImage } from "./Utils"
+import { optimizeImage, uploadImage } from "./../Utils"
 
 const verifyUsername = async (username: string, res: Response) => {
   try {

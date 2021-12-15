@@ -1,18 +1,18 @@
 import path from "path"
 
-import User from "../Models/user.model"
-import { clearCache } from "../Mongoose/cache"
+import User from "../../Models/user.model"
+import { clearCache } from "../../Mongoose/cache"
 
-import toBoolean from "../Utilities/toBoolean"
+import toBoolean from "../../Utilities/toBoolean"
 
-import { controller } from "./controller"
+import { controller } from "../controller"
 
 import {
   optimizeImage,
   deleteImageFromDisk,
   deleteImageFromImageKit,
   uploadImage,
-} from "./Utils"
+} from "../Utils"
 
 export const changeUsername: controller = async (req, res) => {
   try {

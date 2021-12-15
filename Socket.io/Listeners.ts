@@ -40,13 +40,13 @@ export const sendMessageListener = (_io: Server, socket: socketI): void => {
     "sendMessage",
     (
       { message, sender }: { message: string; sender: string },
-      room: string,
+      roomId: string,
       contactId: string
     ): void => {
       if (users.isOnline(contactId))
         socket.broadcast
-          .to(room)
-          .emit("recieveMessage", { room, message, sender })
+          .to(roomId)
+          .emit("recieveMessage", { roomId, message, sender })
       else console.log("Queue")
       return
     }

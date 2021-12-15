@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-extra-semi */
 import { nanoid } from "nanoid"
 
-import User, { contactI } from "../Models/user.model"
-import { clearCache } from "../Mongoose/cache"
-import { controller } from "./controller"
+import User, { contactI } from "../../Models/user.model"
+import { clearCache } from "../../Mongoose/cache"
+import { controller } from "../controller"
 
 export const addContact: controller = async (req, res) => {
   const id = req.user.id

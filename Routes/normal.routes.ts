@@ -10,7 +10,7 @@ import {
   forgotPassword_step1,
   forgotPassword_step2,
   forgotPassword_step3,
-} from "../Controllers/User.Controller"
+} from "../Controllers/User/User.Controller"
 
 const router = Router()
 

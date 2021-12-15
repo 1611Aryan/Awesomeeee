@@ -1,24 +1,24 @@
 import { Router } from "express"
 import multer from "multer"
-import { profileSetup } from "../Controllers/ProfileSetup.Controller"
+import { profileSetup } from "../Controllers/User/ProfileSetup.Controller"
 
 import {
   getProfile,
   verifyPassword,
   changePassword,
   logout,
-} from "../Controllers/User.Controller"
+} from "../Controllers/User/User.Controller"
 
 import {
   addContact,
   autoUpdateContact,
   deleteContact,
   updateContact,
-} from "../Controllers/Contact.Controller"
+} from "../Controllers/Contact/Contact.Controller"
 import {
   changeProfilePicture,
   changeUsername,
-} from "../Controllers/EditProfile"
+} from "../Controllers/User/EditProfile"
 
 const router = Router()
 const upload = multer({ dest: "uploads/" })

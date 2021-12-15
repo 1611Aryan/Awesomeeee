@@ -5,14 +5,7 @@ import "./cache"
 const MongoConfig = (): void => {
   const MongoURI = process.env.MONGODB_URI
 
-  const mongoOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  }
-
-  mongoose.connect(MongoURI, mongoOptions)
+  mongoose.connect(MongoURI)
 
   const connection = mongoose.connection
 
