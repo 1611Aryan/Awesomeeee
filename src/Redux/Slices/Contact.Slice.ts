@@ -18,7 +18,6 @@ export type contactI = {
   lastSeen: string
   lastMessage: string
   messages: messageI[]
-  lastUpdated?: string
 }
 
 type contactStatus = {
@@ -29,7 +28,7 @@ type contactStatus = {
 type updatedContact = {
   contactId: contactI["contactId"]
   properties: {
-    key: "name" | "profilePicture" | "lastUpdated"
+    key: "name" | "profilePicture"
     value: any
   }[]
 }
@@ -68,7 +67,7 @@ const contactSlice = createSlice({
       const index = state.contacts.findIndex(
         contact => contact.contactId === action.payload.contactId
       )
-      state.contacts[index].online = action.payload.status
+      if (index >= 0) state.contacts[index].online = action.payload.status
     },
     updateContact: (state, action: PayloadAction<updatedContact>) => {
       const index = state.contacts.findIndex(

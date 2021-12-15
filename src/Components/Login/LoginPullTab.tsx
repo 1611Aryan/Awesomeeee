@@ -1,44 +1,27 @@
 import styled from "@emotion/styled"
 import { FiChevronLeft } from "react-icons/fi"
-import { useEffect, useState } from "react"
-import { useAccess } from "Providers/AccessProvider"
+import { useState } from "react"
 
-import { loginEndpoint } from "API_Endpoints"
-import axios from "axios"
 import OAuth from "./OAuth"
 import { Link } from "react-router-dom"
-import { useWidth } from "Providers/WidthProvider"
 
-type payload = {
-  success: boolean
-  username: string
-}
+import useTypedDispatch from "Hooks/useTypedDispatch"
+import { loginUser } from "Redux/Slices/Access.Slice"
+import { error, input, login } from "API/LoginApi"
 
-const LoginPullTab = () => {
-  const [displayLogin, setDisplayLogin] = useState(false)
-
-  const [input, setInput] = useState<{
-    username_email: string
-    password: string
-  }>({
+const LoginPullTab: React.FC<{
+  setPullTabActive: React.Dispatch<React.SetStateAction<boolean>>
+  pullTabActive: boolean
+}> = ({ pullTabActive, setPullTabActive }) => {
+  const [input, setInput] = useState<input>({
     username_email: "",
     password: "",
   })
-  const [error, setError] = useState<{
-    type: "username" | "password"
-    info: string
-  } | null>(null)
+  const [error, setError] = useState<error>(null)
 
-  const { width } = useWidth()
+  const scootOver = () => setPullTabActive(true)
 
-  const scootOver = () => {
-    setDisplayLogin(true)
-    const event = new Event("loginOpened")
-
-    window.dispatchEvent(event)
-  }
-
-  const { setAccess } = useAccess()
+  const dispatch = useTypedDispatch()
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(input => ({ ...input, [e.target.name]: e.target.value }))
@@ -47,48 +30,22 @@ const LoginPullTab = () => {
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const res = await axios[loginEndpoint.METHOD]<payload>(
-        loginEndpoint.URL,
-        {
-          username: input.username_email.trim(),
-          password: input.password.trim(),
-        },
-        { withCredentials: true }
-      )
-
-      if (res.data.success)
-        setAccess({ loggedIn: true, username: res.data.username })
+      const username = await login(input)
+      dispatch(loginUser({ username }))
     } catch (err: any) {
       console.log(err.response.data)
       setError(err.response.data)
+      setInput({ username_email: "", password: "" })
     }
   }
 
-  useEffect(() => {
-    if (width < 500)
-      window.addEventListener("home", () => {
-        setDisplayLogin(false)
-      })
-
-    return () => window.removeEventListener("home", () => {})
-  }, [width])
-
-  useEffect(() => {
-    if (error) {
-      if (error.type === "password")
-        setInput(input => ({ ...input, password: "" }))
-      else if (error.type === "username")
-        setInput({ username_email: "", password: "" })
-    }
-  }, [error])
-
   return (
-    <StyledPullTab className={displayLogin ? "visibleLogin" : ""}>
+    <StyledPullTab className={pullTabActive ? "visibleLogin" : ""}>
       <div className="tab" onClick={scootOver}>
         <FiChevronLeft />
       </div>
-      <div className="login">
-        <span onClick={scootOver}>Login</span>
+      <div className="login" onClick={scootOver}>
+        <span>Login</span>
       </div>
       <div className="formContainer">
         <form onSubmit={submitHandler}>
@@ -133,15 +90,23 @@ const LoginPullTab = () => {
 const StyledPullTab = styled.div`
   position: fixed;
   top: 0;
-  left: 80vw;
+  left: 0vw;
   width: 120vw;
   height: 100vh;
+
+  font-size: 1.15rem;
+
+  transform: translateX(calc(100% - 4em - 20vw));
 
   background: #fff;
 
   display: flex;
 
   transition: transform ease-in 100ms;
+
+  @media only screen and (min-width: 500px) {
+    display: none;
+  }
 
   .tab {
     position: absolute;
@@ -175,7 +140,7 @@ const StyledPullTab = styled.div`
       position: relative;
       z-index: 2;
 
-      font-size: 1.15em;
+      font-size: 1em;
       font-weight: 500;
       color: var(--primary);
 
@@ -218,8 +183,8 @@ const StyledPullTab = styled.div`
 
         label {
           color: white;
-          font-size: 1.2em;
-          font-weight: 300;
+          font-size: 1.1em;
+          font-weight: 400;
         }
 
         .errorMessage {
@@ -232,7 +197,7 @@ const StyledPullTab = styled.div`
         }
 
         input {
-          margin: 0.75em 0;
+          margin: 0.5em 0;
 
           width: 100%;
           padding: 0.3em;

@@ -1,4 +1,4 @@
-import { StyledForm } from "./../Styles"
+import { StyledForm } from "../Styles"
 import BIO_FIELD from "./BIO_FIELD"
 import DOB_FIELD from "./DOB_FIELD"
 

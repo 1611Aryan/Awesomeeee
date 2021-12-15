@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
-import Content from "./Content"
-import Header from "./Header"
+import Content from "Components/ForgotPassword/Content"
+import Header from "Components/ForgotPassword/Header"
 
 const ForgotPassword = () => {
   return (

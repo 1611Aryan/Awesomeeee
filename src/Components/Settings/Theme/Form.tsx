@@ -1,4 +1,4 @@
-import { StyledForm } from "./../Styles"
+import { StyledForm } from "../Styles"
 import COLOR_PALETTE_FIELD from "./COLOR_PALETTE_FIELD"
 import FONT_FIELD from "./FONT_FIELD"
 import SIZE_FIELD from "./SIZE_FIELD"

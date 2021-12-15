@@ -1,44 +1,32 @@
-import { useWidth } from "Providers/WidthProvider"
-import React, { useState } from "react"
-import { useEffect } from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "@emotion/styled"
 
-const Header: React.FC<{ useCase: "login" | "signup" }> = ({ useCase }) => {
+const Header: React.FC<{
+  useCase: "login" | "signup"
+  setPullTabActive: React.Dispatch<React.SetStateAction<boolean>>
+  pullTabActive: boolean
+}> = ({ useCase, setPullTabActive, pullTabActive }) => {
   const [theme, setTheme] = useState({
     headingColor: useCase === "login" ? "#fff" : "var(--primary)",
     buttonBg: useCase === "login" ? "var(--primary)" : "#fff",
     buttonColor: useCase === "login" ? "#fff" : "var(--primary)",
   })
 
-  const { width } = useWidth()
-
-  useEffect(() => {
-    window.addEventListener("loginOpened", () => {
-      if (width < 500)
-        setTheme(theme => ({
-          ...theme,
-          headingColor: "var(--primary)",
-        }))
-    })
-
-    return () => window.removeEventListener("loginOpened", () => {})
-  }, [width])
+  const navigate = useNavigate()
 
   const clickHandler = (
     e: React.MouseEvent<HTMLHeadingElement, MouseEvent>
   ) => {
-    if (width < 500) {
-      e.stopPropagation()
-      const event = new Event("home")
-
-      window.dispatchEvent(event)
-      setTheme(theme => ({
-        ...theme,
-        headingColor: "#fff",
-      }))
-    }
+    setPullTabActive(false)
+    navigate("/")
   }
+
+  useEffect(() => {
+    if (pullTabActive || useCase !== "login")
+      setTheme(theme => ({ ...theme, headingColor: "var(--primary)" }))
+    else setTheme(theme => ({ ...theme, headingColor: "#fff" }))
+  }, [pullTabActive, useCase])
 
   return (
     <StyledHeader theme={theme}>

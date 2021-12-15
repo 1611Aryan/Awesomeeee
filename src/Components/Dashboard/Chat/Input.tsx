@@ -31,6 +31,7 @@ const Input: React.FC = () => {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (input && socket && user && selected) {
+      console.log(selected)
       socket.emit(
         "sendMessage",
         {
@@ -56,7 +57,7 @@ const Input: React.FC = () => {
           ref={inputRef}
           onChange={changeHandler}
         ></textarea>
-        <button>
+        <button type="submit">
           <IoSend />
         </button>
       </form>

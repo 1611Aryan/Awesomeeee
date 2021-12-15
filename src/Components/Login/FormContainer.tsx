@@ -29,6 +29,10 @@ const StyledRight = styled.div`
 
     background: #fff;
   }
+
+  @media only screen and (max-width: 500px) {
+    display: none;
+  }
 `
 
 export default FormContainer

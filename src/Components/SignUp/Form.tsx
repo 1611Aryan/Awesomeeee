@@ -1,35 +1,29 @@
-import axios from "axios"
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import styled from "@emotion/styled"
-import { signUpEndpoint } from "API_Endpoints"
+
+import { error, input, signup } from "API/SignupApi"
 
 const Form: React.FC = () => {
-  const [input, setInput] = useState<{ email: string; password: string }>({
+  const [input, setInput] = useState<input>({
     email: "",
     password: "",
   })
 
   const [success, setSuccess] = useState(false)
-  const [error, setError] = useState<{ type: "email"; info: string } | null>(
-    null
-  )
+  const [error, setError] = useState<error>(null)
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(input => ({ ...input, [e.target.name]: e.target.value }))
   }
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError(null)
+    setSuccess(false)
     try {
-      const res = await axios[signUpEndpoint.METHOD](signUpEndpoint.URL, {
-        email: input.email.trim(),
-        password: input.password.trim(),
-      })
-
-      if (res.data) {
-        setSuccess(true)
-        setError(null)
-      }
+      await signup(input)
+      setSuccess(true)
+      setError(null)
     } catch (err: any) {
       setSuccess(false)
       setError(err.response.data)

@@ -1,7 +1,9 @@
 import google from "Media/PNG/google_icon_2048 (1).png"
 import { baseUrl, googleAuth } from "API_Endpoints"
-import { useAccess } from "Providers/AccessProvider"
 import styled from "@emotion/styled"
+import useTypedDispatch from "Hooks/useTypedDispatch"
+import { loginUser } from "Redux/Slices/Access.Slice"
+import { useEffect } from "react"
 
 type payload = {
   success: boolean
@@ -9,7 +11,7 @@ type payload = {
 }
 
 const OAuth: React.FC = () => {
-  const { setAccess } = useAccess()
+  const dispatch = useTypedDispatch()
 
   const googleAuthHandler = async () => {
     let width = 500
@@ -25,10 +27,12 @@ const OAuth: React.FC = () => {
     window.addEventListener("message", (message: MessageEvent<payload>) => {
       if (message.origin === baseUrl) {
         if (message.data.success)
-          setAccess({ loggedIn: true, username: message.data.username })
+          dispatch(loginUser({ username: message.data.username }))
       }
     })
   }
+
+  useEffect(() => window.removeEventListener("message", () => {}))
 
   return (
     <StyledOAuth>

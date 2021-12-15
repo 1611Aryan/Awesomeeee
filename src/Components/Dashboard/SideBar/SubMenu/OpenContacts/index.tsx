@@ -1,10 +1,11 @@
+import { useShowContacts } from "Providers/ShowContactsProvider"
 import { MdContacts } from "react-icons/md"
 
-const OpenContact: React.FC<{
-  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ setShowConversations }) => {
+const OpenContact = () => {
+  const { setShowContacts } = useShowContacts()
+
   const showContacts = () => {
-    setShowConversations(true)
+    setShowContacts(true)
   }
 
   return <MdContacts onClick={showContacts} />

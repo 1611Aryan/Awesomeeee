@@ -1,23 +1,13 @@
 import { IoMdSettings } from "react-icons/io"
 import { FiLogOut } from "react-icons/fi"
 import styled from "@emotion/styled"
-import { useAccess } from "Providers/AccessProvider"
-import axios from "axios"
-import { logoutEndpoint } from "API_Endpoints"
-import { useSocket } from "Providers/SocketProvider"
+
 import { Link } from "react-router-dom"
 
-const Options: React.FC = () => {
-  const { setAccess } = useAccess()
-  const { socket } = useSocket()
+import useLogout from "Hooks/useLogout"
 
-  const logout = async () => {
-    setAccess({ loggedIn: false, username: null })
-    socket && socket.disconnect()
-    await axios[logoutEndpoint.METHOD](logoutEndpoint.URL, {
-      withCredentials: true,
-    })
-  }
+const Options: React.FC = () => {
+  const logout = useLogout()
 
   return (
     <StyledOptions className="options">

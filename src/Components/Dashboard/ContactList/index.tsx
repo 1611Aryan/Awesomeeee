@@ -6,11 +6,9 @@ import ContactPage from "../ContactPage"
 
 import Contacts from "./Contacts"
 import SearchBar from "./SearchBar"
+import { useShowContacts } from "Providers/ShowContactsProvider"
 
-const Conversations: React.FC<{
-  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ setShowConversations }) => {
-  const [searchBarBottom, setSearchBarBottom] = useState<number>()
+const ContactList: React.FC<{}> = () => {
   const [contactPageVis, setContactPageVis] = useState<{
     visible: boolean
     contact: contactI | null
@@ -19,40 +17,35 @@ const Conversations: React.FC<{
     contact: null,
   })
 
+  const { showContacts } = useShowContacts()
+
   return (
-    <StyledConversations>
-      <div className="border"></div>
+    <StyledContactList className={showContacts ? "" : "hideContacts"}>
       <header>
         <h1>Conversations</h1>
       </header>
-
-      <SearchBar setSearchBarBottom={setSearchBarBottom} />
-
-      <Contacts
-        searchBarBottom={searchBarBottom}
-        setContactPageVis={setContactPageVis}
-        setShowConversations={setShowConversations}
-      />
-
+      <SearchBar />
+      <Contacts setContactPageVis={setContactPageVis} />
       {contactPageVis.visible && (
         <ContactPage
           contactPageVis={contactPageVis}
           setContactPageVis={setContactPageVis}
         />
       )}
-    </StyledConversations>
+    </StyledContactList>
   )
 }
 
-const StyledConversations = styled.div`
+const StyledContactList = styled.div`
   width: var(--conversationsWidth);
+  height: 100%;
 
-  --contactPadding: calc(var(--conversationsWidth) / 16.666);
-
-  height: 100vh;
-  padding: 0 var(--contactPadding) 0;
+  padding: 0 1rem 1rem;
 
   position: relative;
+
+  display: flex;
+  flex-direction: column;
 
   header {
     height: var(--headerHeight);
@@ -66,18 +59,23 @@ const StyledConversations = styled.div`
       font-family: var(--fontHeading);
       font-weight: 500;
       font-size: clamp(1.25em, 3vw, 1.5em);
-      line-height: 1;
     }
   }
 
-  .border {
+  &::after {
+    content: "";
     position: absolute;
     top: 50%;
     right: 0;
     transform: translateY(-50%);
     width: 2px;
-    height: 100%;
-    background: linear-gradient(to right, #dadada88, transparent);
+    height: 98%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #dadada88,
+      transparent 100%
+    );
   }
 
   //Contacts
@@ -85,10 +83,13 @@ const StyledConversations = styled.div`
   --contactTextSize: 0.7em;
 
   @media only screen and (max-width: 500px) {
-    position: fixed;
-    top: 0;
-    left: calc(100vw - var(--conversationsWidth));
+    width: 100%;
+    padding: 0 1.25rem 1rem;
+
+    &::after {
+      display: none;
+    }
   }
 `
 
-export default Conversations
+export default ContactList

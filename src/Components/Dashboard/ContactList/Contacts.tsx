@@ -7,15 +7,13 @@ import Contact from "./Contact"
 import ContactMenu from "./ContactMenu"
 
 const Contacts: React.FC<{
-  searchBarBottom: number | undefined
   setContactPageVis: React.Dispatch<
     React.SetStateAction<{
       visible: boolean
       contact: contactI | null
     }>
   >
-  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ searchBarBottom, setContactPageVis, setShowConversations }) => {
+}> = ({ setContactPageVis }) => {
   const { contacts } = useTypedSelector(state => state.contact)
 
   const [menuConfig, setMenuConfig] = useState<{
@@ -29,12 +27,11 @@ const Contacts: React.FC<{
   })
 
   return (
-    <StyledContacts theme={{ top: searchBarBottom || 0 }}>
+    <StyledContacts>
       <ul className="contacts">
         {contacts &&
           contacts.map((contact, index) => (
             <Contact
-              setShowConversations={setShowConversations}
               setContactPageVis={setContactPageVis}
               setMenuConfig={setMenuConfig}
               key={index}
@@ -47,10 +44,11 @@ const Contacts: React.FC<{
   )
 }
 
-const StyledContacts = styled.div<{ theme: { top: number } }>`
+const StyledContacts = styled.div`
   width: 100%;
-  height: ${props => window.innerHeight - props.theme.top - 15}px;
   flex: 1;
+
+  overflow: hidden;
   .contacts {
     width: 100%;
     height: 100%;

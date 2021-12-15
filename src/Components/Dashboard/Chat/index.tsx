@@ -4,6 +4,7 @@ import styled from "@emotion/styled"
 import Header from "./Header"
 import Input from "./Input"
 import Messages from "./Messages"
+import { useShowContacts } from "Providers/ShowContactsProvider"
 
 const Chat: React.FC = () => {
   const variants = {
@@ -13,8 +14,15 @@ const Chat: React.FC = () => {
     animate: { y: 0 },
   }
 
+  const { showContacts } = useShowContacts()
+
   return (
-    <StyledChat variants={variants} initial="initial" animate="animate">
+    <StyledChat
+      className={showContacts ? "" : "showChat"}
+      variants={variants}
+      initial="initial"
+      animate="animate"
+    >
       <Header />
       <Messages />
       <Input />
@@ -46,9 +54,11 @@ const StyledChat = styled(motion.main)`
   --MessagesFontSize: calc(var(--conversationsWidth) * 0.044);
 
   @media only screen and (max-width: 500px) {
-    position: fixed;
-    top: 0;
-    left: calc(100vw - var(--conversationsWidth));
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
     --InputHeight: calc(var(--conversationsWidth) / 6);
   }
 `

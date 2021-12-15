@@ -1,18 +1,11 @@
-import { useWidth } from "Providers/WidthProvider"
 import styled from "@emotion/styled"
 import AddContact from "./AddContact"
 import OpenContact from "./OpenContacts"
 
-const SubMenu: React.FC<{
-  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ setShowConversations }) => {
-  const { width } = useWidth()
-
+const SubMenu: React.FC = () => {
   return (
     <StyledSubMenu>
-      {!(width > 500) && (
-        <OpenContact setShowConversations={setShowConversations} />
-      )}
+      <OpenContact />
       <AddContact />
     </StyledSubMenu>
   )

@@ -1,19 +1,9 @@
-import { useEffect, useRef } from "react"
 import { HiSearch } from "react-icons/hi"
 import styled from "@emotion/styled"
 
-const SearchBar: React.FC<{
-  setSearchBarBottom: React.Dispatch<React.SetStateAction<number | undefined>>
-}> = ({ setSearchBarBottom }) => {
-  const searchBarRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (searchBarRef.current)
-      setSearchBarBottom(searchBarRef.current.getBoundingClientRect().bottom)
-  }, [setSearchBarBottom])
-
+const SearchBar: React.FC = () => {
   return (
-    <StyledSearchBar ref={searchBarRef}>
+    <StyledSearchBar>
       <form>
         <input type="text" />
         <button>

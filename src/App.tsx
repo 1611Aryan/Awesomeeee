@@ -1,12 +1,11 @@
 import React, { Suspense, useEffect } from "react"
-
-import { useAccess } from "./Providers/AccessProvider"
 import Petal from "./Components/Loaders/Petal/Petal"
 import { useRoutes } from "react-router-dom"
 import Routes from "Routes"
+import useTypedSelector from "Hooks/useTypedSelector"
 
 const App: React.FC = () => {
-  const { access } = useAccess()
+  const { access } = useTypedSelector(state => state)
 
   const routing = useRoutes(Routes(access))
 

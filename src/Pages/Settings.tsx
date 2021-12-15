@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
-import SideBar from "./SideBar"
-import Content from "./Content"
+import SideBar from "Components/Settings/SideBar"
+import Content from "Components/Settings/Content"
 
 const Settings = () => {
   return (

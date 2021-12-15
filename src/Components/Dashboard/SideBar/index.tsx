@@ -3,13 +3,11 @@ import styled from "@emotion/styled"
 import Profile from "./Profile"
 import SubMenu from "./SubMenu"
 
-const SideBar: React.FC<{
-  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ setShowConversations }) => {
+const SideBar: React.FC = () => {
   return (
     <StyledSideBar>
       <h1>M</h1>
-      <SubMenu setShowConversations={setShowConversations} />
+      <SubMenu />
       <Profile />
     </StyledSideBar>
   )

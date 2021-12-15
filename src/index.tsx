@@ -4,32 +4,32 @@ import { BrowserRouter } from "react-router-dom"
 
 import App from "./App"
 import GlobalStyle from "./GlobalStyle"
-import { AccessProvider } from "./Providers/AccessProvider"
 
 import { SelectedContactProvider } from "./Providers/SelectedContactProvider"
 import { SocketProvider } from "./Providers/SocketProvider"
 
 import { Provider as ReduxProvider } from "react-redux"
 
-import { WidthProvider } from "Providers/WidthProvider"
 import store from "Redux/Store"
+import { LoginPullTabProvider } from "Providers/LoginPullTabProvider"
+import { ShowContactsProvider } from "Providers/ShowContactsProvider"
 
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
-    <WidthProvider>
-      <AccessProvider>
-        <ReduxProvider store={store}>
-          <SocketProvider>
+    <ReduxProvider store={store}>
+      <LoginPullTabProvider>
+        <SocketProvider>
+          <ShowContactsProvider>
             <SelectedContactProvider>
               <BrowserRouter>
                 <App />
               </BrowserRouter>
             </SelectedContactProvider>
-          </SocketProvider>
-        </ReduxProvider>
-      </AccessProvider>
-    </WidthProvider>
+          </ShowContactsProvider>
+        </SocketProvider>
+      </LoginPullTabProvider>
+    </ReduxProvider>
   </React.StrictMode>,
   document.getElementById("root")
 )

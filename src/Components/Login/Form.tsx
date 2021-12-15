@@ -1,31 +1,21 @@
-import axios from "axios"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import { useAccess } from "Providers/AccessProvider"
 
-import { loginEndpoint } from "API_Endpoints"
 import OAuth from "./OAuth"
 import styled from "@emotion/styled"
 
-type payload = {
-  success: boolean
-  username: string
-}
+import useTypedDispatch from "Hooks/useTypedDispatch"
+import { loginUser } from "Redux/Slices/Access.Slice"
+import { error, input, login } from "API/LoginApi"
 
 const Form: React.FC = () => {
-  const [input, setInput] = useState<{
-    username_email: string
-    password: string
-  }>({
+  const [input, setInput] = useState<input>({
     username_email: "",
     password: "",
   })
-  const [error, setError] = useState<{
-    type: "username" | "password"
-    info: string
-  } | null>(null)
+  const [error, setError] = useState<error>(null)
 
-  const { setAccess } = useAccess()
+  const dispatch = useTypedDispatch()
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(input => ({ ...input, [e.target.name]: e.target.value }))
@@ -34,31 +24,14 @@ const Form: React.FC = () => {
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const res = await axios[loginEndpoint.METHOD]<payload>(
-        loginEndpoint.URL,
-        {
-          username: input.username_email.trim(),
-          password: input.password.trim(),
-        },
-        { withCredentials: true }
-      )
-
-      if (res.data.success)
-        setAccess({ loggedIn: true, username: res.data.username })
+      const username = await login(input)
+      dispatch(loginUser({ username }))
     } catch (err: any) {
       console.log(err.response.data)
       setError(err.response.data)
+      setInput({ username_email: "", password: "" })
     }
   }
-
-  useEffect(() => {
-    if (error) {
-      if (error.type === "password")
-        setInput(input => ({ ...input, password: "" }))
-      else if (error.type === "username")
-        setInput({ username_email: "", password: "" })
-    }
-  }, [error])
 
   return (
     <StyledForm onSubmit={submitHandler}>

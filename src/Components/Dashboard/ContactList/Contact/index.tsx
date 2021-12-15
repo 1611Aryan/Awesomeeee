@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useEffect } from "react"
 import styled from "@emotion/styled"
 
@@ -7,9 +6,10 @@ import Content from "./ContactContent"
 import Options from "./ContactOptions"
 import ProfilePicture from "./ContactProfilePicture"
 
-import { autoUpdateContact } from "API_Endpoints"
 import { contactI, updateContact } from "Redux/Slices/Contact.Slice"
 import useTypedDispatch from "Hooks/useTypedDispatch"
+import { useShowContacts } from "Providers/ShowContactsProvider"
+import AutoUpdateContact from "API/AutoUpdateContact"
 
 const Contact: React.FC<{
   contact: contactI
@@ -30,49 +30,26 @@ const Contact: React.FC<{
       contact: contactI | null
     }>
   >
-  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
-}> = ({ contact, setMenuConfig, setContactPageVis, setShowConversations }) => {
+}> = ({ contact, setMenuConfig, setContactPageVis }) => {
   const { selected, setSelected } = useSelectedContact()
   const dispatchContact = useTypedDispatch()
+  const { setShowContacts } = useShowContacts()
 
   const clickHandler = () => {
     setSelected({
       roomId: contact.roomId,
       contactId: contact.contactId,
     })
-    setShowConversations(false)
+    setShowContacts(false)
   }
 
   useEffect(() => {
     ;(async () => {
       try {
-        if (
-          selected &&
-          selected.contactId === contact.contactId &&
-          (contact.lastUpdated === undefined ||
-            (contact.lastUpdated &&
-              (Date.now() - parseInt(contact.lastUpdated)) / (1000 * 60) > 10))
-        ) {
-          const res = await axios[autoUpdateContact.METHOD]<{
-            message: "Up to Date" | "Updating Contact"
-            payload: null | {
-              profilePicture: contactI["profilePicture"]
-            }
-          }>(
-            autoUpdateContact.URL,
-            {
-              contact,
-            },
-            {
-              withCredentials: true,
-            }
-          )
+        if (selected && selected.contactId === contact.contactId) {
+          const res = await AutoUpdateContact(contact)
 
-          if (
-            res.data.message === "Updating Contact" &&
-            res.data.payload &&
-            res.data.payload.profilePicture
-          ) {
+          if (res.data.message === "Updating Contact" && res.data.payload) {
             dispatchContact(
               updateContact({
                 contactId: contact.contactId,
@@ -81,15 +58,7 @@ const Contact: React.FC<{
                     key: "profilePicture",
                     value: res.data.payload?.profilePicture,
                   },
-                  { key: "lastUpdated", value: Date.now() },
                 ],
-              })
-            )
-          } else {
-            dispatchContact(
-              updateContact({
-                contactId: contact.contactId,
-                properties: [{ key: "lastUpdated", value: Date.now() }],
               })
             )
           }
