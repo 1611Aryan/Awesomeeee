@@ -11,7 +11,6 @@ import Local from "./Local.strategy"
 class PassportConfig extends Mixin(Local, JWT, Google) {
   constructor(passport: PassportStatic) {
     super(passport)
-    this.passport = passport
     this.init()
   }
 

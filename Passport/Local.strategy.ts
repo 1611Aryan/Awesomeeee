@@ -1,8 +1,9 @@
 import { PassportStatic } from "passport"
 import { Strategy as LocalStrategy } from "passport-local"
+import sendSignupEmail from "../Mail/SignupTemplate"
 
 import User from "../Models/user.model"
-
+;``
 interface UserInput {
   email: string
   username: string
@@ -14,9 +15,7 @@ class Local {
   constructor(passport: PassportStatic) {
     this.passport = passport
   }
-  createUsername = (email: UserInput["email"]): string => {
-    return email.split("@", 1)[0]
-  }
+  createUsername = (email: UserInput["email"]): string => email.split("@", 1)[0]
 
   login = (): unknown =>
     this.passport.use(
@@ -95,6 +94,8 @@ class Local {
               password,
               strategyUsed: "local",
             })
+
+            sendSignupEmail(email)
 
             return done(null, newUser)
           } catch (err) {

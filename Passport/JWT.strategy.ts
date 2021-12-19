@@ -9,19 +9,19 @@ class JWT {
     this.passport = passport
   }
 
-  #cookieExtractor = (req: Request): string => {
+  private cookieExtractor = (req: Request): string => {
     let jwt = null
     if (req && req.cookies) jwt = req.cookies["JWT"]
     return jwt
   }
 
-  jwt = (): void => {
+  protected jwt = (): void => {
     this.passport.use(
       "jwt",
       new JWTStrategy(
         {
           secretOrKey: process.env.JWT_SECRET,
-          jwtFromRequest: this.#cookieExtractor,
+          jwtFromRequest: this.cookieExtractor,
         },
         (token, done) => {
           try {

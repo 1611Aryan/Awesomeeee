@@ -1,12 +1,12 @@
 import path from "path"
 
-import { controller } from "./../controller"
+import { controller } from "../controller"
 
 import bcrypt from "bcrypt"
 import User from "../../Models/user.model"
-import { clearCache } from "../../Mongoose/cache"
+
 import { Response } from "express"
-import { optimizeImage, uploadImage } from "./../Utils"
+import { optimizeImage, uploadImage } from "../Utils"
 
 const verifyUsername = async (username: string, res: Response) => {
   try {
@@ -21,7 +21,7 @@ const verifyUsername = async (username: string, res: Response) => {
 
 const genProfilePicture = async (file: Express.Multer.File, id: string) => {
   try {
-    const imagePath = path.join(__dirname, "..", "uploads", file.filename)
+    const imagePath = path.join(__dirname, "..", "..", "uploads", file.filename)
     const mimeType = file.mimetype
 
     const [, newImagePath] = await optimizeImage(imagePath, mimeType, file.size)
@@ -69,11 +69,12 @@ export const profileSetup: controller = async (req, res) => {
             }
           : common
 
-        await userPermissionCheck.update({
-          $set: updateData,
-        })
-
-        clearCache(id)
+        await userPermissionCheck
+          .updateOne({
+            $set: updateData,
+          })
+          .deleteCacheById(id)
+          .lean()
 
         return res.status(200).send({
           profileSetup: true,

@@ -10,6 +10,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "googleapis": "^92.0.0",
     "handy-redis": "^2.2.1",
     "helmet": "^4.6.0",
     "imagekit": "^3.1.2",
@@ -51,14 +52,13 @@
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "dotenv": "^10.0.0",
-    "eslint": "^7.27.0",
     "ts-node-dev": "^1.1.8"
   },
   "scripts": {
     "dev": "tsnd --respawn server.ts",
     "build": "tsc -p .",
     "start": "cd build && node  server.js  ",
-    "lint": "eslint .  --ext .ts",
-    "lint-fix": "eslint --fix .  --ext .ts"
+    "start-redis-server": "sudo service redis-server start",
+    "stop-redis-server": "sudo service redis-server stop"
   }
 }

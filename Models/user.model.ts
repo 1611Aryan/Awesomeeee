@@ -57,6 +57,7 @@ const UserSchema = new Schema<UserI>(
       type: {
         thumbnail: String,
         large: String,
+        fileId: String,
       },
       required: true,
       default: {
@@ -64,6 +65,7 @@ const UserSchema = new Schema<UserI>(
         thumbnail: DEFAULT_PROFILE_IMAGE.THUMBNAIL,
         large: DEFAULT_PROFILE_IMAGE.LARGE,
       },
+      _id: false,
     },
     contacts: {
       type: [
@@ -82,6 +84,7 @@ const UserSchema = new Schema<UserI>(
       ],
       required: true,
       default: [],
+      _id: false,
     },
     password: {
       type: String,

@@ -1,7 +1,6 @@
 import path from "path"
 
 import User from "../../Models/user.model"
-import { clearCache } from "../../Mongoose/cache"
 
 import toBoolean from "../../Utilities/toBoolean"
 
@@ -27,10 +26,9 @@ export const changeUsername: controller = async (req, res) => {
       $set: {
         username,
       },
-    })
+    }).deleteCacheById(id)
 
     if (user) {
-      clearCache(id)
       return res.status(200).send("Username Changed")
     } else return res.sendStatus(404)
   } catch (err) {
@@ -45,7 +43,7 @@ export const changeProfilePicture: controller = async (req, res) => {
   let imagePath, mimeType
 
   if (!isDefault) {
-    imagePath = path.join(__dirname, "..", "uploads", req.file.filename)
+    imagePath = path.join(__dirname, "..", "..", "uploads", req.file.filename)
     mimeType = req.file.mimetype
   }
 
@@ -68,9 +66,10 @@ export const changeProfilePicture: controller = async (req, res) => {
         $set: {
           profilePicture,
         },
-      }).lean()
+      })
+        .deleteCacheById(id)
+        .lean()
       if (user) {
-        clearCache(id)
         return res.status(200).send({ profilePicture })
       } else return res.sendStatus(404)
     } else return res.status(400)

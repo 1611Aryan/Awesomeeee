@@ -2,7 +2,7 @@
 import { nanoid } from "nanoid"
 
 import User, { contactI } from "../../Models/user.model"
-import { clearCache } from "../../Mongoose/cache"
+
 import { controller } from "../controller"
 
 export const addContact: controller = async (req, res) => {
@@ -62,8 +62,10 @@ export const addContact: controller = async (req, res) => {
         $push: {
           contacts: newContact,
         },
-      }).lean()
-      clearCache(id)
+      })
+        .deleteCacheById(id)
+        .lean()
+
       return res.status(200).send({
         message: "Contact Added",
         contact: newContact,
@@ -100,8 +102,10 @@ export const autoUpdateContact: controller = async (req, res) => {
             "contacts.$.profilePicture": contact.profilePicture,
           },
         }
-      ).lean()
-      clearCache(id)
+      )
+        .deleteCacheById(id)
+        .lean()
+
       return res.status(200).send({
         message: "Updating Contact",
         payload: {
@@ -128,8 +132,9 @@ export const updateContact: controller = async (req, res) => {
           "contacts.$.name": newName,
         },
       }
-    ).lean()
-    clearCache(id)
+    )
+      .deleteCacheById(id)
+      .lean()
 
     return res.status(200).send({ message: "Contact Modified" })
   } catch (err) {
@@ -152,8 +157,9 @@ export const deleteContact: controller = async (req, res) => {
           },
         },
       }
-    ).lean()
-    clearCache(id)
+    )
+      .deleteCacheById(id)
+      .lean()
 
     return res.sendStatus(204)
   } catch (err) {

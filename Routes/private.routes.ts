@@ -1,6 +1,6 @@
 import { Router } from "express"
 import multer from "multer"
-import { profileSetup } from "../Controllers/User/ProfileSetup.Controller"
+import { profileSetup } from "../Controllers/User/ProfileSetup"
 
 import {
   getProfile,

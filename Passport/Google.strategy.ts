@@ -24,9 +24,8 @@ class Google {
           clientSecret: process.env.GOOGLE_CLIENT_SECRET,
           callbackURL: GOOGLE_CALLBACK_URL,
         },
-        async (accessToken, refreshToken, profile, done) => {
+        async (_accessToken, _refreshToken, profile, done) => {
           try {
-            console.log(profile)
             const user = await User.findOne({ email: profile.email })
             if (user) return done(null, user)
             else {
@@ -38,6 +37,7 @@ class Google {
                 profilePicture: {
                   thumbnail: profile.picture,
                   large: profile.picture,
+                  fileId: "google-" + profile.picture,
                 },
               })
 

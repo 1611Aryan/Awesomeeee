@@ -47,7 +47,6 @@ export const deleteImageFromImageKit = (FILE_ID: string): void => {
   ) {
     imagekit.deleteFile(FILE_ID, (err, result) => {
       if (err) console.log({ imageKitDelete: err })
-      else console.log({ result })
     })
   }
   return
