@@ -1,9 +1,10 @@
 import nodemailer from "nodemailer"
 import { google } from "googleapis"
-import { config as envConfig } from "dotenv"
 import SMTPTransport from "nodemailer/lib/smtp-transport"
 
-envConfig()
+process.env.NODE_ENV !== "production" &&
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  require("dotenv").config()
 
 const OAuth2 = google.auth.OAuth2
 
