@@ -9,6 +9,7 @@ const Dashboard = lazy(() => import("Pages/Dashboard"))
 const Login = lazy(() => import("Pages/Login"))
 const SignUp = lazy(() => import("Pages/Signup"))
 const ForgotPassword = lazy(() => import("Pages/ForgotPassword"))
+const ChangePassword = lazy(() => import("Pages/ChangePassword"))
 const Settings = lazy(() => import("Pages/Settings"))
 
 const Routes = (access: access | null): RouteObject[] => {
@@ -22,11 +23,19 @@ const Routes = (access: access | null): RouteObject[] => {
       element: access?.loggedIn ? <Navigate to="/dashboard" /> : <SignUp />,
     },
     {
-      path: "forgot-password",
+      path: "forgotPassword",
       element: access?.loggedIn ? (
         <Navigate to="/dashboard" />
       ) : (
         <ForgotPassword />
+      ),
+    },
+    {
+      path: "changePassword",
+      element: access?.loggedIn ? (
+        <Navigate to="/dashboard" />
+      ) : (
+        <ChangePassword />
       ),
     },
     {

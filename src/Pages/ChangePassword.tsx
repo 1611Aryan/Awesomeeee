@@ -2,16 +2,16 @@ import styled from "@emotion/styled"
 import Content from "Components/Password/Content"
 import Header from "Components/Password/Header"
 
-const ForgotPassword = () => {
+const ChangePassword = () => {
   return (
-    <StyledForgotPassword>
+    <StyledChangePassword>
       <Header />
-      <Content heading="forgot" />
-    </StyledForgotPassword>
+      <Content heading="change" />
+    </StyledChangePassword>
   )
 }
 
-const StyledForgotPassword = styled.section`
+const StyledChangePassword = styled.section`
   width: 100vw;
   height: 100vh;
   position: relative;
@@ -24,4 +24,4 @@ const StyledForgotPassword = styled.section`
   --primary: #4d4476;
 `
 
-export default ForgotPassword
+export default ChangePassword

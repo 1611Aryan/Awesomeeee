@@ -1,4 +1,4 @@
-import { changePassword } from "API_Endpoints"
+import { user_changePassword } from "API_Endpoints"
 import axios from "axios"
 import { useState } from "react"
 import styled from "@emotion/styled"
@@ -20,8 +20,10 @@ const ChangeModal: React.FC<{
     e.preventDefault()
     try {
       if (input) {
-        const res = await axios[changePassword.METHOD]<{ success: boolean }>(
-          changePassword.URL,
+        const res = await axios[user_changePassword.METHOD]<{
+          success: boolean
+        }>(
+          user_changePassword.URL,
           { newPassword: input },
           { withCredentials: true }
         )

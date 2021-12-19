@@ -41,7 +41,6 @@ const StyledSignUp = styled(motion.div)`
 
   will-change: transform;
 
-  --padding: clamp(2rem, 5vw, 4rem);
   --navHeight: 10vh;
   --primary: #4d4476;
 

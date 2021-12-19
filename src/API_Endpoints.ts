@@ -36,18 +36,13 @@ export const signUpEndpoint: endpoint = {
   METHOD: methods.POST,
 }
 
-export const forgotPassword_step1: endpoint = {
-  URL: `${baseUrl}/forgotPassword-1`,
+export const forgotPassword: endpoint = {
+  URL: `${baseUrl}/forgotPassword`,
   METHOD: methods.POST,
 }
 
-export const forgotPassword_step2: endpoint = {
-  URL: `${baseUrl}/forgotPassword-2`,
-  METHOD: methods.POST,
-}
-
-export const forgotPassword_step3: endpoint = {
-  URL: `${baseUrl}/forgotPassword-3`,
+export const changePassword: endpoint = {
+  URL: `${baseUrl}/changePassword`,
   METHOD: methods.PATCH,
 }
 
@@ -101,7 +96,7 @@ export const verifyPassword: endpoint = {
   METHOD: methods.POST,
 }
 
-export const changePassword: endpoint = {
+export const user_changePassword: endpoint = {
   URL: `${baseUrl}/user/changePassword`,
   METHOD: methods.POST,
 }

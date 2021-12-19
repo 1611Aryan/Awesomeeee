@@ -18,6 +18,8 @@ const style = css`
     --medium: 21vw;
     --small: 19vw;
     --extrasmall: 17vw;
+
+    --padding: clamp(1em, 5vw, 4em);
   }
 
   html[theme="small"] {

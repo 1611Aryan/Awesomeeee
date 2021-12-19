@@ -72,7 +72,7 @@ const Form: React.FC = () => {
       <div className="buttons">
         <button>Login</button>
         <span>
-          <Link to="/forgot-password">Forgot Password?</Link>
+          <Link to="/forgotPassword">Forgot Password?</Link>
         </span>
       </div>
 
