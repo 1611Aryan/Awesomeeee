@@ -19,7 +19,8 @@ class PassportConfig extends Mixin(Local, JWT, Google) {
     this.signup()
     this.delete()
     this.jwt()
-    this.google()
+    this.googleLogin()
+    this.googleSignup()
   }
 }
 export default PassportConfig

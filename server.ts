@@ -14,6 +14,7 @@ import socketConfig from "./Socket.io"
 import Router from "./Routes/normal.routes"
 import PrivateRouter from "./Routes/private.routes"
 import ImageKitConfig from "./ImageKit/ImageKit.Config"
+import OauthRouter from "./Routes/oauth.routes"
 
 new PassportConfig(passport)
 
@@ -29,6 +30,7 @@ MongoConfig()
 export const imagekit = ImageKitConfig()
 
 app.use("/", Router)
+app.use("/", OauthRouter)
 app.use(
   "/user",
   passport.authenticate("jwt", { session: false }),

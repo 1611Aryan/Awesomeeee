@@ -9,14 +9,7 @@ import { Response } from "express"
 import { optimizeImage, uploadImage } from "../Utils"
 
 const verifyUsername = async (username: string, res: Response) => {
-  try {
-    const usernameAvailable = await User.findOne({ username })
-    if (usernameAvailable)
-      return res.status(403).send({ message: "Username Not Available" })
-  } catch (err) {
-    throw new Error(err)
-    return
-  }
+  return await User.findOne({ username })
 }
 
 const genProfilePicture = async (file: Express.Multer.File, id: string) => {
@@ -42,7 +35,8 @@ export const profileSetup: controller = async (req, res) => {
   try {
     if (!username) return res.status(400).send({ message: "Incorrect Payload" })
 
-    await verifyUsername(username, res)
+    if (await verifyUsername(username, res))
+      return res.status(403).send({ message: "Username Not Available" })
 
     const userPermissionCheck = await User.findById(id)
 

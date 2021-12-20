@@ -1,7 +1,12 @@
-export const GOOGLE_CALLBACK_URL =
+export const GOOGLE_LOGIN_CALLBACK_URL =
   process.env.NODE_ENV === "production"
-    ? "https://awesomeeeee.herokuapp.com/auth/google/callback"
-    : "http://localhost:5000/auth/google/callback"
+    ? "https://awesomeeeee.herokuapp.com/login/google/callback"
+    : "http://localhost:5000/login/google/callback"
+
+export const GOOGLE_SIGNUP_CALLBACK_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://awesomeeeee.herokuapp.com/signup/google/callback"
+    : "http://localhost:5000/signup/google/callback"
 
 export const CLIENT_URL =
   process.env.NODE_ENV === "production"

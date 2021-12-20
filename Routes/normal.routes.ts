@@ -18,27 +18,43 @@ const errHandler = (
   info: { [key: string]: string },
   res: Response
 ) => {
+  let error = true
+
   if (err) {
-    if (typeof err === "number") return res.sendStatus(err)
-    if (err.status && err.message && typeof err.status === "number")
-      return res.status(err.status).send(err.message)
-    return res.send(err)
-  }
-  if (info && info.message) return res.status(400).send(info.message)
+    if (typeof err === "number") {
+      res.sendStatus(err)
+    } else if (err.status && err.message && typeof err.status === "number")
+      res.status(err.status).send(err.message)
+    else res.send(err)
+  } else if (info && info.message) res.status(400).send(info.message)
+  else error = false
+  return error
+}
+
+const generateScript = (res: any) => {
+  const script = `res = ${JSON.stringify(res)};
+  window.opener.postMessage(res, '${CLIENT_URL}');
+  window.close();
+  `
+  const hashedScript = createHash("sha256").update(script).digest("base64")
+
+  const responseHTML = `<html><head><title>Main</title></head><body><script type="text/javascript">${script}</script></body></html>`
+
+  return [hashedScript, responseHTML]
 }
 
 router.get("/", (_req, res) => res.redirect(CLIENT_URL))
 
 router.post("/signup", (req, res) =>
   passport.authenticate("signup", async (err, user: UserI, info) => {
-    errHandler(err, info, res)
+    if (errHandler(err, info, res)) return
     return res.send(true)
   })(req, res)
 )
 
 router.post("/login", (req, res) =>
   passport.authenticate("login", async (err, user: UserI & Document, info) => {
-    errHandler(err, info, res)
+    if (errHandler(err, info, res)) return
 
     req.logIn(user, { session: false }, async err => {
       if (err) res.send(err)
@@ -61,63 +77,6 @@ router.post("/login", (req, res) =>
         .send({ success: true, username: user.username })
     })
   })(req, res)
-)
-
-router.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-)
-
-router.get("/auth/google/callback", (req, res) =>
-  passport.authenticate(
-    "google",
-    { session: false },
-    async (err, user: UserI & Document, info) => {
-      if (err) {
-        if (typeof err === "number") return res.sendStatus(err)
-        if (err.status && err.message && typeof err.status === "number")
-          return res.status(err.status).send(err.message)
-        return res.send(err)
-      }
-      if (info && info.message) return res.status(400).send(info.message)
-      else {
-        req.logIn(user, { session: false }, async err => {
-          if (err) res.send(err)
-          const payload = {
-            id: user._id,
-            username: user.username,
-          }
-
-          const token = jwt.sign(payload, process.env.JWT_SECRET)
-
-          const targetOrigin = CLIENT_URL
-
-          const inlineJS = `res = ${JSON.stringify({
-            success: true,
-            username: user.username,
-          })};
-          window.opener.postMessage(res, '${targetOrigin}');
-          window.close();
-          `
-
-          const hashed = createHash("sha256").update(inlineJS).digest("base64")
-
-          const responseHTML = `<html><head><title>Main</title></head><body><script type="text/javascript">${inlineJS}</script></body></html>`
-
-          return res
-            .status(200)
-            .cookie("JWT", token, {
-              maxAge: 604_800_000,
-              httpOnly: true,
-              sameSite: "none",
-              secure: true,
-            })
-            .header("Content-Security-Policy", `script-src 'sha256-${hashed}' `)
-            .send(responseHTML)
-        })
-      }
-    }
-  )(req, res)
 )
 
 router.post("/forgotPassword", forgotPassword)
