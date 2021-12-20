@@ -49,6 +49,9 @@ const LoginPullTab: React.FC<{
       </div>
       <div className="formContainer">
         <form onSubmit={submitHandler}>
+          <p className="errorMessage">
+            {error && error.type === "oauth" ? error.info : ""}
+          </p>
           <div className="inputContainer">
             <label htmlFor="username_email">Email/Username</label>
             <p className="errorMessage">
@@ -77,10 +80,10 @@ const LoginPullTab: React.FC<{
           <div className="buttons">
             <button>Login</button>
             <span>
-              <Link to="/forgot-password">Forgot Password?</Link>
+              <Link to="/forgotPassword">Forgot Password?</Link>
             </span>
           </div>
-          <OAuth />
+          <OAuth setError={setError} />
         </form>
       </div>
     </StyledPullTab>
@@ -174,6 +177,15 @@ const StyledPullTab = styled.div`
       align-items: flex-start;
       flex-direction: column;
 
+      .errorMessage {
+        color: coral;
+        line-height: 1;
+        height: clamp(0.6em, 1vw, 0.9em);
+        font-size: clamp(0.6em, 1vw, 0.8em);
+        font-weight: 400;
+        margin: 0.1em 0;
+      }
+
       .inputContainer {
         display: flex;
         flex-direction: column;
@@ -185,15 +197,6 @@ const StyledPullTab = styled.div`
           color: white;
           font-size: 1.1em;
           font-weight: 400;
-        }
-
-        .errorMessage {
-          color: coral;
-          line-height: 1;
-          height: clamp(0.6em, 1vw, 0.9em);
-          font-size: clamp(0.6em, 1vw, 0.8em);
-          font-weight: 400;
-          margin: 0.1em 0;
         }
 
         input {

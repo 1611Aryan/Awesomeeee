@@ -1,9 +1,11 @@
 import google from "Media/PNG/google_icon_2048 (1).png"
+
 import styled from "@emotion/styled"
 import useTypedDispatch from "Hooks/useTypedDispatch"
 import { useEffect } from "react"
-import { error } from "API/LoginApi"
-import GoogleAuth, { EventHandler } from "API/GoogleAuth"
+import { error } from "API/SignupApi"
+import GoogleAuth from "API/GoogleAuth"
+import { EventHandler } from "../../API/GoogleAuth"
 
 const OAuth: React.FC<{
   setError: React.Dispatch<React.SetStateAction<error>>
@@ -11,7 +13,7 @@ const OAuth: React.FC<{
   const dispatch = useTypedDispatch()
 
   const googleAuthHandler = () => {
-    GoogleAuth("login")
+    GoogleAuth("signup")
     window.addEventListener("message", EventHandler(dispatch, setError))
   }
 
@@ -21,7 +23,7 @@ const OAuth: React.FC<{
     <StyledOAuth>
       <div className="or">
         <div className="line"></div>
-        <h3>Or, login with</h3>
+        <h3>Or, Signup with</h3>
         <div className="line"></div>
       </div>
 
@@ -36,7 +38,7 @@ const OAuth: React.FC<{
 }
 
 const StyledOAuth = styled.div`
-  width: 100%;
+  width: 50%;
   margin: clamp(0.5em, 3vw, 1em) 0;
   .or {
     width: 100%;

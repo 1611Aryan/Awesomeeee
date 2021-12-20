@@ -35,6 +35,9 @@ const Form: React.FC = () => {
 
   return (
     <StyledForm onSubmit={submitHandler}>
+      <p className="errorMessage">
+        {error && error.type === "oauth" ? error.info : ""}
+      </p>
       <StyledInputContainer>
         <label htmlFor="username_email">Username/Email</label>
         <div>
@@ -76,7 +79,7 @@ const Form: React.FC = () => {
         </span>
       </div>
 
-      <OAuth />
+      <OAuth setError={setError} />
     </StyledForm>
   )
 }
@@ -95,6 +98,18 @@ const StyledForm = styled.form`
   color: var(--primary);
 
   z-index: 2;
+
+  .errorMessage {
+    width: 100%;
+    color: red;
+    line-height: 1;
+
+    font-size: clamp(0.6em, 1vw, 0.8em);
+    font-weight: 300;
+    margin: 0.1em 0;
+
+    text-align: left;
+  }
 
   .buttons {
     width: 100%;
@@ -131,15 +146,6 @@ const StyledInputContainer = styled.div`
 
   label {
     font-size: clamp(1em, 4vw, 1.5em);
-  }
-
-  .errorMessage {
-    color: red;
-    line-height: 1;
-    height: clamp(0.6em, 1vw, 0.9em);
-    font-size: clamp(0.6em, 1vw, 0.8em);
-    font-weight: 300;
-    margin: 0.1em 0;
   }
 
   div {

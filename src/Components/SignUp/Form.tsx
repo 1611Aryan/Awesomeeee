@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import styled from "@emotion/styled"
 
 import { error, input, signup } from "API/SignupApi"
+import OAuth from "./Oauth"
 
 const Form: React.FC = () => {
   const [input, setInput] = useState<input>({
@@ -66,6 +67,7 @@ const Form: React.FC = () => {
         />
       </div>
       <button>Sign Up</button>
+      <OAuth setError={setError} />
     </StyledForm>
   )
 }
@@ -104,8 +106,8 @@ const StyledForm = styled.form`
   .errorInfo {
     line-height: 1;
     color: red;
-    height: clamp(0.6em, 1vw, 0.8em);
-    font-size: clamp(0.6em, 1vw, 0.8em);
+
+    font-size: clamp(0.8em, 1vw, 1em);
   }
   .inputContainer {
     width: 100%;

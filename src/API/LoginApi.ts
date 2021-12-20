@@ -7,7 +7,7 @@ export type input = {
 }
 
 export type error = {
-  type: "username" | "password"
+  type: "username" | "password" | "oauth"
   info: string
 } | null
 

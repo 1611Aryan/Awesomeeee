@@ -26,8 +26,13 @@ export const loginEndpoint: endpoint = {
   METHOD: methods.POST,
 }
 
-export const googleAuth: endpoint = {
-  URL: `${baseUrl}/auth/google`,
+export const googleLoginAuth: endpoint = {
+  URL: `${baseUrl}/login/google`,
+  METHOD: methods.GET,
+}
+
+export const googleSignupAuth: endpoint = {
+  URL: `${baseUrl}/signup/google`,
   METHOD: methods.GET,
 }
 
