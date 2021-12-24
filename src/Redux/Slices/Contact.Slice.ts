@@ -55,7 +55,7 @@ const contactSlice = createSlice({
 
       for (let i = 0; i < num; i++) {
         if (state.contacts[i].roomId === action.payload.roomId) {
-          state.contacts[0].messages.push({
+          state.contacts[i].messages.push({
             message: action.payload.message,
             sender: action.payload.sender,
           })

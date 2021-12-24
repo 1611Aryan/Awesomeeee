@@ -77,6 +77,7 @@ const StyledMessage = styled.li<{ theme: theme | undefined }>`
   letter-spacing: 0.3px;
   word-spacing: 0.5px;
   word-break: break-word;
+  white-space: pre-wrap;
 
   color: #efefef;
   background: ${props => props.theme.background};

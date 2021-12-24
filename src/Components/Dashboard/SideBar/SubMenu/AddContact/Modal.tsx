@@ -77,7 +77,7 @@ const Modal: React.FC<{
           withCredentials: true,
         }
       )
-      console.log(res)
+
       setErr(res.data.message)
 
       dispatch(addContact({ ...res.data.contact, messages: [] }))

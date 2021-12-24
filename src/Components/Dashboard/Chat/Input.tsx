@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
 import { IoSend } from "react-icons/io5"
-import React, { useState, useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { useSelectedContact } from "Providers/SelectedContactProvider"
 import { useSocket } from "Providers/SocketProvider"
 import useTypedSelector from "Hooks/useTypedSelector"
@@ -10,53 +10,57 @@ import { addMessage } from "Redux/Slices/Contact.Slice"
 const Input: React.FC = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
-  const [input, setInput] = useState("")
-
   const { socket } = useSocket()
   const { user } = useTypedSelector(state => state.user)
   const dispatch = useTypedDispatch()
   const { selected } = useSelectedContact()
 
-  useEffect(() => {
-    if (selected && inputRef.current) {
-      inputRef.current.focus()
-      setInput("")
-    }
-  }, [selected])
-
-  const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(e.target.value)
-  }
-
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (input && socket && user && selected) {
-      console.log(selected)
+  const submitform = () => {
+    if (inputRef.current?.value && socket && user && selected) {
+      const message = inputRef.current?.value
       socket.emit(
         "sendMessage",
         {
-          message: input,
+          message,
           sender: user.username,
         },
         selected.roomId,
         selected.contactId
       )
-      dispatch(
-        addMessage({ roomId: selected.roomId, message: input, sender: "me" })
-      )
-      setInput("")
+      dispatch(addMessage({ roomId: selected.roomId, message, sender: "me" }))
+      inputRef.current.value = ""
     }
   }
+
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    submitform()
+  }
+
+  useEffect(() => {
+    if (selected && inputRef.current) {
+      inputRef.current.focus()
+      inputRef.current.value = ""
+    }
+  }, [selected])
+
+  useEffect(() => {
+    if (inputRef.current)
+      inputRef.current.addEventListener("keypress", e => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          submitform()
+          e.preventDefault()
+        }
+      })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputRef])
 
   return (
     <StyledInput>
       <div className="border"></div>
       <form onSubmit={submitHandler}>
-        <textarea
-          value={input}
-          ref={inputRef}
-          onChange={changeHandler}
-        ></textarea>
+        <textarea ref={inputRef}></textarea>
         <button type="submit">
           <IoSend />
         </button>
