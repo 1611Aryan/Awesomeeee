@@ -56,7 +56,7 @@
   },
   "scripts": {
     "dev": "pnpm nodemon --exec 'ts-node-esm' src/server.ts ",
-    "build": "pnpm  tsc",
+    "build": "tsc",
     "start": "cd dist && node server.js  ",
     "start-redis-server": "sudo service redis-server start",
     "stop-redis-server": "sudo service redis-server stop"
