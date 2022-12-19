@@ -1,8 +1,8 @@
+import useTypedSelector from "Hooks/useTypedSelector"
 import React, { Suspense, useEffect } from "react"
-import Petal from "./Components/Loaders/Petal/Petal"
 import { useRoutes } from "react-router-dom"
 import Routes from "Routes"
-import useTypedSelector from "Hooks/useTypedSelector"
+import Petal from "./Components/Loaders/Petal/Petal"
 
 const App: React.FC = () => {
   const { access } = useTypedSelector(state => state)

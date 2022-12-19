@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 
-import OAuth from "./OAuth"
 import styled from "@emotion/styled"
+import OAuth from "./OAuth"
 
+import { error, input, login } from "API/LoginApi"
 import useTypedDispatch from "Hooks/useTypedDispatch"
 import { loginUser } from "Redux/Slices/Access.Slice"
-import { error, input, login } from "API/LoginApi"
 
 const Form: React.FC = () => {
   const [input, setInput] = useState<input>({
@@ -29,7 +29,7 @@ const Form: React.FC = () => {
     } catch (err: any) {
       console.log(err.response.data)
       setError(err.response.data)
-      setInput({ username_email: "", password: "" })
+      //setInput({ username_email: "", password: "" })
     }
   }
 

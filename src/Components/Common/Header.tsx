@@ -1,6 +1,6 @@
+import styled from "@emotion/styled"
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import styled from "@emotion/styled"
 
 const Header: React.FC<{
   useCase: "login" | "signup"

@@ -18,11 +18,11 @@ export const WEBSOCKET_ENDPOINT =
 
 export const baseUrl =
   process.env.NODE_ENV === "production"
-    ? "https://awesomeeeee.herokuapp.com"
-    : "http://localhost:5000"
+    ? "https://awesomeeeee.herokuapp.com/backend"
+    : "http://localhost:5000/backend"
 
 export const loginEndpoint: endpoint = {
-  URL: `${baseUrl}/login`,
+  URL: `${baseUrl}/`,
   METHOD: methods.POST,
 }
 

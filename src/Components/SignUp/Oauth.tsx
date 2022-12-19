@@ -1,10 +1,10 @@
-import google from "Media/PNG/google_icon_2048 (1).png"
+import google from "Media/PNG/google.png"
 
 import styled from "@emotion/styled"
+import GoogleAuth from "API/GoogleAuth"
+import { error } from "API/SignupApi"
 import useTypedDispatch from "Hooks/useTypedDispatch"
 import { useEffect } from "react"
-import { error } from "API/SignupApi"
-import GoogleAuth from "API/GoogleAuth"
 import { EventHandler } from "../../API/GoogleAuth"
 
 const OAuth: React.FC<{

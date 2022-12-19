@@ -1,9 +1,9 @@
-import google from "Media/PNG/google_icon_2048 (1).png"
 import styled from "@emotion/styled"
-import useTypedDispatch from "Hooks/useTypedDispatch"
-import { useEffect } from "react"
-import { error } from "API/LoginApi"
 import GoogleAuth, { EventHandler } from "API/GoogleAuth"
+import { error } from "API/LoginApi"
+import useTypedDispatch from "Hooks/useTypedDispatch"
+import google from "Media/PNG/google.png"
+import { useEffect } from "react"
 
 const OAuth: React.FC<{
   setError: React.Dispatch<React.SetStateAction<error>>

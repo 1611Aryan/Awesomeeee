@@ -1,5 +1,5 @@
 import React from "react"
-import ReactDOM from "react-dom"
+import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from "react-router-dom"
 
 import App from "./App"
@@ -10,11 +10,13 @@ import { SocketProvider } from "./Providers/SocketProvider"
 
 import { Provider as ReduxProvider } from "react-redux"
 
-import store from "Redux/Store"
 import { LoginPullTabProvider } from "Providers/LoginPullTabProvider"
 import { ShowContactsProvider } from "Providers/ShowContactsProvider"
+import store from "Redux/Store"
 
-ReactDOM.render(
+const root=createRoot(document.getElementById("root")!)
+
+root.render(
   <React.StrictMode>
     <GlobalStyle />
     <ReduxProvider store={store}>
@@ -30,6 +32,5 @@ ReactDOM.render(
         </SocketProvider>
       </LoginPullTabProvider>
     </ReduxProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 )
