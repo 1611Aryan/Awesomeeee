@@ -11,7 +11,6 @@ import socketConfig from "./Socket.io/index.js"
 
 import http from "http"
 import ImageKitConfig from "./ImageKit/ImageKit.Config.js"
-import RedisConfig from "./Redis/index.js"
 import Router from "./Routes/normal.routes.js"
 import OauthRouter from "./Routes/oauth.routes.js"
 import PrivateRouter from "./Routes/private.routes.js"
@@ -29,7 +28,7 @@ const server = http.createServer(app)
 socketConfig(server)
 await MongoConfig()
 export const imagekit = ImageKitConfig()
-export const redisClient = await RedisConfig()
+//export const redisClient = await RedisConfig()
 
 app.use(
   "/backend/user",
